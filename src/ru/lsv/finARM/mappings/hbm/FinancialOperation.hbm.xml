@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ru.lsv.finARM.mappings.FinancialOperation">
+        <id name="foId" column="foId">
+            <generator class="native"/>
+        </id>
+        <property name="kind"/>
+        <property name="operationDate"/>
+        <property name="operationSum"/>
+        <many-to-one name="manager" column="managerId" lazy="false"/> 
+        <property name="customer"/>
+        <property name="orderNum"/>
+        <property name="paymentType"/>
+        <property name="closed"/>
+        <property name="closeDate"/>
+        <property name="closeYear"/>
+        <property name="closeMonth"/>
+        <set name="spendings" table="fo_spendings" cascade="all-delete-orphan">
+            <key column="foId"/>
+            <many-to-many column="finSpId" unique="true" class="ru.lsv.finARM.mappings.Spending"/>
+        </set>
+        <many-to-one name="plannedSpending" column="monthSpId" lazy="false"/>
+        <property name="nonPlannedSpending"/>
+        <property name="currentProfit"/>
+    </class>
+</hibernate-mapping>

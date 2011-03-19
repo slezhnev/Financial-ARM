@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Apache Commons Lang">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/docs/apache.commons.lang/apidocs" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

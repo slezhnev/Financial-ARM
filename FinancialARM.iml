@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="hibernate.cfg.xml" value="ab05e7da-1d58-475f-bee2-11f397bb11e1" />
+          <unit-entry name="ru:lsv:finARM:resources:hibernate.cfg.xml" />
+        </datasource-map>
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/ru/lsv/finARM/resources/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="NewPersistenceUnit" value="ab05e7da-1d58-475f-bee2-11f397bb11e1" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="hibernate3" level="project" />
+    <orderEntry type="library" name="PostgreSQL JDBC 4 driver" level="project" />
+    <orderEntry type="library" name="Java EE 6" level="project" />
+    <orderEntry type="library" name="JGoodies Common 1.1.1" level="project" />
+    <orderEntry type="library" name="JGoodies Looks 2.4.0" level="project" />
+    <orderEntry type="library" name="Apache Commons Lang" level="project" />
+    <orderEntry type="library" name="JasperReport 4.0.0" level="project" />
+    <orderEntry type="library" name="JCalendar 1.3.3" level="project" />
+    <orderEntry type="library" name="Jaxen 1.1.1" level="project" />
+    <orderEntry type="library" name="HSQLDB 2.0.0" level="project" />
+  </component>
+</module>
+

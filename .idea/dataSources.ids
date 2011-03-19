@@ -1,0 +1,38 @@
+<?xml version="1.0"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="DataSource" product="PostgreSQL" version="9.0.2" uuid="ab05e7da-1d58-475f-bee2-11f397bb11e1">
+    <identifier-quote-string>"</identifier-quote-string>
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql://localhost:5432/finARM</jdbc-url>
+    <user-name>financialARM</user-name>
+    <user-password>dfccdfc3dfc4dfcbdfd8dfc7</user-password>
+    <libraries>
+      <library>
+        <url>jar://$PROJECT_DIR$/lib/postgresql-9.0-801.jdbc4.jar!/</url>
+      </library>
+    </libraries>
+    <table name="managers" schema="public" catalog="" type="TABLE">
+      <column name="id" sqlType="serial" length="10" precision="0" nullable="false" jdbcType="4" />
+      <column name="FIO" sqlType="varchar" length="200" precision="0" nullable="false" jdbcType="12" />
+      <column name="incomeDate" sqlType="date" length="13" precision="0" nullable="false" jdbcType="91" />
+      <column name="cashPercent" sqlType="numeric" length="131089" precision="0" nullable="true" jdbcType="2" />
+      <column name="nonCashPercent" sqlType="numeric" length="131089" precision="0" nullable="true" jdbcType="2" />
+      <column name="dismissed" sqlType="bool" length="1" precision="0" nullable="false" jdbcType="-7" />
+      <column name="dismissDate" sqlType="date" length="13" precision="0" nullable="true" jdbcType="91" />
+      <column name="retention" sqlType="numeric" length="131089" precision="0" nullable="true" jdbcType="2" />
+      <column name="subsidy" sqlType="numeric" length="131089" precision="0" nullable="true" jdbcType="2" />
+      <primary-key name="id" columns="id" />
+    </table>
+    <table name="managers_id_seq" schema="public" catalog="" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" length="2147483647" precision="0" nullable="false" jdbcType="12" />
+      <column name="last_value" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="start_value" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="increment_by" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="max_value" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="min_value" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="cache_value" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="log_cnt" sqlType="int8" length="19" precision="0" nullable="false" jdbcType="-5" />
+      <column name="is_cycled" sqlType="bool" length="1" precision="0" nullable="false" jdbcType="-7" />
+      <column name="is_called" sqlType="bool" length="1" precision="0" nullable="false" jdbcType="-7" />
+    </table>
+  </data-source>
+</component>

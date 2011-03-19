@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ru.lsv.finARM.mappings.MonthSpending">
+        <id name="monthSpId">
+            <generator class="native"/>
+        </id>
+        <property name="month"/>
+        <property name="year"/>
+        <property name="name"/>
+        <property name="amount"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,1 @@
+java -jar FinancialARM.jar >run.results 2>error.results

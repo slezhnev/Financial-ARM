@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinancialResults" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="fontStyle" fontName="Arial" fontSize="14" isBold="false"/>
+	<queryString language="xPath">
+		<![CDATA[/result]]>
+	</queryString>
+	<field name="period" class="java.lang.String">
+		<fieldDescription><![CDATA[@period]]></fieldDescription>
+	</field>
+	<field name="cashTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[cashTotal]]></fieldDescription>
+	</field>
+	<field name="nonCashTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[nonCashTotal]]></fieldDescription>
+	</field>
+	<field name="nonClosedTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[nonClosedTotal]]></fieldDescription>
+	</field>
+	<field name="prepaidTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[prepaidTotal]]></fieldDescription>
+	</field>
+	<field name="plannedTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[plannedTotal]]></fieldDescription>
+	</field>
+	<field name="plannedMakedTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[plannedMakedTotal]]></fieldDescription>
+	</field>
+	<field name="nonPlannedTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[nonPlannedTotal]]></fieldDescription>
+	</field>
+	<field name="payrollTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[payrollTotal]]></fieldDescription>
+	</field>
+	<field name="plannedTxt" class="java.lang.String">
+		<fieldDescription><![CDATA[plannedTxt]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement style="fontStyle" x="10" y="10" width="545" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Финансовые результаты]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="194" y="30" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[за]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="fontStyle" x="223" y="30" width="167" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{period}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="604" splitType="Stretch">
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="32" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма безналичной прибыли]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="32" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonCashTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="64" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма наличной прибыли]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="64" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cashTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="96" width="346" height="41"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма плановых расходов ]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="96" width="209" height="41"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{plannedTxt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="137" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonPlannedTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="137" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма неплановых расходов]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="169" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{payrollTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="169" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая зарплата менеджеров (к выдаче)]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="201" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{prepaidTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="201" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма выданных авансов]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="233" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonClosedTotal}+$F{cashTotal}+$F{nonCashTotal}-
+$F{prepaidTotal}-$F{nonPlannedTotal}-$F{plannedMakedTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="233" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общее количество денежных средств]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="265" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Прибыль]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="265" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cashTotal}+$F{nonCashTotal}-
+$F{prepaidTotal}-$F{nonPlannedTotal}-$F{plannedMakedTotal}-
+$F{payrollTotal}-($F{plannedTotal}-$F{plannedMakedTotal})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="0" width="346" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Общая сумма прибыли по незакрытым договорам]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="346" y="0" width="209" height="32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonClosedTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

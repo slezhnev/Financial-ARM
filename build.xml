@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<project name="finARM" default="jar" basedir="." >
+
+  <property name="src" value="h:/javaprojects/FinancialARM/"/>
+  <property name="project" value="FinancialARM"/>
+
+  <target name="clear">
+    <delete dir="./dist/"/>
+    <mkdir dir="./dist/"/>
+    <mkdir dir="./dist/build"/>
+    <mkdir dir="./dist/result"/>
+    <mkdir dir="./dist/result/reports"/>
+  </target>
+
+  <target name="compile" depends="clear">
+      <!-- <javac srcdir="${src}/src/" 
+             destdir="${src}/dist/"
+             encoding="UTF-8">
+         <classpath>
+			 <fileset dir="${src}/lib">
+			    <include name="**/*.jar"/>
+			 </fileset>
+         </classpath>
+      </javac> -->
+	  <copy todir="${src}/dist/build/">
+         <fileset dir="${src}/src/" excludes="**/*.java,**/*.form" includes="**"/>
+         <fileset dir="${src}/out/production/FinancialARM/" excludes="**/*.java,**/*.form" includes="**"/>
+		 <fileset file="${src}/jasperreports.properties"/>
+      </copy>
+	  <copy todir="${src}/dist/result/">
+		 <fileset file="${src}/jasperreports.properties"/>
+		 <fileset file="${src}/connection.properties"/>
+		 <fileset file="${src}/dist.prepared/FinancialARM.cmd"/>
+      </copy>
+	  <copy todir="${src}/dist/result/reports/">
+         <fileset dir="${src}/reports" includes="*.jasper"/>
+      </copy>
+  </target>
+
+  <target name="jar" depends="compile">
+     <jar destfile="${src}/dist/result/${project}.jar" basedir="${src}/dist/build">
+		<zipgroupfileset dir="${src}/lib" includes="*.jar"/>
+	    <manifest>
+		   <attribute name="Main-class" value="ru.lsv.finARM.Main"/>
+		   <attribute name="Class-Path" value="."/>
+		</manifest>
+	 </jar>
+  </target>
+
+</project>

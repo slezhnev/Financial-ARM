@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- <property name="connection.url">jdbc:postgresql://localhost:5432/finARM</property> -->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.use_sql_comments">true</property>
+        <!-- <property name="connection.username">financialARM</property>
+        <property name="connection.password">finarm</property> -->
+        <!-- DB schema will be updated if needed -->
+        <property name="hbm2ddl.auto">update</property>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/Manager.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/ManagerPerMonth.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/SpendingTemplate.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/MonthSpending.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/FinancialMonth.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/Spending.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/FinancialOperation.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

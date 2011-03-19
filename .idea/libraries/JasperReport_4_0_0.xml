@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="JasperReport 4.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jasperreports-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-beanutils-1.8.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-digester-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JasperReport/4.0.0/docs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JasperReport/4.0.0/src" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PayrollReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="fontStyle" isDefault="true" fontName="Arial" fontSize="14"/>
+	<queryString language="xPath">
+		<![CDATA[/payroll/manager]]>
+	</queryString>
+	<field name="FIO" class="java.lang.String">
+		<fieldDescription><![CDATA[@FIO]]></fieldDescription>
+	</field>
+	<field name="prepayment" class="java.lang.Double">
+		<fieldDescription><![CDATA[@prepayment]]></fieldDescription>
+	</field>
+	<field name="profit" class="java.lang.Double">
+		<fieldDescription><![CDATA[@profit]]></fieldDescription>
+	</field>
+	<field name="period" class="java.lang.String">
+		<fieldDescription><![CDATA[/payroll/@period]]></fieldDescription>
+	</field>
+	<field name="paycheck" class="java.lang.Double">
+		<fieldDescription><![CDATA[@paycheck]]></fieldDescription>
+	</field>
+	<variable name="prepaymentTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{prepayment}]]></variableExpression>
+	</variable>
+	<variable name="profitTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	</variable>
+	<variable name="totalProfitSum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{paycheck}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Зарплатная ведомость]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="40" width="20" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[за]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="347" y="40" width="127" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{period}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="0" width="343" height="35"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Фамилия, Имя, Отчество]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="343" y="0" width="150" height="35"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Аванс]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="493" y="0" width="150" height="35"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Начислено]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="643" y="0" width="150" height="35"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[К выдаче]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement style="fontStyle" x="0" y="0" width="343" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="343" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{prepayment}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="493" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{profit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="643" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{paycheck}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement style="fontStyle" x="682" y="11" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Страница "+$V{PAGE_NUMBER}+" из"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="fontStyle" x="762" y="11" width="40" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="201" splitType="Stretch">
+			<staticText>
+				<reportElement x="609" y="87" width="73" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Директор]]></text>
+			</staticText>
+			<line>
+				<reportElement x="606" y="135" width="184" height="1"/>
+			</line>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="609" y="146" width="181" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="fontStyle" x="0" y="0" width="343" height="32"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Итого:]]></text>
+			</staticText>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="343" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{prepaymentTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="493" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{profitTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00 руб">
+				<reportElement style="fontStyle" x="643" y="0" width="150" height="32"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{totalProfitSum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
