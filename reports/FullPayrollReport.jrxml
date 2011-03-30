@@ -46,35 +46,21 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="20" width="802" height="20"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Полная зарплатная ведомость]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="323" y="40" width="20" height="20"/>
-				<textElement>
-					<font fontName="Arial" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[за]]></text>
-			</staticText>
+	<pageHeader>
+		<band height="50">
 			<textField>
-				<reportElement x="347" y="40" width="127" height="20"/>
-				<textElement>
+				<reportElement x="16" y="14" width="786" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{period}]]></textFieldExpression>
 			</textField>
 		</band>
-	</title>
+	</pageHeader>
 	<detail>
-		<band height="66" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<textField>
-				<reportElement style="fontStyle" x="0" y="0" width="233" height="66"/>
+				<reportElement style="fontStyle" x="0" y="12" width="233" height="66"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -87,8 +73,8 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FIO}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="327" y="0" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="327" y="12" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -102,7 +88,7 @@
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{salary}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="fontStyle" x="233" y="0" width="94" height="22"/>
+				<reportElement style="fontStyle" x="233" y="12" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -115,8 +101,8 @@
 				</textElement>
 				<text><![CDATA[Оклад:]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="515" y="0" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="515" y="12" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -130,7 +116,7 @@
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cashProfit}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="fontStyle" x="421" y="0" width="94" height="22"/>
+				<reportElement style="fontStyle" x="421" y="12" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -144,7 +130,7 @@
 				<text><![CDATA[Сумма нал:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="609" y="0" width="94" height="33"/>
+				<reportElement style="fontStyle" x="609" y="12" width="94" height="33"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -157,8 +143,8 @@
 				</textElement>
 				<text><![CDATA[Авансы:]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="703" y="0" width="99" height="33"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="703" y="12" width="99" height="33"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -171,8 +157,8 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{prepayment}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="327" y="22" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="327" y="34" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -186,7 +172,7 @@
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{subsidy}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="fontStyle" x="233" y="22" width="94" height="22"/>
+				<reportElement style="fontStyle" x="233" y="34" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -200,7 +186,7 @@
 				<text><![CDATA[Субсидия:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="421" y="22" width="94" height="22"/>
+				<reportElement style="fontStyle" x="421" y="34" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -213,8 +199,8 @@
 				</textElement>
 				<text><![CDATA[Сумма безнал:]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="515" y="22" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="515" y="34" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -228,7 +214,7 @@
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonCashProfit}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="fontStyle" x="233" y="44" width="94" height="22"/>
+				<reportElement style="fontStyle" x="233" y="56" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -242,7 +228,7 @@
 				<text><![CDATA[Вычеты:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="421" y="44" width="94" height="22"/>
+				<reportElement style="fontStyle" x="421" y="56" width="94" height="22"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -255,8 +241,8 @@
 				</textElement>
 				<text><![CDATA[Общая ЗП:]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="327" y="44" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="327" y="56" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -269,8 +255,8 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{retention}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="515" y="44" width="94" height="22"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="515" y="56" width="94" height="22"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -283,8 +269,8 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
-				<reportElement style="fontStyle" x="703" y="33" width="99" height="33"/>
+			<textField pattern="#,##0.00 ¤">
+				<reportElement style="fontStyle" x="703" y="45" width="99" height="33"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -298,7 +284,7 @@
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{paycheck}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="fontStyle" x="609" y="33" width="94" height="33"/>
+				<reportElement style="fontStyle" x="609" y="45" width="94" height="33"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -311,6 +297,9 @@
 				</textElement>
 				<text><![CDATA[На руки:]]></text>
 			</staticText>
+			<break>
+				<reportElement x="0" y="0" width="100" height="1"/>
+			</break>
 		</band>
 		<band height="111">
 			<subreport>
@@ -361,6 +350,9 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<break>
+				<reportElement x="0" y="19" width="100" height="1"/>
+			</break>
 		</band>
 	</pageFooter>
 </jasperReport>

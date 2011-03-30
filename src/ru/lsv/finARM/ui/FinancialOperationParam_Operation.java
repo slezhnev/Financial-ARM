@@ -5,6 +5,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.logic.FinancialMonths;
+import ru.lsv.finARM.mappings.FinancialMonth;
 import ru.lsv.finARM.mappings.FinancialOperation;
 import ru.lsv.finARM.mappings.Manager;
 import ru.lsv.finARM.mappings.Spending;
@@ -13,6 +15,8 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,6 +41,10 @@ public class FinancialOperationParam_Operation {
     private JButton closeBtn;
     private JPanel panel1;
     private JLabel currentProfitLabel;
+    private JFormattedTextField salarySum;
+    private JLabel currentSalaryProfitLabel;
+    private JFormattedTextField managerPercentEdit;
+    private JButton recalcProfitBtn;
 
     private JDialog dialog;
 
@@ -45,6 +53,7 @@ public class FinancialOperationParam_Operation {
     private boolean isClosed = false;
     private Date closeDate = null;
     private Double currentProfit;
+    private Double currentSalaryProfit;
 
     public FinancialOperationParam_Operation(Frame owner) {
         dialog = new JDialog(owner, "Параметры договора");
@@ -109,6 +118,48 @@ public class FinancialOperationParam_Operation {
                 doCloseEnabling(!isClosed);
             }
         });
+        operationSumEdit.addPropertyChangeListener("value", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                salarySum.setValue(operationSumEdit.getValue());
+            }
+        });
+        managerComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doSetManagerPercent();
+            }
+        });
+        paymentTypeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doSetManagerPercent();
+            }
+        });
+        recalcProfitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Обновим траты - с учетом того, что у нас может зарплатных сумм и не быть
+                for (Spending sp : ((SpendingTableModel) spendingTable.getModel()).getSpendings()) {
+                    if (sp.getPaymentSalarySum() == null)
+                        sp.setPaymentSalarySum(sp.getPaymentSum());
+                }
+                rebuildCurrentProfit();
+            }
+        });
+    }
+
+
+    /**
+     * Устанавливает процент менеджера при изменении менеджера или вида оплаты
+     */
+    private void doSetManagerPercent() {
+        if (managerComboBox.getSelectedItem() != null) {
+            if (paymentTypeComboBox.getSelectedIndex() == 0)
+                managerPercentEdit.setValue(((Manager) managerComboBox.getSelectedItem()).getCashPercent());
+            else
+                managerPercentEdit.setValue(((Manager) managerComboBox.getSelectedItem()).getNonCashPercent());
+        }
     }
 
     /**
@@ -171,13 +222,19 @@ public class FinancialOperationParam_Operation {
     private void doCloseEnabling(Boolean closed) {
         if (closed) {
             if (!isClosed) {
-                if (JOptionPane.showConfirmDialog(mainPanel, new String[] {"Вы уверены, что хотите закрыть договор?",
+                if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите закрыть договор?",
                         "После закрытия редактирование договора будет невозможно без его повторного открытия!"},
                         "Закрытие договора", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                    return;                    
+                    return;
                 }
                 // Значит - зыкрываем
                 Calendar cal = Calendar.getInstance();
+                FinancialMonth fm = FinancialMonths.getInstance().getActiveMonth(); 
+                if (cal.get(Calendar.MONTH) != fm.getMonth()) {
+                    cal.set(Calendar.YEAR, fm.getYear());
+                    cal.set(Calendar.MONTH, fm.getMonth());
+                    cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+                }
                 closeDate = new Date(cal.getTimeInMillis());
                 isClosed = closed;
             }
@@ -189,11 +246,11 @@ public class FinancialOperationParam_Operation {
             }
         } else {
             if (isClosed) {
-                if (JOptionPane.showConfirmDialog(mainPanel, new String[] {"Вы уверены, что хотите открыть договор?",
+                if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор?",
                         "Это может повлиять на уже сформированные и напечатанные отчеты!"},
                         "Открытие договора", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     return;
-                } 
+                }
                 isClosed = closed;
             }
             closeBtn.setText("Закрыть договор");
@@ -213,6 +270,8 @@ public class FinancialOperationParam_Operation {
         editSpendingBtn.setEnabled(!closed);
         delSpengingBtn.setEnabled(!closed);
         operationSumEdit.setEnabled(!closed);
+        salarySum.setEnabled(!closed);
+        managerPercentEdit.setEnabled(!closed);
     }
 
     /**
@@ -276,12 +335,20 @@ public class FinancialOperationParam_Operation {
             //
             orderNumEdit.setText(fo.getOrderNum());
             operationSumEdit.setValue(fo.getOperationSum());
+            if (fo.getSalarySum() != null)
+                salarySum.setValue(fo.getSalarySum());
+            else
+                salarySum.setValue(fo.getOperationSum());
             dateEdit.setDate(fo.getOperationDate());
             paymentTypeComboBox.setSelectedIndex(fo.getPaymentType());
             //
             java.util.List<Manager> managers = sess.createQuery("from Manager order by FIO").list();
             managerComboBox.setModel(new DefaultComboBoxModel(managers.toArray()));
             managerComboBox.setSelectedItem(fo.getManager());
+            doSetManagerPercent();
+            if (fo.getManagerPercent() != null) {
+                managerPercentEdit.setValue(fo.getManagerPercent());
+            }
             //
             isClosed = fo.getClosed();
             closeDate = fo.getCloseDate();
@@ -297,9 +364,11 @@ public class FinancialOperationParam_Operation {
             // Выходим - что-то сломалось
             return null;
         }
-        rebuildCurrentProfit();
         //
         dialog.pack();
+        //
+        rebuildCurrentProfit();
+        //
         dialog.setLocationRelativeTo(positionComponent);
         dialog.setVisible(true);
         if (modalResult) {
@@ -324,6 +393,9 @@ public class FinancialOperationParam_Operation {
             }
             fo.setSpendings(((SpendingTableModel) spendingTable.getModel()).getSpendings());
             fo.setCurrentProfit(currentProfit);
+            fo.setSalarySum((Double) salarySum.getValue());
+            fo.setCurrentSalaryProfit(currentSalaryProfit);
+            fo.setManagerPercent((Double) managerPercentEdit.getValue());
             return fo;
         } else {
             return null;
@@ -334,11 +406,15 @@ public class FinancialOperationParam_Operation {
      * Пересчитывает и отображает текущую прибыль по договору
      */
     private void rebuildCurrentProfit() {
-        currentProfit = (Double)operationSumEdit.getValue();
-        for (Spending sp : ((SpendingTableModel)spendingTable.getModel()).getSpendings()) {
+        currentProfit = (Double) operationSumEdit.getValue();
+        currentSalaryProfit = (Double) salarySum.getValue();
+        for (Spending sp : ((SpendingTableModel) spendingTable.getModel()).getSpendings()) {
             currentProfit = currentProfit - sp.getPaymentSum();
+            if (sp.getPaymentSalarySum() != null)
+                currentSalaryProfit = currentSalaryProfit - sp.getPaymentSalarySum();
         }
         currentProfitLabel.setText(CommonUtils.formatCurrency(currentProfit));
+        currentSalaryProfitLabel.setText(CommonUtils.formatCurrency(currentSalaryProfit));
     }
 
 

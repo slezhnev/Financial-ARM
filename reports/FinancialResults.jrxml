@@ -79,7 +79,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая сумма безналичной прибыли]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="32" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -103,7 +103,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая сумма наличной прибыли]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="64" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -139,7 +139,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{plannedTxt}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="137" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -163,7 +163,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая сумма неплановых расходов]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="169" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -187,7 +187,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая зарплата менеджеров (к выдаче)]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="201" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -211,7 +211,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая сумма выданных авансов]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="233" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -248,7 +248,7 @@ $F{prepaidTotal}-$F{nonPlannedTotal}-$F{plannedMakedTotal}]]></textFieldExpressi
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Прибыль]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="265" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -274,7 +274,7 @@ $F{payrollTotal}-($F{plannedTotal}-$F{plannedMakedTotal})]]></textFieldExpressio
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Общая сумма прибыли по незакрытым договорам]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="0" width="209" height="32"/>
 				<box>
 					<pen lineWidth="0.5"/>

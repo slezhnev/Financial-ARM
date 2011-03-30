@@ -27,5 +27,8 @@
         <many-to-one name="plannedSpending" column="monthSpId" lazy="false"/>
         <property name="nonPlannedSpending"/>
         <property name="currentProfit"/>
+        <property name="salarySum"/>
+        <property name="currentSalaryProfit"/>
+        <property name="managerPercent"/>
     </class>
 </hibernate-mapping>

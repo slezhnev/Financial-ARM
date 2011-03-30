@@ -64,6 +64,7 @@ public class Main {
         //
         UIManager.put("OptionPane.noButtonText", "Нет");
         UIManager.put("OptionPane.yesButtonText", "Да");
+        UIManager.put("OptionPane.cancelButtonText", "Отмена");
     }
 
 }

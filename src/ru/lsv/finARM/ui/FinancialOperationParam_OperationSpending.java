@@ -9,6 +9,8 @@ import ru.lsv.finARM.mappings.Spending;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ public class FinancialOperationParam_OperationSpending {
     private JComboBox paymentTypeComboBox;
     private JDateChooser dateEdit;
     private JTextField commentEdit;
+    private JFormattedTextField salarySumEdit;
 
     private JDialog dialog;
 
@@ -70,6 +73,12 @@ public class FinancialOperationParam_OperationSpending {
             }
         });
 
+        sumEdit.addPropertyChangeListener("value", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                salarySumEdit.setValue(sumEdit.getValue());
+            }
+        });
     }
 
     /**
@@ -127,7 +136,7 @@ public class FinancialOperationParam_OperationSpending {
      * @param spend             Расход
      * @param spendings         Список расходов в договоре. Надо для провеки введения дублей
      * @param sum               Общая сумма договора
-     * @param positionComponent Компонента для позиционирования  @return Скорректированный расход или null, если ничего не надо сохранять  @return Измененный расход
+     * @param positionComponent Компонента для позиционирования  
      * @return Скорректированный расход
      */
     public Spending doEdit(Spending spend, Set<Spending> spendings, Double sum, Component positionComponent) {
@@ -150,6 +159,9 @@ public class FinancialOperationParam_OperationSpending {
         }
         orderNumEdit.setText(spend.getOrderNum());
         sumEdit.setValue(spend.getPaymentSum());
+        if (spend.getPaymentSalarySum() != null) {
+            salarySumEdit.setValue(spend.getPaymentSalarySum());
+        }
         paymentTypeComboBox.setSelectedIndex(spend.getPaymentType());
         dateEdit.setDate(spend.getPaymentDate());
         commentEdit.setText(spend.getComment());
@@ -175,6 +187,7 @@ public class FinancialOperationParam_OperationSpending {
         spend.setPayerTo((String) payerToComboBox.getSelectedItem());
         spend.setOrderNum(orderNumEdit.getText());
         spend.setPaymentSum((Double) sumEdit.getValue());
+        spend.setPaymentSalarySum((Double) salarySumEdit.getValue());
         spend.setPaymentType(paymentTypeComboBox.getSelectedIndex());
         spend.setPaymentDate(new Date(dateEdit.getDate().getTime()));
         spend.setComment(commentEdit.getText());

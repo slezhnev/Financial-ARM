@@ -115,12 +115,15 @@ public class PayrollReport {
                             double suppliersSum = 0;
                             for (Spending sp : op.getSpendings()) {
                                 if (suppliers.length() != 0) suppliers.append("\n");
-                                suppliers.append(sp.getPayerTo()).append("(").append(sp.getOrderNum()).append(") - ").append(CommonUtils.formatCurrency(sp.getPaymentSum()));
-                                suppliersSum = suppliersSum + sp.getPaymentSum();
+                                suppliers.append(sp.getPayerTo()).append("(").append(sp.getOrderNum()).append(") - ").append(CommonUtils.formatCurrency(sp.getPaymentSalarySum()));
+                                suppliersSum = suppliersSum + sp.getPaymentSalarySum();
                             }
                             PayrollElement_Contracts contract = new PayrollElement_Contracts(op.getCustomer(),
-                                    op.getOrderNum(), op.getPaymentType(), op.getOperationSum(), suppliers.toString(), suppliersSum,
-                                    op.getCloseMonth(), op.getCloseYear());
+                                    op.getOrderNum(), op.getPaymentType(), /*op.getOperationSum(),*/
+                                    op.getSalarySum(),
+                                    suppliers.toString(), suppliersSum,
+                                    op.getCloseMonth(), op.getCloseYear(),
+                                    op.getManagerPercent());
                             el.contracts.add(contract);
                             managers.put(op.getManager(), el);
                         }
@@ -158,6 +161,7 @@ public class PayrollReport {
                         e1.setAttribute("customer", contract.customer);
                         e1.setAttribute("order", contract.order);
                         e1.setAttribute("paymentSum", CommonUtils.formatCurrency(contract.paymentSum));
+                        e1.setAttribute("managerPercent", "" + contract.managerPercent + "%");
                         e1.setAttribute("suppliersSum", CommonUtils.formatCurrency(contract.suppliersSum));
                         Element e2 = doc.createElement("suppliers");
                         e2.setTextContent(contract.suppliers);
@@ -173,10 +177,12 @@ public class PayrollReport {
                         }
                         if (contract.paymentKind == 0) {
                             e1.setAttribute("paymentType", "нал");
-                            cashProfit = cashProfit + manager.getCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
+                            //cashProfit = cashProfit + manager.getCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
+                            cashProfit = cashProfit + contract.managerPercent / 100 * (contract.paymentSum - contract.suppliersSum);
                         } else {
                             e1.setAttribute("paymentType", "безнал");
-                            nonCashProfit = nonCashProfit + manager.getNonCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
+                            //nonCashProfit = nonCashProfit + manager.getNonCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
+                            nonCashProfit = nonCashProfit + contract.managerPercent / 100 * (contract.paymentSum - contract.suppliersSum);
                         }
                         e.appendChild(e1);
                     }
@@ -330,7 +336,8 @@ public class PayrollReport {
     private class PayrollElement_Contracts {
 
         private PayrollElement_Contracts(String customer, String order, Integer paymentKind, Double paymentSum, String suppliers,
-                                         Double suppliersSum, Integer closedMonth, Integer closedYear) {
+                                         Double suppliersSum, Integer closedMonth, Integer closedYear,
+                                         Double managerPercent) {
             this.customer = customer;
             this.order = order;
             this.paymentKind = paymentKind;
@@ -339,6 +346,7 @@ public class PayrollReport {
             this.suppliersSum = suppliersSum;
             this.closedMonth = closedMonth;
             this.closedYear = closedYear;
+            this.managerPercent = managerPercent;
         }
 
         /**
@@ -374,6 +382,10 @@ public class PayrollReport {
          * Год закрытия
          */
         public Integer closedYear;
+        /**
+         * Процент менеджера
+         */
+        public Double managerPercent;
     }
 
 }

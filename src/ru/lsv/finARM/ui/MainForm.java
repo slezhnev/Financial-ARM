@@ -345,6 +345,7 @@ public class MainForm implements ActionListener {
             ManagersCatalog mCatalogTemp = new ManagersCatalog(frame);
             if (mCatalogTemp.show(mainPanel)) {
                 // Тут надо будет отрефрешить основной dataset
+                loadData(null, false);
             }
         } else if (spendingTemplatesMIText.equals(e.getActionCommand())) {
             SpendingTemplatesCatalog spCatalogTemp = new SpendingTemplatesCatalog(frame);

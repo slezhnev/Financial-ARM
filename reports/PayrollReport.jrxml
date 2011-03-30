@@ -133,7 +133,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FIO}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="343" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -145,7 +145,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{prepayment}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="493" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -157,7 +157,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="643" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -222,7 +222,7 @@
 				</textElement>
 				<text><![CDATA[Итого:]]></text>
 			</staticText>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="343" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -236,7 +236,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$V{prepaymentTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="493" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -250,7 +250,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$V{profitTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="643" y="0" width="150" height="32"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>

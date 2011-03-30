@@ -1,9 +1,7 @@
 package ru.lsv.finARM.ui;
 
 import com.toedter.calendar.JDateChooser;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.mappings.Manager;
@@ -38,6 +36,17 @@ public class ManagerParam {
     //
     private Integer managerId;
     //
+    /**
+     * Сохраненный процент за наличку
+     */
+    private double oldCashPercent;
+    /**
+     * Сохраненный процент за безналичку
+     */
+    private double oldNonCashPercent;
+    /**
+     * Оно тут и так понятно
+     */
     boolean modalResult;
 
     ManagerParam(Dialog owner) {
@@ -115,10 +124,6 @@ public class ManagerParam {
             JOptionPane.showMessageDialog(null, "Должна быть задана ФИО", "Параметры менеджера", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (((Double) cashPercentEdit.getValue() < 0) || ((Double) nonCashPercentEdit.getValue() < 0)) {
-            JOptionPane.showMessageDialog(null, "Процент не может быть отрицательным", "Параметры менеджера", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
         // Прежде чем что-то там сохранять - надо проверить, а может быть уже есть менеджер с такой ФИО?
         Session sess = null;
         try {
@@ -137,6 +142,45 @@ public class ManagerParam {
             sess.close();
         } catch (HibernateException ex) {
             if (sess != null) sess.close();
+        }
+        if (((Double) cashPercentEdit.getValue() < 0) || ((Double) nonCashPercentEdit.getValue() < 0)) {
+            JOptionPane.showMessageDialog(null, "Процент не может быть отрицательным", "Параметры менеджера", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Проверяем на изменение процентных ставок
+        if ((managerId != null) &&
+                ((oldCashPercent != (Double) cashPercentEdit.getValue()) ||
+                        (oldNonCashPercent != (Double) nonCashPercentEdit.getValue()))) {
+            String[] msg = {"Изменились процентные ставки.", "Скорректировать процентные ставки для открытых договоров?"};
+            int res = JOptionPane.showConfirmDialog(mainPanel, msg, "Параметры менеджера", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (res == JOptionPane.CANCEL_OPTION) return;
+            else if (res == JOptionPane.YES_OPTION) {
+                sess = null;
+                Transaction trx = null;
+                try {
+                    sess = HibernateUtils.openSession();
+                    trx = sess.beginTransaction();
+                    Manager tempMng = new Manager();
+                    tempMng.setManagerId(managerId);
+                    Query query = sess.createQuery("update FinancialOperation set managerPercent=? where closed=false and paymentType=? and manager=?").
+                            setEntity(2, tempMng);
+                    // Наличка
+                    query.setDouble(0, (Double)cashPercentEdit.getValue());
+                    query.setInteger(1, 0);
+                    query.executeUpdate();
+                    // Безналичка
+                    query.setDouble(0, (Double)nonCashPercentEdit.getValue());
+                    query.setInteger(1, 1);
+                    query.executeUpdate();
+                    trx.commit();
+                    //
+                    sess.close();
+                    sess = null;
+                } catch (HibernateException ex) {
+                    if (trx != null) trx.rollback();
+                    if (sess != null) sess.close();
+                }
+            }
         }
         modalResult = true;
         dialog.setVisible(false);
@@ -164,7 +208,9 @@ public class ManagerParam {
         subsidyEdit.setValue(manager.getSubsidy());
         retensionEdit.setValue(manager.getRetention());
         cashPercentEdit.setValue(manager.getCashPercent());
+        oldCashPercent = manager.getCashPercent();
         nonCashPercentEdit.setValue(manager.getNonCashPercent());
+        oldNonCashPercent = manager.getNonCashPercent();
         if (manager.getCashPercent() == 100) {
             directorRB.setSelected(true);
         } else {

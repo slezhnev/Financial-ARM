@@ -117,6 +117,14 @@ public class Spending {
         this.comment = comment;
     }
     
+    public Double getPaymentSalarySum() {
+        return paymentSalarySum;
+    }
+
+    public void setPaymentSalarySum(Double paymentSalarySum) {
+        this.paymentSalarySum = paymentSalarySum;
+    }
+    
     /**
      * Возвращает число полей
      *
@@ -209,6 +217,10 @@ public class Spending {
      * Сумма
      */
     private Double paymentSum;
+    /**
+     * Сумма для расчета зарплаты  
+     */
+    private Double paymentSalarySum;
     /**
      * Вид оплаты. 0 - наличными, 1 - безналичным
      */

@@ -15,6 +15,7 @@ public class FinancialOperation {
     public FinancialOperation() {
         closed = false;
         operationSum = 0.0;
+        salarySum = 0.0;
         operationDate = new Date(Calendar.getInstance().getTimeInMillis());
         paymentType = 0;
         kind = 0;
@@ -213,6 +214,18 @@ public class FinancialOperation {
      * Текущая прибыль
      */
     private Double currentProfit;
+    /**
+     * Сумма договора для расчета зарплаты
+     */
+    private Double salarySum;
+    /**
+     * Текущая прибыль для расчета зарплаты
+     */
+    private Double currentSalaryProfit;
+    /**
+     * Текущий процент менеджера
+     */
+    private Double managerPercent;
 
     // Блок для расхода
     /**
@@ -252,4 +265,27 @@ public class FinancialOperation {
         return str;
     }
 
+    public Double getSalarySum() {
+        return salarySum;
+    }
+
+    public void setSalarySum(Double salarySum) {
+        this.salarySum = salarySum;
+    }
+
+    public Double getCurrentSalaryProfit() {
+        return currentSalaryProfit;
+    }
+
+    public void setCurrentSalaryProfit(Double currentSalaryProfit) {
+        this.currentSalaryProfit = currentSalaryProfit;
+    }
+
+    public Double getManagerPercent() {
+        return managerPercent;
+    }
+
+    public void setManagerPercent(Double managerPercent) {
+        this.managerPercent = managerPercent;
+    }
 }

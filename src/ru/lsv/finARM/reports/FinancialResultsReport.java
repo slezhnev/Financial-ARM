@@ -95,21 +95,24 @@ public class FinancialResultsReport {
                 case 0: { // Договор
                     // Подгружаем расходы договора
                     op = (FinancialOperation) sess.get(FinancialOperation.class, op.getFoId());
+                    double salary = op.getSalarySum();
                     double tmp = op.getOperationSum();
                     for (Spending spend : op.getSpendings()) {
                         tmp = tmp - spend.getPaymentSum();
+                        salary = salary - spend.getPaymentSalarySum();
                     }
                     if (op.getClosed()) {
                         ManagerPerMonth mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
                                 op.getCloseMonth(), op.getCloseYear());
                         if (mng != null) {
-                            double managerCoeff = 0;
+                            //double managerCoeff = 0;
+                            double managerCoeff = op.getManagerPercent();
                             if (op.getPaymentType() == 0) {
                                 cashTotal = cashTotal + tmp;
-                                managerCoeff = mng.getCashPercent();
+                                //managerCoeff = mng.getCashPercent();
                             } else {
                                 nonCashTotal = nonCashTotal + tmp;
-                                managerCoeff = mng.getNonCashPercent();
+                                //managerCoeff = mng.getNonCashPercent();
                             }
                             double anotherPayments = 0;
                             if (!managersPerMonth.contains(mng)) {
@@ -120,9 +123,11 @@ public class FinancialResultsReport {
                             }
                             // Обрабатываем выдачу бабла менеджерам
                             if (managers.containsKey(op.getManager())) {
-                                managers.put(op.getManager(), managers.get(op.getManager()) + tmp * managerCoeff / 100 + anotherPayments);
+                                //managers.put(op.getManager(), managers.get(op.getManager()) + tmp * managerCoeff / 100 + anotherPayments);
+                                managers.put(op.getManager(), managers.get(op.getManager()) + salary * managerCoeff / 100 + anotherPayments);
                             } else {
-                                managers.put(op.getManager(), tmp * managerCoeff / 100 + anotherPayments);
+                                //managers.put(op.getManager(), tmp * managerCoeff / 100 + anotherPayments);
+                                managers.put(op.getManager(), salary * managerCoeff / 100 + anotherPayments);
                             }
                         }
                     } else {

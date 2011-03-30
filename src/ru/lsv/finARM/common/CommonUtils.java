@@ -11,6 +11,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
@@ -18,7 +19,8 @@ import java.util.Locale;
  */
 public class CommonUtils {
 
-    private static final DecimalFormat df = new DecimalFormat("0.00 ¤");
+    //private static final DecimalFormat df = new DecimalFormat("0.00 ¤");
+    private static final NumberFormat df = DecimalFormat.getCurrencyInstance();
 
     /**
      * Форматирование денежной суммы

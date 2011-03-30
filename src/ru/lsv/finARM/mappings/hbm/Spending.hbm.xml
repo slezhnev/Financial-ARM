@@ -15,5 +15,6 @@
         <property name="paymentType"/>
         <property name="paymentDate"/>
         <property name="comment"/>
+        <property name="paymentSalarySum"/>
     </class>
 </hibernate-mapping>
