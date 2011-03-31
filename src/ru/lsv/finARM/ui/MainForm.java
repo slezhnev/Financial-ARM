@@ -226,7 +226,7 @@ public class MainForm implements ActionListener {
         frame.setJMenuBar(buildMenu());
         //
         //frame.pack();
-        frame.setBounds(10, 10, 800, 600);
+        frame.setBounds(10, 10, 1100, 900);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -265,53 +265,56 @@ public class MainForm implements ActionListener {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu;
         JMenuItem item;
+        //if (isDirector) {
+        menu = new JMenu("Справочники");
+        item = new JMenuItem(managersMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        item = new JMenuItem(spendingTemplatesMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        //
         if (isDirector) {
-            menu = new JMenu("Справочники");
-            item = new JMenuItem(managersMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            item = new JMenuItem(spendingTemplatesMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            //
             menu.addSeparator();
             item = new JMenuItem(usersMIText);
             item.addActionListener(this);
             menu.add(item);
-            //
-            menuBar.add(menu);
-            //
-            menu = new JMenu("Помесячное");
-            item = new JMenuItem(monthSpendingMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            menu.addSeparator();
-            item = new JMenuItem(closeMonthMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            item = new JMenuItem(openMonthMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            menuBar.add(menu);
         }
+        //
+        menuBar.add(menu);
+        //
+        menu = new JMenu("Помесячное");
+        item = new JMenuItem(monthSpendingMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        menu.addSeparator();
+        item = new JMenuItem(closeMonthMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        item = new JMenuItem(openMonthMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        menuBar.add(menu);
+        //}
         //
         //
         menu = new JMenu("Отчеты");
         shortSalaryMI = new JMenuItem(reports_salaryMIText);
         shortSalaryMI.addActionListener(this);
         menu.add(shortSalaryMI);
+//        if (isDirector) {
+        fullSalaryMI = new JMenuItem(reports_fullSalaryMIText);
+        fullSalaryMI.addActionListener(this);
+        menu.add(fullSalaryMI);
+        menu.addSeparator();
+        item = new JMenuItem(reports_plannedMonthSpendingMIText);
+        item.addActionListener(this);
+        menu.add(item);
+        menu.addSeparator();
+        item = new JMenuItem(reports_nonClosedOperationsMIText);
+        item.addActionListener(this);
+        menu.add(item);
         if (isDirector) {
-            fullSalaryMI = new JMenuItem(reports_fullSalaryMIText);
-            fullSalaryMI.addActionListener(this);
-            menu.add(fullSalaryMI);
-            menu.addSeparator();
-            item = new JMenuItem(reports_plannedMonthSpendingMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            menu.addSeparator();
-            item = new JMenuItem(reports_nonClosedOperationsMIText);
-            item.addActionListener(this);
-            menu.add(item);
             menu.addSeparator();
             item = new JMenuItem(reports_financialResultsMIText);
             item.addActionListener(this);
@@ -385,7 +388,7 @@ public class MainForm implements ActionListener {
         } else if (reports_fullSalaryMIText.equals(e.getActionCommand())) {
             PayrollReport report = new PayrollReport();
             try {
-                report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams,  true);
+                report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams, true);
             } catch (Exception e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
@@ -621,13 +624,15 @@ public class MainForm implements ActionListener {
             // Установим временной фильтр
             Query query;
             if (timeFilterParams.getBeginDate() == null) {
-                query = sess.createQuery("from FinancialOperation where (closed=false)OR((closed=true) AND (closeYear=?) AND (closeMonth=?)) order by operationDate")
+                query = sess.createQuery("from FinancialOperation where (closed=false)OR((closed=true) AND (closeYear=?) AND (closeMonth=?)) order by operationDate, foId")
                         .setInteger(0, timeFilterParams.getSelectedYear())
                         .setInteger(1, timeFilterParams.getSelectedMonth());
             } else {
-                query = sess.createQuery("from FinancialOperation where (closed=false)OR((closed=true) AND (closeDate >= ?) AND (closeDate <= ?)) order by operationDate")
+                query = sess.createQuery("from FinancialOperation where (closed=false)OR((closed=true)AND(closeDate >= ?)AND(closeDate <= ?))OR((kind=0)AND(operationDate >= ?)AND(operationDate <= ?)) order by operationDate, foId")
                         .setDate(0, timeFilterParams.getBeginDate())
-                        .setDate(1, timeFilterParams.getEndDate());
+                        .setDate(1, timeFilterParams.getEndDate())
+                        .setDate(2, timeFilterParams.getBeginDate())
+                        .setDate(3, timeFilterParams.getEndDate());
             }
             java.util.List<FinancialOperation> operations = query.list();
             ((FinancialOperationTableModel) finOpTable.getModel()).setOperations(operations);
@@ -793,7 +798,7 @@ public class MainForm implements ActionListener {
          */
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return String.class; 
+            return String.class;
             /*switch (columnIndex) {
                 case 1:
                     return Date.class;
@@ -849,7 +854,7 @@ public class MainForm implements ActionListener {
                         }
                     }
                     if (object.getClass().equals(String.class)) {
-                        setText((String)object);
+                        setText((String) object);
                     }
                 }
             }
@@ -858,7 +863,7 @@ public class MainForm implements ActionListener {
                 if (getForeground().equals(Color.BLACK)) setForeground(Color.WHITE);
                 else setForeground(getForeground().brighter());
             } else {
-                setBackground(table.getBackground());                
+                setBackground(table.getBackground());
             }
             if (isBordered) {
                 if (isSelected) {

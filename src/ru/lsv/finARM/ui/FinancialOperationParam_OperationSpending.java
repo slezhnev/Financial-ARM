@@ -97,10 +97,10 @@ public class FinancialOperationParam_OperationSpending {
             JOptionPane.showMessageDialog(null, "Не указан номер счета", "Параметры расхода по договору", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (((Double) sumEdit.getValue()) <= 0) {
+        /*if (((Double) sumEdit.getValue()) <= 0) {
             JOptionPane.showMessageDialog(null, "Неверно задана сумма", "Параметры расхода по договору", JOptionPane.ERROR_MESSAGE);
             return;
-        }
+        }*/
         // Проверяем - а не пытаемся ли мы засунуть дубля?!
         Spending spend = reload(new Spending());
         if (spendings.contains(spend)) {

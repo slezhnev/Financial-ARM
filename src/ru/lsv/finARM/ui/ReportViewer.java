@@ -53,7 +53,7 @@ public class ReportViewer extends JDialog {
         this.reportName = reportName;
         this.xmlName = xmlName;
         getContentPane().add(panel1);
-        setBounds(0, 0, 800, 600);
+        setBounds(0, 0, 1100, 900);
         setLocationRelativeTo(locationComp);
     }
 
