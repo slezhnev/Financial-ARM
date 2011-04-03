@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Отчет по финансовым результатам
@@ -163,6 +164,50 @@ public class FinancialResultsReport {
         }
         //
         // Поехали обрабатывать остатки менеджеров и плановые платежи
+        // Учтем зарплаты тех, у кого нет закрытых договоров
+        int beginYear;
+        int endYear;
+        int beginMonth;
+        int endMonth;
+        if (timeParams.getBeginDate() != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(timeParams.getBeginDate().getTime());
+            beginYear = cal.get(Calendar.YEAR);
+            beginMonth = cal.get(Calendar.MONTH);
+            cal.setTimeInMillis(timeParams.getEndDate().getTime());
+            endYear = cal.get(Calendar.YEAR);
+            endMonth = cal.get(Calendar.MONTH);
+        } else {
+            // А вот тут у нас - тока ОДИН месяц!
+            beginYear = timeParams.getSelectedYear();
+            endYear = beginYear;
+            beginMonth = timeParams.getSelectedYear();
+            endMonth = beginMonth;
+        }
+        // Получаем из ManagerPerMonth
+        List<ManagerPerMonth> mngrs = sess.createQuery("from ManagerPerMonth where ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
+                setInteger(0, beginYear).
+                setInteger(1, endYear).
+                setInteger(2, beginYear).
+                setInteger(3, beginMonth).
+                setInteger(4, endYear).
+                setInteger(5, endMonth).
+                list();
+        for (ManagerPerMonth manager : mngrs) {
+            if (!managersPerMonth.contains(manager)) {
+                // Если в этом месяце мы еще ничего не учитывали, то учтем
+                Manager mng = new Manager();
+                mng.setManagerId(manager.getManagerId());
+                // Обрабатываем выдачу бабла менеджерам
+                if (managers.containsKey(mng)) {
+                    managers.put(mng, managers.get(mng) + manager.getSalary() + manager.getSubsidy() - manager.getRetention());
+                } else {
+                    managers.put(mng, manager.getSalary() + manager.getSubsidy() - manager.getRetention());
+                }
+
+            }
+        }
+        //
         // Иенеджеры
         for (Manager mng : managers.keySet()) {
             if ((mng.getCashPercent() != 100) && (mng.getNonCashPercent() != 100))

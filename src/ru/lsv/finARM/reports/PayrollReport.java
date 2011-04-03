@@ -101,6 +101,11 @@ public class PayrollReport {
             sess = HibernateUtils.openSession();
             // Создаем все для формирования
             HashMap<Manager, PayrollElement> managers = new HashMap<Manager, PayrollElement>();
+            // Формируем ОБЩИЙ список менеджеров
+            List<Manager> allManagers = sess.createQuery("from Manager order by FIO").list();
+            for (Manager mng : allManagers) {
+                managers.put(mng, new PayrollElement());
+            }
             // Поехали по операциям
             for (FinancialOperation op : operations) {
                 switch (op.getKind()) {
@@ -152,9 +157,9 @@ public class PayrollReport {
                     // Причем по договорам, причем с учетом ManagerPerMonth
                     double cashProfit = 0;
                     double nonCashProfit = 0;
-                    double subsidy = 0;
-                    double retention = 0;
-                    double salary = 0;
+//                    double subsidy = 0;
+//                    double retention = 0;
+//                    double salary = 0;
                     for (PayrollElement_Contracts contract : pe.contracts) {
                         Element e1 = doc.createElement("contract");
                         e1.setAttribute("parentId", "" + id);
@@ -167,14 +172,14 @@ public class PayrollReport {
                         e2.setTextContent(contract.suppliers);
                         e1.appendChild(e2);
                         e1.setAttribute("profit", CommonUtils.formatCurrency(contract.paymentSum - contract.suppliersSum));
-                        ManagerPerMonth manager = ReportsCommonUtils.getManager(sess, mng.getManagerId(), contract.closedMonth, contract.closedYear);
-                        if (!managersPerMonth.contains(manager)) {
-                            // Значит этот месяц еще не учтен. Поедем обработаем
-                            subsidy = subsidy + (manager.getSubsidy() == null ? 0 : manager.getSubsidy());
-                            retention = retention + (manager.getRetention() == null ? 0 : manager.getRetention());
-                            salary = salary + (manager.getSalary() == null ? 0 : manager.getSalary());
-                            managersPerMonth.add(manager);
-                        }
+//                        ManagerPerMonth manager = ReportsCommonUtils.getManager(sess, mng.getManagerId(), contract.closedMonth, contract.closedYear);
+//                        if (!managersPerMonth.contains(manager)) {
+//                            // Значит этот месяц еще не учтен. Поедем обработаем
+//                            subsidy = subsidy + (manager.getSubsidy() == null ? 0 : manager.getSubsidy());
+//                            retention = retention + (manager.getRetention() == null ? 0 : manager.getRetention());
+//                            salary = salary + (manager.getSalary() == null ? 0 : manager.getSalary());
+//                            managersPerMonth.add(manager);
+//                        }
                         if (contract.paymentKind == 0) {
                             e1.setAttribute("paymentType", "нал");
                             //cashProfit = cashProfit + manager.getCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
@@ -185,6 +190,49 @@ public class PayrollReport {
                             nonCashProfit = nonCashProfit + contract.managerPercent / 100 * (contract.paymentSum - contract.suppliersSum);
                         }
                         e.appendChild(e1);
+                    }
+                    // Посчитаем зарплату и прочую фигню за период...
+                    int beginYear;
+                    int endYear;
+                    int beginMonth;
+                    int endMonth;
+                    if (timeParams.getBeginDate() != null) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeInMillis(timeParams.getBeginDate().getTime());
+                        beginYear = cal.get(Calendar.YEAR);
+                        beginMonth = cal.get(Calendar.MONTH);
+                        cal.setTimeInMillis(timeParams.getEndDate().getTime());
+                        endYear = cal.get(Calendar.YEAR);
+                        endMonth = cal.get(Calendar.MONTH);
+                    } else {
+                        // А вот тут у нас - тока ОДИН месяц!
+                        beginYear = timeParams.getSelectedYear();
+                        endYear = beginYear;
+                        beginMonth = timeParams.getSelectedYear();
+                        endMonth = beginMonth;
+                    }
+                    // Получаем из ManagerPerMonth
+                    List<ManagerPerMonth> mngrs = sess.createQuery("from ManagerPerMonth where (managerId=?) and ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
+                            setInteger(0, mng.getManagerId()).
+                            setInteger(1, beginYear).
+                            setInteger(2, endYear).
+                            setInteger(3, beginYear).
+                            setInteger(4, beginMonth).
+                            setInteger(5, endYear).
+                            setInteger(6, endMonth).
+                            list();
+                    // Считаем
+                    double subsidy = 0;
+                    double retention = 0;
+                    double salary = 0;
+                    for (ManagerPerMonth manager : mngrs) {
+                        if (!managersPerMonth.contains(manager)) {
+                            // Значит этот месяц еще не учтен. Поедем обработаем
+                            subsidy = subsidy + (manager.getSubsidy() == null ? 0 : manager.getSubsidy());
+                            retention = retention + (manager.getRetention() == null ? 0 : manager.getRetention());
+                            salary = salary + (manager.getSalary() == null ? 0 : manager.getSalary());
+                            managersPerMonth.add(manager);
+                        }
                     }
                     //
                     e.setAttribute("profit", "" + (cashProfit + nonCashProfit + salary + subsidy - retention));
