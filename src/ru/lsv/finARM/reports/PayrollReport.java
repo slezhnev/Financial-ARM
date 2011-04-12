@@ -1,6 +1,7 @@
 package ru.lsv.finARM.reports;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.DOMImplementation;
@@ -208,19 +209,28 @@ public class PayrollReport {
                         // А вот тут у нас - тока ОДИН месяц!
                         beginYear = timeParams.getSelectedYear();
                         endYear = beginYear;
-                        beginMonth = timeParams.getSelectedYear();
+                        beginMonth = timeParams.getSelectedMonth();
                         endMonth = beginMonth;
                     }
                     // Получаем из ManagerPerMonth
-                    List<ManagerPerMonth> mngrs = sess.createQuery("from ManagerPerMonth where (managerId=?) and ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
-                            setInteger(0, mng.getManagerId()).
-                            setInteger(1, beginYear).
-                            setInteger(2, endYear).
-                            setInteger(3, beginYear).
-                            setInteger(4, beginMonth).
-                            setInteger(5, endYear).
-                            setInteger(6, endMonth).
-                            list();
+                    Query query;
+                    if (beginYear == endYear) {
+                        query = sess.createQuery("from ManagerPerMonth where (managerId=?) and (year=? AND month >=? AND month <=?)").
+                                setInteger(0, mng.getManagerId()).
+                                setInteger(1, beginYear).
+                                setInteger(2, beginMonth).
+                                setInteger(3, endMonth);
+                    } else {
+                        query = sess.createQuery("from ManagerPerMonth where (managerId=?) and ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
+                                setInteger(0, mng.getManagerId()).
+                                setInteger(1, beginYear).
+                                setInteger(2, endYear).
+                                setInteger(3, beginYear).
+                                setInteger(4, beginMonth).
+                                setInteger(5, endYear).
+                                setInteger(6, endMonth);
+                    }
+                    List<ManagerPerMonth> mngrs = query.list();
                     // Считаем
                     double subsidy = 0;
                     double retention = 0;

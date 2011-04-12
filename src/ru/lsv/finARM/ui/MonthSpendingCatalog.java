@@ -289,7 +289,7 @@ public class MonthSpendingCatalog {
             if (session == null) sess = HibernateUtils.openSession();
             else sess = session;
             FinancialMonth fm = (FinancialMonth) monthsComboBox.getSelectedItem();
-            spends = sess.createQuery("from MonthSpending where month=? AND year=? order by amount").
+            spends = sess.createQuery("from MonthSpending where month=? AND year=? order by name").
                     setInteger(0, fm.getMonth()).setInteger(1, fm.getYear()).list();
             ((MonthSpendingTableModel) table.getModel()).setMonthSpendingList(spends);
             ((MonthSpendingTableModel) table.getModel()).fireTableDataChanged();
