@@ -26,6 +26,8 @@ public class MonthSpendingParam {
     private JDialog dialog;
     //
     private Integer spId;
+    private Integer spMonth;
+    private Integer spYear;
     private boolean modalResult = false;
 
     public MonthSpendingParam(JDialog owner) {
@@ -82,6 +84,8 @@ public class MonthSpendingParam {
             //
             Criteria crit = sess.createCriteria(MonthSpending.class);
             crit.add(Restrictions.eq("name", spendNameEdit.getText()));
+            crit.add(Restrictions.eq("month", spMonth));
+            crit.add(Restrictions.eq("year", spYear));
             if (spId != null) crit.add(Restrictions.ne("monthSpId", spId));
             if (crit.uniqueResult() != null) {
                 // Значит есть уже такой манагер
@@ -108,6 +112,8 @@ public class MonthSpendingParam {
 
     public MonthSpending doEdit(MonthSpending spTemplate, Component positionComponent) {
         spId = spTemplate.getMonthSpId();
+        spMonth = spTemplate.getMonth();
+        spYear = spTemplate.getYear();
         spendNameEdit.setText(spTemplate.getName());
         spendAmountEdit.setValue(spTemplate.getAmount());
         yearMonthLabel.setText(""+ CommonUtils.getMonthNameByIndex(spTemplate.getMonth())+" "+spTemplate.getYear());
