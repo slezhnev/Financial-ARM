@@ -32,6 +32,9 @@
 	<field name="managerPercent" class="java.lang.String">
 		<fieldDescription><![CDATA[@managerPercent]]></fieldDescription>
 	</field>
+	<field name="date" class="java.lang.String">
+		<fieldDescription><![CDATA[@date]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -66,7 +69,7 @@
 				<text><![CDATA[Счет]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="245" y="0" width="83" height="20"/>
+				<reportElement style="fontStyle" x="309" y="0" width="70" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -80,7 +83,7 @@
 				<text><![CDATA[Сумма]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="389" y="0" width="221" height="20"/>
+				<reportElement style="fontStyle" x="425" y="0" width="203" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -94,7 +97,7 @@
 				<text><![CDATA[Поставщики (счет) - сумма]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="328" y="0" width="61" height="20"/>
+				<reportElement style="fontStyle" x="379" y="0" width="46" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -108,7 +111,7 @@
 				<text><![CDATA[Оплата]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="680" y="0" width="70" height="20"/>
+				<reportElement style="fontStyle" x="698" y="0" width="70" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -122,7 +125,7 @@
 				<text><![CDATA[Прибыль]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="610" y="0" width="70" height="20"/>
+				<reportElement style="fontStyle" x="628" y="0" width="70" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -136,7 +139,7 @@
 				<text><![CDATA[Расходы]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="fontStyle" x="750" y="0" width="52" height="20"/>
+				<reportElement style="fontStyle" x="768" y="0" width="34" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -148,6 +151,20 @@
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="fontStyle" x="245" y="0" width="64" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Дата]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -182,7 +199,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="245" y="0" width="83" height="40"/>
+				<reportElement x="309" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -196,7 +213,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymentSum}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="328" y="0" width="61" height="40"/>
+				<reportElement x="379" y="0" width="46" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -210,7 +227,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymentType}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="389" y="0" width="221" height="40"/>
+				<reportElement x="425" y="0" width="203" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -224,7 +241,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{suppliers}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="680" y="0" width="70" height="40"/>
+				<reportElement x="698" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -238,7 +255,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="610" y="0" width="70" height="40"/>
+				<reportElement x="628" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -252,7 +269,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{suppliersSum}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="750" y="0" width="52" height="40"/>
+				<reportElement x="768" y="0" width="34" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -264,6 +281,20 @@
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{managerPercent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="0" width="64" height="40"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

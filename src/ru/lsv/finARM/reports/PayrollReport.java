@@ -21,6 +21,7 @@ import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -129,7 +130,8 @@ public class PayrollReport {
                                     op.getSalarySum(),
                                     suppliers.toString(), suppliersSum,
                                     op.getCloseMonth(), op.getCloseYear(),
-                                    op.getManagerPercent());
+                                    op.getManagerPercent(),
+                                    op.getOperationDate());
                             el.contracts.add(contract);
                             managers.put(op.getManager(), el);
                         }
@@ -146,6 +148,7 @@ public class PayrollReport {
             // Формируем теперь XML
             HashSet<ManagerPerMonth> managersPerMonth = new HashSet<ManagerPerMonth>();
             int id = 1;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
             for (Manager mng : new TreeSet<Manager>(managers.keySet())) {
                 // Исключаем директоров
                 if ((mng.getCashPercent() != 100) || (mng.getNonCashPercent() != 100)) {
@@ -165,6 +168,7 @@ public class PayrollReport {
                         Element e1 = doc.createElement("contract");
                         e1.setAttribute("parentId", "" + id);
                         e1.setAttribute("customer", contract.customer);
+                        e1.setAttribute("date", sdf.format(contract.operationDate));
                         e1.setAttribute("order", contract.order);
                         e1.setAttribute("paymentSum", CommonUtils.formatCurrency(contract.paymentSum));
                         e1.setAttribute("managerPercent", "" + contract.managerPercent + "%");
@@ -393,9 +397,9 @@ public class PayrollReport {
      */
     private class PayrollElement_Contracts {
 
-        private PayrollElement_Contracts(String customer, String order, Integer paymentKind, Double paymentSum, String suppliers,
-                                         Double suppliersSum, Integer closedMonth, Integer closedYear,
-                                         Double managerPercent) {
+        private PayrollElement_Contracts(String customer, String order, Integer paymentKind, Double paymentSum,
+                                         String suppliers, Double suppliersSum, Integer closedMonth, Integer closedYear,
+                                         Double managerPercent, Date operationDate) {
             this.customer = customer;
             this.order = order;
             this.paymentKind = paymentKind;
@@ -405,6 +409,7 @@ public class PayrollReport {
             this.closedMonth = closedMonth;
             this.closedYear = closedYear;
             this.managerPercent = managerPercent;
+            this.operationDate = operationDate;
         }
 
         /**
@@ -444,6 +449,10 @@ public class PayrollReport {
          * Процент менеджера
          */
         public Double managerPercent;
+        /**
+         * Дата договора
+         */
+        public Date operationDate;
     }
 
 }

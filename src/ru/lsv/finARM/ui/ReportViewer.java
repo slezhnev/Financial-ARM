@@ -12,6 +12,8 @@ import org.w3c.dom.Document;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,7 +21,7 @@ import java.util.Map;
 /**
  * Форма просмотра XML-отчетов
  */
-public class ReportViewer extends JDialog {
+public class ReportViewer extends JFrame {
     private JRViewer JRViewer1;
     private JPanel panel1;
 
@@ -39,28 +41,34 @@ public class ReportViewer extends JDialog {
     /**
      * Создание просмотршика отчетов
      *
-     * @param frame Где создавать форму
+     * @param frame        Где создавать форму
      * @param locationComp Относитель чего позиционироваться
-     * @param reportName Название отчета (БЕЗ раширения!)
-     * @param xmlName Имя XML документа с данными
+     * @param reportName   Название отчета (БЕЗ раширения!)
+     * @param xmlName      Имя XML документа с данными
      */
     public ReportViewer(Frame frame,
                         Component locationComp,
                         String reportName,
                         String xmlName) {
-        super(frame, "Просмотр отчета", true);
+        //super(frame, "Просмотр отчета", true);
+        super("Просмотр отчета");
         //
         this.reportName = reportName;
         this.xmlName = xmlName;
         getContentPane().add(panel1);
         setBounds(0, 0, 1100, 900);
         setLocationRelativeTo(locationComp);
+        /*this.addWindowFocusListener(new WindowAdapter() {
+            public void windowLostFocus(WindowEvent e) {
+                toFront();
+            }
+        });*/
     }
 
     private void createUIComponents() {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-            Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("./"+xmlName));
+            Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("./" + xmlName));
             params.put(JRXPathQueryExecuterFactory.PARAMETER_XML_DATA_DOCUMENT, document);
             params.put(JRXPathQueryExecuterFactory.XML_DATE_PATTERN, "dd/mm/yyyy");
             params.put(JRXPathQueryExecuterFactory.XML_NUMBER_PATTERN, "#,##0.#");
@@ -68,7 +76,7 @@ public class ReportViewer extends JDialog {
             params.put(JRParameter.REPORT_LOCALE, Locale.getDefault());
             params.put("SUBREPORT_DIR", "./reports/");
 
-            JasperPrint print = JasperFillManager.fillReport("./reports/"+reportName+".jasper", params);
+            JasperPrint print = JasperFillManager.fillReport("./reports/" + reportName + ".jasper", params);
 
             JRViewer1 = new JRViewer(print);
             //
