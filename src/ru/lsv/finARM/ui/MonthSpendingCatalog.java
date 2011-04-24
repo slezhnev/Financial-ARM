@@ -1,8 +1,10 @@
 package ru.lsv.finARM.ui;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.FinancialMonth;
@@ -16,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Список планируемых месячных трат
@@ -30,12 +34,18 @@ public class MonthSpendingCatalog {
     private JPanel periodPanel;
     private JComboBox monthsComboBox;
     private JButton moveFromTemplateBtn;
+    private JLabel plannedLabel;
+    private JLabel spendedLabel;
+    private JLabel restLabel;
 
     //
     protected JDialog dialog;
     //
     private MonthSpendingParam monthSpendingParam;
-
+    //
+    HashMap<MonthSpending, Double> actualSpend = new HashMap<MonthSpending, Double>();
+    //
+    Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 
     MonthSpendingCatalog(Frame owner) {
         dialog = new JDialog(owner, "Планируемые месячные расходы");
@@ -289,8 +299,33 @@ public class MonthSpendingCatalog {
             if (session == null) sess = HibernateUtils.openSession();
             else sess = session;
             FinancialMonth fm = (FinancialMonth) monthsComboBox.getSelectedItem();
+            actualSpend.clear();
             spends = sess.createQuery("from MonthSpending where month=? AND year=? order by name").
                     setInteger(0, fm.getMonth()).setInteger(1, fm.getYear()).list();
+            dialog.setCursor(waitCursor);
+            Query query = sess.createQuery("select sum(operationSum) from FinancialOperation where kind=2 AND closeMonth=? AND closeYear=? AND plannedSpending = ?").
+                    setInteger(0, fm.getMonth()).
+                    setInteger(1, fm.getYear());
+            double dTotal = 0.0;
+            double dSpended = 0.0;
+            double dReallySpended = 0.0;
+            for (MonthSpending spend : spends) {
+                Double spended = (Double) query.setEntity(2, spend).uniqueResult();
+                if (spended == null) spended = 0.0;
+                actualSpend.put(spend, spended);
+                dTotal = dTotal + spend.getAmount();
+                dReallySpended = dReallySpended + spended;
+                if (spend.getAmount() >= spended)
+                    dSpended = dSpended + spended;
+                else
+                    dSpended = dSpended + spend.getAmount();
+            }
+            dialog.setCursor(Cursor.getDefaultCursor());
+            //
+            plannedLabel.setText(CommonUtils.formatCurrency(dTotal));
+            spendedLabel.setText(CommonUtils.formatCurrency(dReallySpended));
+            restLabel.setText(CommonUtils.formatCurrency(dTotal - dSpended));
+            // Теперь еще посчитаем - сколько именно мы потратили в этом месяце
             ((MonthSpendingTableModel) table.getModel()).setMonthSpendingList(spends);
             ((MonthSpendingTableModel) table.getModel()).fireTableDataChanged();
             if ((savePosition) && (savedStId != -1)) {
@@ -349,7 +384,7 @@ public class MonthSpendingCatalog {
          */
         @Override
         public int getColumnCount() {
-            return colCount;
+            return colCount + 2;
         }
 
         /**
@@ -362,11 +397,17 @@ public class MonthSpendingCatalog {
          */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            if ((rowIndex < monthSpending.size()) && (columnIndex < colCount)) {
+            if ((rowIndex < monthSpending.size()) && (columnIndex < colCount))
                 return monthSpending.get(rowIndex).getValueByIndex(columnIndex);
-            } else {
-                return null;
-            }
+            else if ((rowIndex < monthSpending.size()) && (columnIndex < (colCount + 2)) && (actualSpend.containsKey(monthSpending.get(rowIndex)))) {
+                if (columnIndex == colCount) {
+                    return CommonUtils.formatCurrency(actualSpend.get(monthSpending.get(rowIndex)));
+                } else {
+                    double tmp = monthSpending.get(rowIndex).getAmount() - actualSpend.get(monthSpending.get(rowIndex));
+                    if (tmp < 0) tmp = 0.0;
+                    return CommonUtils.formatCurrency(tmp);
+                }
+            } else return null;
         }
 
         /**
@@ -379,11 +420,10 @@ public class MonthSpendingCatalog {
          */
         @Override
         public String getColumnName(int column) {
-            if (column < colCount) {
-                return MonthSpending.getValueNameByIndex(column);
-            } else {
-                return null;
-            }
+            if (column < colCount) return MonthSpending.getValueNameByIndex(column);
+            else if (column == colCount) return "Потрачено";
+            else if (column == (colCount + 1)) return "Остаток";
+            else return null;
         }
 
         /**
@@ -397,7 +437,7 @@ public class MonthSpendingCatalog {
             if (columnIndex < colCount) {
                 return MonthSpending.getValueClassByIndex(columnIndex);
             } else {
-                return null;
+                return String.class;
             }
         }
 

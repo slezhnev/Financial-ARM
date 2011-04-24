@@ -170,8 +170,8 @@
 	</pageHeader>
 	<detail>
 		<band height="40" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="195" height="40"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="195" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -185,7 +185,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="195" y="0" width="50" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="195" y="0" width="50" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -199,7 +199,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="309" y="0" width="70" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="309" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -213,7 +213,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymentSum}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="379" y="0" width="46" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="379" y="0" width="46" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -226,8 +226,8 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymentType}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="425" y="0" width="203" height="40"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="425" y="0" width="203" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -241,7 +241,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{suppliers}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="698" y="0" width="70" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="698" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -255,7 +255,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="628" y="0" width="70" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="628" y="0" width="70" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -269,7 +269,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{suppliersSum}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="768" y="0" width="34" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="768" y="0" width="34" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -283,7 +283,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{managerPercent}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="245" y="0" width="64" height="40"/>
+				<reportElement stretchType="RelativeToBandHeight" x="245" y="0" width="64" height="40"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>

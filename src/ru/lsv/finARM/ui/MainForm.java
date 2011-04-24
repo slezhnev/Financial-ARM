@@ -48,6 +48,8 @@ public class MainForm implements ActionListener {
     //
     private JMenuItem shortSalaryMI = null;
     private JMenuItem fullSalaryMI = null;
+    //
+    boolean isDirector = false;
     // Константы пунктов меню
     private static final String managersMIText = "Менеджеры";
     private static final String spendingTemplatesMIText = "Шаблон месячных расходов";
@@ -162,7 +164,7 @@ public class MainForm implements ActionListener {
                 case 0: {
                     // Редактируем договор
                     FinancialOperationParam_Operation param = new FinancialOperationParam_Operation(frame);
-                    fo = param.doEdit(fo, mainPanel);
+                    fo = param.doEdit(fo, mainPanel, isDirector);
                     if (fo != null) {
                         saveToDB(fo, 1);
                     }
@@ -247,7 +249,6 @@ public class MainForm implements ActionListener {
     private JMenuBar buildMenu() {
         // Меню будем строить в зависимости от того, какая роль ща у нашего текущего пользователя
         Session sess = null;
-        boolean isDirector = false;
         try {
             sess = HibernateUtils.openSession();
             List<String> res = sess.createSQLQuery("SELECT role_name FROM information_schema.applicable_roles where grantee=current_user").list();
@@ -494,7 +495,7 @@ public class MainForm implements ActionListener {
         FinancialOperation fo = new FinancialOperation();
         fo.setKind(0);
         FinancialOperationParam_Operation params = new FinancialOperationParam_Operation(frame);
-        fo = params.doEdit(fo, mainPanel);
+        fo = params.doEdit(fo, mainPanel, isDirector);
         if (fo != null) {
             // Сохраняем
             saveToDB(fo, 0);
@@ -753,7 +754,10 @@ public class MainForm implements ActionListener {
                             return "-";
                         }
                     case 6:
-                        return CommonUtils.formatCurrency(op.getCurrentProfit());
+                        if (op.getKind() == 0) {
+                            return CommonUtils.formatCurrency(op.getCurrentProfit());
+                        } else
+                            return CommonUtils.formatCurrency(-op.getOperationSum());
                     default:
                         return "";
                 }
@@ -841,6 +845,7 @@ public class MainForm implements ActionListener {
                     switch (op.getKind()) {
                         case 0: {
                             if (op.getClosed()) setForeground(colors.getClosedColor());
+                            else if (op.getClosedForSalary()) setForeground(colors.getClosedForSalaryColor());
                             else setForeground(colors.getOpenedColor());
                             break;
                         }

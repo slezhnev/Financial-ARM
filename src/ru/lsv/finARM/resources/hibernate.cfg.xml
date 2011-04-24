@@ -20,5 +20,6 @@
         <mapping resource="ru/lsv/finARM/mappings/hbm/FinancialMonth.hbm.xml"/>
         <mapping resource="ru/lsv/finARM/mappings/hbm/Spending.hbm.xml"/>
         <mapping resource="ru/lsv/finARM/mappings/hbm/FinancialOperation.hbm.xml"/>
+        <mapping resource="ru/lsv/finARM/mappings/hbm/Incoming.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

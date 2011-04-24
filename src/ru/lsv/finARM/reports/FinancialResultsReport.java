@@ -9,9 +9,11 @@ import org.w3c.dom.Element;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.mappings.*;
+import ru.lsv.finARM.ui.FormattedEditDialog;
 import ru.lsv.finARM.ui.MainForm;
 import ru.lsv.finARM.ui.ReportViewer;
 
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -72,8 +74,10 @@ public class FinancialResultsReport {
         double cashTotal = 0;
         // Прибыль безналичная
         double nonCashTotal = 0;
-        // Прибыль по незакрытым
+        // Прибыль по незакрытым (прибыль > 0)
         double nonClosedTotal = 0;
+        // Убытки по незакрытым
+        double nonClosedLosses = 0;
         // Общая сумма авансов
         double prepaidTotal = 0;
         // Зарплата по менеджерам
@@ -86,10 +90,14 @@ public class FinancialResultsReport {
         double plannedTotal = 0;
         // Общая сумма совершенных плановых расходов
         double plannedMakedTotal = 0;
+        // Общая сумма совершенных плановых расходов (РЕАЛЬНЫХ!)
+        double plannedReallyMakedTotal = 0;
         // Внеплановые расходы
         double nonPlannedTotal = 0;
         // Общая сумма зарплаты "к выдаче"
         double payrollTotal = 0;
+        // "Коррекция" по незакрытым договорам
+        double correction = 0;
         // Поехали по операциям
         for (FinancialOperation op : operations) {
             switch (op.getKind()) {
@@ -102,9 +110,15 @@ public class FinancialResultsReport {
                         tmp = tmp - spend.getPaymentSum();
                         salary = salary - spend.getPaymentSalarySum();
                     }
-                    if (op.getClosed()) {
-                        ManagerPerMonth mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
-                                op.getCloseMonth(), op.getCloseYear());
+                    if (op.getClosed() || op.getClosedForSalary()) {
+                        ManagerPerMonth mng;
+                        // Отдельно обрабатываем закрытие и закрытие по зарплате
+                        if (op.getClosed())
+                            mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
+                                    op.getCloseMonth(), op.getCloseYear());
+                        else
+                            mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
+                                    op.getCloseForSalaryMonth(), op.getCloseForSalaryYear());
                         if (mng != null) {
                             //double managerCoeff = 0;
                             double managerCoeff = op.getManagerPercent();
@@ -132,7 +146,10 @@ public class FinancialResultsReport {
                             }
                         }
                     } else {
-                        nonClosedTotal = nonClosedTotal + tmp;
+                        if (tmp > 0)
+                            nonClosedTotal = nonClosedTotal + tmp;
+                        else
+                            nonClosedLosses = nonClosedLosses + tmp;
                     }
                     // Поехали считать
                     break;
@@ -152,11 +169,17 @@ public class FinancialResultsReport {
                         nonPlannedTotal = nonPlannedTotal + op.getOperationSum();
                     } else {
                         // Плановый
+                        double tmp;
                         if (planned.containsKey(op.getPlannedSpending())) {
-                            planned.put(op.getPlannedSpending(), planned.get(op.getPlannedSpending()) + op.getOperationSum());
+                            tmp = planned.get(op.getPlannedSpending()) + op.getOperationSum();
                         } else {
-                            planned.put(op.getPlannedSpending(), op.getOperationSum());
+                            tmp = op.getOperationSum();
                         }
+                        if (tmp > op.getPlannedSpending().getAmount())
+                            planned.put(op.getPlannedSpending(), op.getPlannedSpending().getAmount());
+                        else
+                            planned.put(op.getPlannedSpending(), tmp);
+                        plannedReallyMakedTotal = plannedReallyMakedTotal + op.getOperationSum();
                     }
                     break;
                 }
@@ -181,18 +204,26 @@ public class FinancialResultsReport {
             // А вот тут у нас - тока ОДИН месяц!
             beginYear = timeParams.getSelectedYear();
             endYear = beginYear;
-            beginMonth = timeParams.getSelectedYear();
+            beginMonth = timeParams.getSelectedMonth();
             endMonth = beginMonth;
         }
         // Получаем из ManagerPerMonth
-        List<ManagerPerMonth> mngrs = sess.createQuery("from ManagerPerMonth where ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
-                setInteger(0, beginYear).
-                setInteger(1, endYear).
-                setInteger(2, beginYear).
-                setInteger(3, beginMonth).
-                setInteger(4, endYear).
-                setInteger(5, endMonth).
-                list();
+        Query query;
+        if (beginYear == endYear) {
+            query = sess.createQuery("from ManagerPerMonth where (year=? AND month >=? AND month <=?)").
+                    setInteger(0, beginYear).
+                    setInteger(1, beginMonth).
+                    setInteger(2, endMonth);
+        } else {
+            query = sess.createQuery("from ManagerPerMonth where ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?))").
+                    setInteger(0, beginYear).
+                    setInteger(1, endYear).
+                    setInteger(2, beginYear).
+                    setInteger(3, beginMonth).
+                    setInteger(4, endYear).
+                    setInteger(5, endMonth);
+        }
+        List<ManagerPerMonth> mngrs = query.list();
         for (ManagerPerMonth manager : mngrs) {
             if (!managersPerMonth.contains(manager)) {
                 // Если в этом месяце мы еще ничего не учитывали, то учтем
@@ -207,30 +238,27 @@ public class FinancialResultsReport {
 
             }
         }
+        correction = FormattedEditDialog.doEnterValue("Ввод значения", nonClosedLosses, locationComp);
         //
-        // Иенеджеры
+        // Менеджеры
         for (Manager mng : managers.keySet()) {
             if ((mng.getCashPercent() != 100) && (mng.getNonCashPercent() != 100))
                 payrollTotal = payrollTotal + managers.get(mng);
         }
         // Плановые платежи
-        Query query;
-        if (timeParams.getBeginDate() == null) {
-            // Значит - за месяц
-            query = sess.createQuery("from MonthSpending where month=? AND year=? order by amount").
-                    setInteger(0, timeParams.getSelectedMonth()).
-                    setInteger(1, timeParams.getSelectedYear());
+        if (beginYear == endYear) {
+            query = sess.createQuery("from MonthSpending where (year=? AND month >=? AND month <=?) order by amount").
+                    setInteger(0, beginYear).
+                    setInteger(1, beginMonth).
+                    setInteger(2, endMonth);
         } else {
-            // А вот тут у нас диапазон дат. И это - ОЧЕНЬ плохо
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTimeInMillis(timeParams.getBeginDate().getTime());
-            Calendar cal2 = Calendar.getInstance();
-            cal1.setTimeInMillis(timeParams.getEndDate().getTime());
-            query = sess.createQuery("from MonthSpending where (month >= ? AND year >=?)AND(month <= ? AND year <=?) order by amount").
-                    setInteger(0, cal1.get(Calendar.MONTH)).
-                    setInteger(1, cal1.get(Calendar.YEAR)).
-                    setInteger(2, cal2.get(Calendar.MONTH)).
-                    setInteger(3, cal2.get(Calendar.YEAR));
+            query = sess.createQuery("from MonthSpending where ((year > ? AND year < ?)OR(year=? AND month >=?)OR(year=? AND month <=?)) order by amount").
+                    setInteger(0, beginYear).
+                    setInteger(1, endYear).
+                    setInteger(2, beginYear).
+                    setInteger(3, beginMonth).
+                    setInteger(4, endYear).
+                    setInteger(5, endMonth);
         }
         java.util.List<MonthSpending> dbPlanned = query.list();
         // Итого - запланировано
@@ -253,6 +281,9 @@ public class FinancialResultsReport {
         e1 = doc.createElement("nonClosedTotal");
         e1.setTextContent("" + nonClosedTotal);
         root.appendChild(e1);
+        e1 = doc.createElement("nonClosedLosses");
+        e1.setTextContent("" + nonClosedLosses);
+        root.appendChild(e1);
         e1 = doc.createElement("prepaidTotal");
         e1.setTextContent("" + prepaidTotal);
         root.appendChild(e1);
@@ -262,6 +293,9 @@ public class FinancialResultsReport {
         e1 = doc.createElement("plannedMakedTotal");
         e1.setTextContent("" + plannedMakedTotal);
         root.appendChild(e1);
+        e1 = doc.createElement("plannedReallyMakedTotal");
+        e1.setTextContent("" + plannedReallyMakedTotal);
+        root.appendChild(e1);
         e1 = doc.createElement("plannedTxt");
         e1.setTextContent("всего - " + CommonUtils.formatCurrency(plannedTotal) + "\n потрачено - " + CommonUtils.formatCurrency(plannedMakedTotal));
         root.appendChild(e1);
@@ -270,6 +304,9 @@ public class FinancialResultsReport {
         root.appendChild(e1);
         e1 = doc.createElement("payrollTotal");
         e1.setTextContent("" + payrollTotal);
+        root.appendChild(e1);
+        e1 = doc.createElement("correction");
+        e1.setTextContent("" + correction);
         root.appendChild(e1);
         //
         // Сохраняем

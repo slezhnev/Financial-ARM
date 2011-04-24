@@ -121,7 +121,7 @@ public class MonthSpending {
         if (columnIndex < getValuesCount()) {
             switch (columnIndex) {
                 case 0 : return name;
-                case 1 : return amount;
+                case 1 : return CommonUtils.formatCurrency(amount);
                 default: return null;
             }
         } else {
@@ -138,7 +138,7 @@ public class MonthSpending {
         if (columnIndex < getValuesCount()) {
             switch (columnIndex) {
                 case 0 : return String.class;
-                case 1 : return Double.class;
+                case 1 : return String.class;
                 default: return null;
             }
         } else {

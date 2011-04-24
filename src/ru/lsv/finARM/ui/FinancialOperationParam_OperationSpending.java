@@ -76,7 +76,8 @@ public class FinancialOperationParam_OperationSpending {
         sumEdit.addPropertyChangeListener("value", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                salarySumEdit.setValue(sumEdit.getValue());
+                if (salarySumEdit.isEnabled())
+                    salarySumEdit.setValue(sumEdit.getValue());
             }
         });
     }
@@ -136,10 +137,10 @@ public class FinancialOperationParam_OperationSpending {
      * @param spend             Расход
      * @param spendings         Список расходов в договоре. Надо для провеки введения дублей
      * @param sum               Общая сумма договора
-     * @param positionComponent Компонента для позиционирования  
+     * @param positionComponent Компонента для позиционирования
      * @return Скорректированный расход
      */
-    public Spending doEdit(Spending spend, Set<Spending> spendings, Double sum, Component positionComponent) {
+    public Spending doEdit(Spending spend, Set<Spending> spendings, Double sum, boolean isClosedForSalary, Component positionComponent) {
         // Сохраняем и удаляем нафиг
         this.spendings = spendings;
         totalSum = sum;
@@ -162,6 +163,7 @@ public class FinancialOperationParam_OperationSpending {
         if (spend.getPaymentSalarySum() != null) {
             salarySumEdit.setValue(spend.getPaymentSalarySum());
         }
+        if (isClosedForSalary) salarySumEdit.setEnabled(false);
         paymentTypeComboBox.setSelectedIndex(spend.getPaymentType());
         dateEdit.setDate(spend.getPaymentDate());
         commentEdit.setText(spend.getComment());
@@ -174,7 +176,6 @@ public class FinancialOperationParam_OperationSpending {
         } else {
             return null;
         }
-
     }
 
     /**

@@ -30,5 +30,13 @@
         <property name="salarySum"/>
         <property name="currentSalaryProfit"/>
         <property name="managerPercent"/>
+        <property name="closedForSalary"/>
+        <property name="closeForSalaryDate"/>
+        <property name="closeForSalaryYear"/>
+        <property name="closeForSalaryMonth"/>
+        <set name="incomings" table="fo_incomings" cascade="all-delete-orphan">
+            <key column="foId"/>
+            <many-to-many column="incomingId" unique="true" class="ru.lsv.finARM.mappings.Incoming"/>
+        </set>
     </class>
 </hibernate-mapping>

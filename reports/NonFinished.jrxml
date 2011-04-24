@@ -31,6 +31,9 @@
 	<field name="period" class="java.lang.String">
 		<fieldDescription><![CDATA[/operations/@period]]></fieldDescription>
 	</field>
+	<field name="rest" class="java.lang.Double">
+		<fieldDescription><![CDATA[@rest]]></fieldDescription>
+	</field>
 	<variable name="sumTotal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{sum}]]></variableExpression>
 	</variable>
@@ -38,7 +41,7 @@
 		<variableExpression><![CDATA[$F{spend}]]></variableExpression>
 	</variable>
 	<variable name="totalTotal" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{sum}-$F{spend}]]></variableExpression>
+		<variableExpression><![CDATA[$F{rest}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -220,7 +223,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="512" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -230,9 +233,9 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{txtSum}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{sum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="607" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -244,7 +247,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{spend}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="702" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -254,7 +257,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{sum}-$F{spend}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{rest}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -274,7 +277,7 @@
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="607" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -286,7 +289,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$V{spendTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="702" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>
@@ -298,7 +301,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$V{totalTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="0.00 руб">
+			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="512" y="0" width="95" height="41"/>
 				<box leftPadding="5">
 					<pen lineWidth="0.5"/>

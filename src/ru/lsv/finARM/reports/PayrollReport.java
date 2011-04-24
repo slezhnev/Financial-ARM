@@ -112,7 +112,7 @@ public class PayrollReport {
             for (FinancialOperation op : operations) {
                 switch (op.getKind()) {
                     case 0: { // Договор
-                        if (op.getClosed()) {
+                        if (op.getClosed() || op.getClosedForSalary()) {
                             // Что-то считаем только в том случае, если оно у нас тут закрыто
                             // Считаем общую прибыль по договору
                             op = (FinancialOperation) sess.get(FinancialOperation.class, op.getFoId());

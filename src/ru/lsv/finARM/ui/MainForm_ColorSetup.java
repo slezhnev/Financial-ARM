@@ -26,8 +26,10 @@ public class MainForm_ColorSetup {
     private JButton a4Button;
     private JLabel label3;
     private JLabel label4;
+    private JButton a5Button;
+    private JLabel label5;
 
-    private Color[] colors = {Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK};
+    private Color[] colors = {Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK};
 
     private JDialog dialog;
 
@@ -93,6 +95,13 @@ public class MainForm_ColorSetup {
                 label4.setForeground(colors[3]);
             }
         });
+        a5Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                colors[4] = JColorChooser.showDialog(mainPanel, "Цвет выделения закрытых по зарплате договоров", colors[4]);
+                label5.setForeground(colors[4]);
+            }
+        });
         // Загружаем...
         Properties props = new Properties();
         try {
@@ -115,7 +124,7 @@ public class MainForm_ColorSetup {
         }
         try {
             File file = new File(System.getProperty("user.home") + "/.finARM/");
-            if ((!file.exists())&&(!file.mkdir())) {
+            if ((!file.exists()) && (!file.mkdir())) {
                 throw new IOException("");
             }
             colorProps.storeToXML(new FileOutputStream(System.getProperty("user.home") + "/.finARM/colors.properties"), "Цвета выделения");
@@ -201,5 +210,14 @@ public class MainForm_ColorSetup {
      */
     public Color getSpendingColor() {
         return colors[3];
+    }
+
+    /**
+     * Цвет выделения закрытых по зарплате договоров
+     *
+     * @return Цвет
+     */
+    public Color getClosedForSalaryColor() {
+        return colors[4];
     }
 }

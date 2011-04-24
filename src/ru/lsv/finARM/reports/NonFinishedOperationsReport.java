@@ -83,6 +83,9 @@ public class NonFinishedOperationsReport {
                     total = total + spend.getPaymentSum();
                 }
                 e1.setAttribute("spend", ""+total);
+                double rest = op.getOperationSum() - total;
+                if (rest < 0) rest = 0;
+                e1.setAttribute("rest", ""+rest);
                 e1.setAttribute("manager", ""+op.getManager());
                 root.appendChild(e1);
             }

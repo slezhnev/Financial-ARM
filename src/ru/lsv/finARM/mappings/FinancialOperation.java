@@ -20,6 +20,7 @@ public class FinancialOperation {
         paymentType = 0;
         kind = 0;
         spendings = new HashSet<Spending>();
+        incomings = new HashSet<Incoming>();
     }
 
     public Boolean getClosed() {
@@ -170,14 +171,18 @@ public class FinancialOperation {
     private Double operationSum;
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Общие параметры для договора и аванса
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Менеджер
      */
     private Manager manager;
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Блок для договора
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Заказчик
      */
@@ -226,8 +231,14 @@ public class FinancialOperation {
      * Текущий процент менеджера
      */
     private Double managerPercent;
+    /**
+     * Поступления
+     */
+    private Set<Incoming> incomings;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Блок для расхода
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Ссылка на планируемую трату
      */
@@ -236,6 +247,22 @@ public class FinancialOperation {
      * Наименование для внеплановой траты
      */
     private String nonPlannedSpending;
+    /**
+     * Отметка о закрытии операции по зарплате
+     */
+    private Boolean closedForSalary;
+    /**
+     * Дата закрытия операции  по зарплате
+     */
+    private Date closeForSalaryDate;
+    /**
+     * Год закрытия операции  по зарплате - для удобства фильтрования
+     */
+    private Integer closeForSalaryYear;
+    /**
+     * Месяц закрытия операции  по зарплате - для удобства фильтрования
+     */
+    private Integer closeForSalaryMonth;
 
     /**
      * Returns a string representation of the object. I
@@ -287,5 +314,45 @@ public class FinancialOperation {
 
     public void setManagerPercent(Double managerPercent) {
         this.managerPercent = managerPercent;
+    }
+
+    public Boolean getClosedForSalary() {
+        return closedForSalary == null ? false : closedForSalary;
+    }
+
+    public void setClosedForSalary(Boolean closedForSalary) {
+        this.closedForSalary = closedForSalary;
+    }
+
+    public Date getCloseForSalaryDate() {
+        return closeForSalaryDate;
+    }
+
+    public void setCloseForSalaryDate(Date closeForSalaryDate) {
+        this.closeForSalaryDate = closeForSalaryDate;
+    }
+
+    public Integer getCloseForSalaryYear() {
+        return closeForSalaryYear;
+    }
+
+    public void setCloseForSalaryYear(Integer closeForSalaryYear) {
+        this.closeForSalaryYear = closeForSalaryYear;
+    }
+
+    public Integer getCloseForSalaryMonth() {
+        return closeForSalaryMonth;
+    }
+
+    public void setCloseForSalaryMonth(Integer closeForSalaryMonth) {
+        this.closeForSalaryMonth = closeForSalaryMonth;
+    }
+
+    public Set<Incoming> getIncomings() {
+        return incomings;
+    }
+
+    public void setIncomings(Set<Incoming> incomings) {
+        this.incomings = incomings;
     }
 }

@@ -103,7 +103,7 @@ public class SpendingTemplate {
                 case 0:
                     return spendName;
                 case 1:
-                    return spendAmount;
+                    return CommonUtils.formatCurrency(spendAmount);
                 default:
                     return null;
             }
@@ -124,7 +124,7 @@ public class SpendingTemplate {
                 case 0:
                     return String.class;
                 case 1:
-                    return Double.class;
+                    return String.class;
                 default:
                     return null;
             }

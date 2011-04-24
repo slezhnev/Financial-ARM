@@ -99,7 +99,9 @@ public class PlannedMonthSpendingReport {
                     } else {
                         planned.put(op.getPlannedSpending(), op.getPlannedSpending().getAmount() - op.getOperationSum());
                     }
-                    e2.setAttribute("remainingAmount", "" + planned.get(op.getPlannedSpending()));
+                    double tmp = planned.get(op.getPlannedSpending());
+                    if (tmp < 0) tmp = 0;
+                    e2.setAttribute("remainingAmount", "" + tmp);
                 }
                 e1.appendChild(e2);
             }
@@ -136,7 +138,9 @@ public class PlannedMonthSpendingReport {
             e2.setAttribute("plannedFor", CommonUtils.getMonthNameByIndex(spend.getMonth() - 1) + " " + spend.getYear());
             e2.setAttribute("amount", "" + spend.getAmount());
             if (planned.containsKey(spend)) {
-                e2.setAttribute("remainingAmount", "" + planned.get(spend));
+                double tmp = planned.get(spend);
+                if (tmp < 0) tmp = 0;
+                e2.setAttribute("remainingAmount", "" + tmp);
             } else {
                 e2.setAttribute("remainingAmount", "" + spend.getAmount());
             }

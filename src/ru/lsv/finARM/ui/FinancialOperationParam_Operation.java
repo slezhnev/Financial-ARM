@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.logic.FinancialMonths;
-import ru.lsv.finARM.mappings.FinancialMonth;
-import ru.lsv.finARM.mappings.FinancialOperation;
-import ru.lsv.finARM.mappings.Manager;
-import ru.lsv.finARM.mappings.Spending;
+import ru.lsv.finARM.mappings.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -45,6 +42,13 @@ public class FinancialOperationParam_Operation {
     private JLabel currentSalaryProfitLabel;
     private JFormattedTextField managerPercentEdit;
     private JButton recalcProfitBtn;
+    private JButton closeForSalaryBtn;
+    private JLabel currentSalaryProfitLabel_Text;
+    private JTable incomingsTable;
+    private JButton recalcSumBtn;
+    private JButton addIncBtn;
+    private JButton editIncBtn;
+    private JButton delIncBtn;
 
     private JDialog dialog;
 
@@ -52,8 +56,11 @@ public class FinancialOperationParam_Operation {
 
     private boolean isClosed = false;
     private Date closeDate = null;
+    private boolean isClosedForSalary = false;
+    private Date closeForSalaryDate = null;
     private Double currentProfit;
     private Double currentSalaryProfit;
+    private boolean isDirector = false;
 
     public FinancialOperationParam_Operation(Frame owner) {
         dialog = new JDialog(owner, "Параметры договора");
@@ -121,7 +128,8 @@ public class FinancialOperationParam_Operation {
         operationSumEdit.addPropertyChangeListener("value", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                salarySum.setValue(operationSumEdit.getValue());
+                if (salarySum.isEnabled())
+                    salarySum.setValue(operationSumEdit.getValue());
             }
         });
         managerComboBox.addActionListener(new ActionListener() {
@@ -147,6 +155,107 @@ public class FinancialOperationParam_Operation {
                 rebuildCurrentProfit();
             }
         });
+        closeForSalaryBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doCloseForSalaryEnabling(!isClosedForSalary);
+            }
+        });
+        //
+        incomingsTable.setModel(new IncomingTableModel());
+        recalcSumBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                recalcOperationSum();
+            }
+        });
+        addIncBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doAddIncoming();
+            }
+        });
+        editIncBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doEditIncoming();
+            }
+        });
+        delIncBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doDelIncoming();
+            }
+        });
+    }
+
+    /**
+     * Удаление поступления
+     */
+    private void doDelIncoming() {
+        if (incomingsTable.getSelectedRow() > -1) {
+            Incoming inc = (Incoming) ((IncomingTableModel) incomingsTable.getModel()).getIncomings().toArray()[incomingsTable.getSelectedRow()];
+            if (JOptionPane.showConfirmDialog(mainPanel, "Вы уверены, что хотите удалить поступление?", "Удаление поступления", JOptionPane.YES_NO_OPTION) ==
+                    JOptionPane.YES_OPTION) {
+                ((IncomingTableModel) incomingsTable.getModel()).getIncomings().remove(inc);
+                ((IncomingTableModel) incomingsTable.getModel()).fireTableDataChanged();
+                recalcOperationSum();
+            }
+        }
+    }
+
+    /**
+     * Изменение поступления
+     */
+    private void doEditIncoming() {
+        if (incomingsTable.getSelectedRow() > -1) {
+            Incoming inc = (Incoming) ((IncomingTableModel) incomingsTable.getModel()).getIncomings().toArray()[incomingsTable.getSelectedRow()];
+            FinancialOperationParam_OperationIncoming fooi = new FinancialOperationParam_OperationIncoming(dialog);
+            inc = fooi.doEdit(inc, mainPanel);
+            if (inc != null) {
+                ArrayList<Incoming> incs = new ArrayList<Incoming>(((IncomingTableModel) incomingsTable.getModel()).getIncomings());
+                incs.set(incomingsTable.getSelectedRow(), inc);
+                ((IncomingTableModel) incomingsTable.getModel()).setIncomings(new HashSet<Incoming>(incs));
+                ((IncomingTableModel) incomingsTable.getModel()).fireTableRowsUpdated(incomingsTable.getSelectedRow(), incomingsTable.getSelectedRow());
+                recalcOperationSum();
+            }
+        }
+    }
+
+    /**
+     * Добавление поступления
+     */
+    private void doAddIncoming() {
+        Incoming inc = new Incoming();
+        FinancialOperationParam_OperationIncoming fooi = new FinancialOperationParam_OperationIncoming(dialog);
+        inc = fooi.doEdit(inc, mainPanel);
+        if (inc != null) {
+            ((IncomingTableModel) incomingsTable.getModel()).getIncomings().add(inc);
+            ((IncomingTableModel) incomingsTable.getModel()).fireTableDataChanged();
+            recalcOperationSum();
+        }
+    }
+
+    /**
+     * Пересчет суммы договора по поступлениям
+     */
+    private void recalcOperationSum() {
+        if (!isClosed) {
+            // Что-то делаем только в том случае, если договор не закрыт
+            if (((IncomingTableModel) incomingsTable.getModel()).getIncomings().size() == 0) {
+                operationSumEdit.setEnabled(true);
+            } else {
+                operationSumEdit.setEnabled(false);
+                Double sum = 0.0;
+                for (Incoming inc : ((IncomingTableModel) incomingsTable.getModel()).getIncomings()) {
+                    sum = sum + inc.getIncomingSum();
+                }
+                operationSumEdit.setValue(sum);
+                if (!isClosedForSalary)
+                    salarySum.setValue(sum);
+            }
+            rebuildCurrentProfit();
+        }
     }
 
 
@@ -188,7 +297,7 @@ public class FinancialOperationParam_Operation {
             // Да и проверять нам надо только на полное совпадение с остальными элементами
             HashSet<Spending> tmpSpendings = new HashSet<Spending>(((SpendingTableModel) spendingTable.getModel()).getSpendings());
             tmpSpendings.remove(spend);
-            spend = param.doEdit(spend, tmpSpendings, (Double) operationSumEdit.getValue(), mainPanel);
+            spend = param.doEdit(spend, tmpSpendings, (Double) operationSumEdit.getValue(), isClosedForSalary, mainPanel);
             if (spend != null) {
                 ArrayList<Spending> spendings = new ArrayList<Spending>(((SpendingTableModel) spendingTable.getModel()).getSpendings());
                 spendings.set(spendingTable.getSelectedRow(), spend);
@@ -206,7 +315,7 @@ public class FinancialOperationParam_Operation {
         Spending spend = new Spending();
         FinancialOperationParam_OperationSpending param = new FinancialOperationParam_OperationSpending(dialog);
         spend = param.doEdit(spend, ((SpendingTableModel) spendingTable.getModel()).getSpendings(), (Double) operationSumEdit.getValue(),
-                mainPanel);
+                isClosedForSalary, mainPanel);
         if (spend != null) {
             ((SpendingTableModel) spendingTable.getModel()).getSpendings().add(spend);
             ((SpendingTableModel) spendingTable.getModel()).fireTableDataChanged();
@@ -229,7 +338,7 @@ public class FinancialOperationParam_Operation {
                 }
                 // Значит - зыкрываем
                 Calendar cal = Calendar.getInstance();
-                FinancialMonth fm = FinancialMonths.getInstance().getActiveMonth(); 
+                FinancialMonth fm = FinancialMonths.getInstance().getActiveMonth();
                 if (cal.get(Calendar.MONTH) != fm.getMonth()) {
                     cal.set(Calendar.YEAR, fm.getYear());
                     cal.set(Calendar.MONTH, fm.getMonth());
@@ -244,6 +353,7 @@ public class FinancialOperationParam_Operation {
             if (img != null) {
                 closeBtn.setIcon(new ImageIcon(img));
             }
+            if (!isDirector) closeBtn.setEnabled(false);
         } else {
             if (isClosed) {
                 if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор?",
@@ -272,7 +382,82 @@ public class FinancialOperationParam_Operation {
         operationSumEdit.setEnabled(!closed);
         salarySum.setEnabled(!closed);
         managerPercentEdit.setEnabled(!closed);
+        recalcProfitBtn.setEnabled(!closed);
+        //
+        incomingsTable.setEnabled(!closed);
+        addIncBtn.setEnabled(!closed);
+        editIncBtn.setEnabled(!closed);
+        delIncBtn.setEnabled(!closed);
+        recalcSumBtn.setEnabled(!closed);
+        //
+        if (closeForSalaryBtn.isEnabled()) closeForSalaryBtn.setEnabled(!closed);
     }
+
+
+    /**
+     * Обрабатывает зыкрытие / открытие для зарплаты
+     *
+     * @param closed Чего конкретно делать-то надо
+     */
+    private void doCloseForSalaryEnabling(Boolean closed) {
+        if (!isClosed) {
+            // Что- тут мы будем делать только в случае, если у нас договор не закрыт
+            closeForSalaryBtn.setEnabled(isDirector);
+            if (closed) {
+                if (!isClosedForSalary) {
+                    if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите закрыть договор по зарплате?",
+                            "После закрытия будут недоступны к редактированию зарплатная сумма, менеджер, зарплатный процент, вид оплаты,",
+                            "не будет пересчитываться текущая зарплатная прибыль !"},
+                            "Закрытие договора по зарплате", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    // Значит - зыкрываем
+                    Calendar cal = Calendar.getInstance();
+                    FinancialMonth fm = FinancialMonths.getInstance().getActiveMonth();
+                    if (cal.get(Calendar.MONTH) != fm.getMonth()) {
+                        cal.set(Calendar.YEAR, fm.getYear());
+                        cal.set(Calendar.MONTH, fm.getMonth());
+                        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+                    }
+                    closeForSalaryDate = new Date(cal.getTimeInMillis());
+                    isClosedForSalary = closed;
+                }
+                closeForSalaryBtn.setText("Открыть договор по зарплате. Дата закрытия - " + new SimpleDateFormat("dd.MM.yyyy").format(closeForSalaryDate));
+                closeForSalaryBtn.setToolTipText("Открыть закрытый по зарплате договор");
+                java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/refresh_square16_h.png");
+                if (img != null) {
+                    closeForSalaryBtn.setIcon(new ImageIcon(img));
+                }
+            } else {
+                if (isClosedForSalary) {
+                    if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор по зарплате?",
+                            "Это может повлиять на уже сформированные и напечатанные отчеты!", " ",
+                            "ВНИМАНИЕ - если в закрытый по зарплате договор вносились расходы - не забудьте скорректировать в них зарплатные суммы!", " "},
+                            "Открытие договора по зарплате", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    isClosedForSalary = closed;
+                }
+                closeForSalaryBtn.setText("Закрыть договор по зарплате");
+                closeForSalaryBtn.setToolTipText("Закрыть договор по зарплате");
+                java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/post_square16_h.png");
+                if (img != null) {
+                    closeForSalaryBtn.setIcon(new ImageIcon(img));
+                }
+            }
+            paymentTypeComboBox.setEnabled(!closed);
+            managerComboBox.setEnabled(!closed);
+            salarySum.setEnabled(!closed);
+            managerPercentEdit.setEnabled(!closed);
+            if (closed) {
+                currentSalaryProfitLabel.setForeground(Color.ORANGE.darker());
+            } else {
+                currentSalaryProfitLabel.setForeground(Color.BLACK);
+            }
+            currentSalaryProfitLabel_Text.setForeground(currentSalaryProfitLabel.getForeground());
+        }
+    }
+
 
     /**
      * Обработка нормального закрытия
@@ -319,7 +504,8 @@ public class FinancialOperationParam_Operation {
      * @param positionComponent Относительно чего позиционироваться
      * @return Скорректированный расход
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent) {
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean isDirector) {
+        this.isDirector = isDirector;
         // Вначале - загрузим fo полностью...
         // До кучи - проинициализируем все остальное, связанное с сессией
         Session sess = null;
@@ -335,6 +521,9 @@ public class FinancialOperationParam_Operation {
             //
             orderNumEdit.setText(fo.getOrderNum());
             operationSumEdit.setValue(fo.getOperationSum());
+            //
+            recalcOperationSum();
+            //
             if (fo.getSalarySum() != null)
                 salarySum.setValue(fo.getSalarySum());
             else
@@ -350,12 +539,20 @@ public class FinancialOperationParam_Operation {
                 managerPercentEdit.setValue(fo.getManagerPercent());
             }
             //
+            currentSalaryProfit = fo.getCurrentSalaryProfit();
+            //
             isClosed = fo.getClosed();
             closeDate = fo.getCloseDate();
             doCloseEnabling(fo.getClosed());
+            isClosedForSalary = fo.getClosedForSalary();
+            closeForSalaryDate = fo.getCloseForSalaryDate();
+            doCloseForSalaryEnabling(fo.getClosedForSalary());
             //
             HashSet<Spending> tempSp = new HashSet<Spending>(fo.getSpendings());
             ((SpendingTableModel) spendingTable.getModel()).setSpendings(tempSp);
+            //
+            HashSet<Incoming> incs = new HashSet<Incoming>(fo.getIncomings());
+            ((IncomingTableModel) incomingsTable.getModel()).setIncomings(incs);
             //
             sess.close();
             sess = null;
@@ -367,6 +564,7 @@ public class FinancialOperationParam_Operation {
         //
         dialog.pack();
         //
+        recalcOperationSum();
         rebuildCurrentProfit();
         //
         dialog.setLocationRelativeTo(positionComponent);
@@ -391,7 +589,20 @@ public class FinancialOperationParam_Operation {
                 fo.setCloseMonth(null);
                 fo.setCloseYear(null);
             }
+            fo.setClosedForSalary(isClosedForSalary);
+            if (fo.getClosedForSalary()) {
+                fo.setCloseForSalaryDate(closeForSalaryDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(fo.getCloseForSalaryDate().getTime());
+                fo.setCloseForSalaryMonth(cal.get(Calendar.MONTH));
+                fo.setCloseForSalaryYear(cal.get(Calendar.YEAR));
+            } else {
+                fo.setCloseForSalaryDate(null);
+                fo.setCloseForSalaryMonth(null);
+                fo.setCloseForSalaryYear(null);
+            }
             fo.setSpendings(((SpendingTableModel) spendingTable.getModel()).getSpendings());
+            fo.setIncomings(((IncomingTableModel) incomingsTable.getModel()).getIncomings());
             fo.setCurrentProfit(currentProfit);
             fo.setSalarySum((Double) salarySum.getValue());
             fo.setCurrentSalaryProfit(currentSalaryProfit);
@@ -511,6 +722,114 @@ public class FinancialOperationParam_Operation {
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             return (new Spending()).getFieldClassById(columnIndex);
+        }
+    }
+
+    private class IncomingTableModel extends AbstractTableModel {
+
+        public Set<Incoming> getIncomings() {
+            return incomings;
+        }
+
+        public void setIncomings(Set<Incoming> incomings) {
+            this.incomings = incomings;
+            fireTableDataChanged();
+        }
+
+        Set<Incoming> incomings = new HashSet<Incoming>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+        /**
+         * Returns the number of rows in the model.
+         *
+         * @return the number of rows in the model
+         * @see #getColumnCount
+         */
+        @Override
+        public int getRowCount() {
+            return incomings.size();
+        }
+
+        /**
+         * Returns the number of columns in the model.
+         *
+         * @return the number of columns in the model
+         * @see #getRowCount
+         */
+        @Override
+        public int getColumnCount() {
+            return 3;
+        }
+
+        /**
+         * Returns the value for the cell at <code>columnIndex</code> and
+         * <code>rowIndex</code>.
+         *
+         * @param rowIndex    the row whose value is to be queried
+         * @param columnIndex the column whose value is to be queried
+         * @return the value Object at the specified cell
+         */
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if ((incomings.size() > rowIndex) && (columnIndex < 3)) {
+                Incoming inc = (Incoming) incomings.toArray()[rowIndex];
+                switch (columnIndex) {
+                    case 0:
+                        return sdf.format(inc.getIncomingDate());
+                    case 1:
+                        return CommonUtils.formatCurrency(inc.getIncomingSum());
+                    case 2:
+                        return inc.getIncomingComment();
+                    default:
+                        return null;
+                }
+            } else
+                return null;
+        }
+
+        /**
+         * Returns a default name for the column using spreadsheet conventions:
+         * A, B, C, ... Z, AA, AB, etc.  If <code>column</code> cannot be found,
+         * returns an empty string.
+         *
+         * @param column the column being queried
+         * @return a string containing the default name of <code>column</code>
+         */
+        @Override
+        public String getColumnName(int column) {
+            switch (column) {
+                case 0:
+                    return "Дата";
+                case 1:
+                    return "Сумма";
+                case 2:
+                    return "Комментарий";
+                default:
+                    return null;
+            }
+        }
+
+        /**
+         * Returns <code>Object.class</code> regardless of <code>columnIndex</code>.
+         *
+         * @param columnIndex the column being queried
+         * @return the Object.class
+         */
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return String.class;
+        }
+
+        /**
+         * Returns false.  This is the default implementation for all cells.
+         *
+         * @param rowIndex    the row being queried
+         * @param columnIndex the column being queried
+         * @return false
+         */
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
         }
     }
 
