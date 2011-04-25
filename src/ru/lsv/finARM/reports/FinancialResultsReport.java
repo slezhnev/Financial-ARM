@@ -122,12 +122,19 @@ public class FinancialResultsReport {
                         if (mng != null) {
                             //double managerCoeff = 0;
                             double managerCoeff = op.getManagerPercent();
-                            if (op.getPaymentType() == 0) {
-                                cashTotal = cashTotal + tmp;
-                                //managerCoeff = mng.getCashPercent();
+                            if (op.getClosed()) {
+                                if (op.getPaymentType() == 0) {
+                                    cashTotal = cashTotal + tmp;
+                                    //managerCoeff = mng.getCashPercent();
+                                } else {
+                                    nonCashTotal = nonCashTotal + tmp;
+                                    //managerCoeff = mng.getNonCashPercent();
+                                }
                             } else {
-                                nonCashTotal = nonCashTotal + tmp;
-                                //managerCoeff = mng.getNonCashPercent();
+                                if (tmp > 0)
+                                    nonClosedTotal = nonClosedTotal + tmp;
+                                else
+                                    nonClosedLosses = nonClosedLosses + tmp;
                             }
                             double anotherPayments = 0;
                             if (!managersPerMonth.contains(mng)) {
