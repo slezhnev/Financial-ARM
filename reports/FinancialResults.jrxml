@@ -354,8 +354,7 @@ $F{cashTotal}+$F{nonCashTotal}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{nonClosedTotal}+$F{nonClosedLosses}+
 $F{cashTotal}+$F{nonCashTotal}-
-$F{plannedReallyMakedTotal}-$F{nonPlannedTotal}-
-$F{prepaidTotal}]]></textFieldExpression>
+$F{plannedReallyMakedTotal}-$F{nonPlannedTotal}-$F{prepaidTotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00 ¤">
 				<reportElement style="fontStyle" x="346" y="352" width="209" height="32"/>

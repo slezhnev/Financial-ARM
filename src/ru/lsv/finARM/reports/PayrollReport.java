@@ -156,7 +156,7 @@ public class PayrollReport {
                     PayrollElement pe = managers.get(mng);
                     e.setAttribute("id", "" + id);
                     e.setAttribute("FIO", mng.getFIO());
-                    e.setAttribute("prepayment", "" + pe.getPrepayment());
+                    e.setAttribute("prepayment", CommonUtils.formatDouble(pe.getPrepayment()));
                     // А вот профит - надо бы еще посчитать как бе...
                     // Причем по договорам, причем с учетом ManagerPerMonth
                     double cashProfit = 0;
@@ -188,11 +188,11 @@ public class PayrollReport {
                         if (contract.paymentKind == 0) {
                             e1.setAttribute("paymentType", "нал");
                             //cashProfit = cashProfit + manager.getCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
-                            cashProfit = cashProfit + contract.managerPercent / 100 * (contract.paymentSum - contract.suppliersSum);
+                            cashProfit = cashProfit + contract.managerPercent / 100.0 * (contract.paymentSum - contract.suppliersSum);
                         } else {
                             e1.setAttribute("paymentType", "безнал");
                             //nonCashProfit = nonCashProfit + manager.getNonCashPercent() / 100 * (contract.paymentSum - contract.suppliersSum);
-                            nonCashProfit = nonCashProfit + contract.managerPercent / 100 * (contract.paymentSum - contract.suppliersSum);
+                            nonCashProfit = nonCashProfit + contract.managerPercent / 100.0 * (contract.paymentSum - contract.suppliersSum);
                         }
                         e.appendChild(e1);
                     }
@@ -249,14 +249,14 @@ public class PayrollReport {
                         }
                     }
                     //
-                    e.setAttribute("profit", "" + (cashProfit + nonCashProfit + salary + subsidy - retention));
-                    e.setAttribute("paycheck", "" + (cashProfit + nonCashProfit + salary + subsidy - retention - pe.getPrepayment()));
+                    e.setAttribute("profit", CommonUtils.formatDouble(cashProfit + nonCashProfit + salary + subsidy - retention));
+                    e.setAttribute("paycheck", CommonUtils.formatDouble(cashProfit + nonCashProfit + salary + subsidy - retention - pe.getPrepayment()));
                     if (fullReport) {
-                        e.setAttribute("subsidy", "" + subsidy);
-                        e.setAttribute("retention", "" + retention);
-                        e.setAttribute("salary", "" + salary);
-                        e.setAttribute("cashProfit", "" + cashProfit);
-                        e.setAttribute("nonCashProfit", "" + nonCashProfit);
+                        e.setAttribute("subsidy", CommonUtils.formatDouble(subsidy));
+                        e.setAttribute("retention", CommonUtils.formatDouble(retention));
+                        e.setAttribute("salary", CommonUtils.formatDouble(salary));
+                        e.setAttribute("cashProfit", CommonUtils.formatDouble(cashProfit));
+                        e.setAttribute("nonCashProfit", CommonUtils.formatDouble(nonCashProfit));
                     }
                     root.appendChild(e);
                     id++;

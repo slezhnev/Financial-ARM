@@ -72,7 +72,7 @@ public class NonFinishedOperationsReport {
                 e1.setAttribute("customer", op.getCustomer());
                 e1.setAttribute("order", op.getOrderNum());
                 e1.setAttribute("date", sdf.format(op.getOperationDate()));
-                e1.setAttribute("sum", ""+op.getOperationSum());
+                e1.setAttribute("sum", CommonUtils.formatDouble(op.getOperationSum()));
                 if (op.getPaymentType() == 0) {
                     e1.setAttribute("txtSum", CommonUtils.formatCurrency(op.getOperationSum())+"(нал.)");
                 } else {
@@ -82,10 +82,10 @@ public class NonFinishedOperationsReport {
                 for (Spending spend : op.getSpendings()) {
                     total = total + spend.getPaymentSum();
                 }
-                e1.setAttribute("spend", ""+total);
+                e1.setAttribute("spend", CommonUtils.formatDouble(total));
                 double rest = op.getOperationSum() - total;
                 if (rest < 0) rest = 0;
-                e1.setAttribute("rest", ""+rest);
+                e1.setAttribute("rest", CommonUtils.formatDouble(rest));
                 e1.setAttribute("manager", ""+op.getManager());
                 root.appendChild(e1);
             }

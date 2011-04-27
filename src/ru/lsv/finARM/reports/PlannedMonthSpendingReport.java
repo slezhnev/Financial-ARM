@@ -78,7 +78,7 @@ public class PlannedMonthSpendingReport {
             if (op.getKind() == 2) {
                 Element e2 = doc.createElement("spend");
                 // Нашли расход - поехали над ним медитировать
-                e2.setAttribute("amount", "" + op.getOperationSum());
+                e2.setAttribute("amount", CommonUtils.formatDouble(op.getOperationSum()));
                 e2.setAttribute("date", sdf.format(op.getOperationDate()));
                 if (op.getPlannedSpending() == null) {
                     // Внеплановый расход
@@ -93,7 +93,7 @@ public class PlannedMonthSpendingReport {
                 } else {
                     // Плановый расход
                     e2.setAttribute("name", op.getPlannedSpending().getName());
-                    e2.setAttribute("planned", "" + op.getPlannedSpending().getAmount());
+                    e2.setAttribute("planned", CommonUtils.formatDouble(op.getPlannedSpending().getAmount()));
                     if (planned.containsKey(op.getPlannedSpending())) {
                         planned.put(op.getPlannedSpending(), planned.get(op.getPlannedSpending()) - op.getOperationSum());
                     } else {
@@ -101,7 +101,7 @@ public class PlannedMonthSpendingReport {
                     }
                     double tmp = planned.get(op.getPlannedSpending());
                     if (tmp < 0) tmp = 0;
-                    e2.setAttribute("remainingAmount", "" + tmp);
+                    e2.setAttribute("remainingAmount", CommonUtils.formatDouble(tmp));
                 }
                 e1.appendChild(e2);
             }
@@ -136,13 +136,13 @@ public class PlannedMonthSpendingReport {
             Element e2 = doc.createElement("spend");
             e2.setAttribute("name", spend.getName());
             e2.setAttribute("plannedFor", CommonUtils.getMonthNameByIndex(spend.getMonth() - 1) + " " + spend.getYear());
-            e2.setAttribute("amount", "" + spend.getAmount());
+            e2.setAttribute("amount", CommonUtils.formatDouble(spend.getAmount()));
             if (planned.containsKey(spend)) {
                 double tmp = planned.get(spend);
                 if (tmp < 0) tmp = 0;
-                e2.setAttribute("remainingAmount", "" + tmp);
+                e2.setAttribute("remainingAmount", CommonUtils.formatDouble(tmp));
             } else {
-                e2.setAttribute("remainingAmount", "" + spend.getAmount());
+                e2.setAttribute("remainingAmount", CommonUtils.formatDouble(spend.getAmount()));
             }
             e1.appendChild(e2);
         }
@@ -152,7 +152,7 @@ public class PlannedMonthSpendingReport {
         for (String name : new TreeSet<String>(nonPlanned.keySet())) {
             Element e2 = doc.createElement("spend");
             e2.setAttribute("name", name);
-            e2.setAttribute("totalAmount", "" + nonPlanned.get(name));
+            e2.setAttribute("totalAmount", CommonUtils.formatDouble(nonPlanned.get(name)));
             e1.appendChild(e2);
         }
         //

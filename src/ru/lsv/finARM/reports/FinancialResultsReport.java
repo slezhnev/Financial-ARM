@@ -146,10 +146,10 @@ public class FinancialResultsReport {
                             // Обрабатываем выдачу бабла менеджерам
                             if (managers.containsKey(op.getManager())) {
                                 //managers.put(op.getManager(), managers.get(op.getManager()) + tmp * managerCoeff / 100 + anotherPayments);
-                                managers.put(op.getManager(), managers.get(op.getManager()) + salary * managerCoeff / 100 + anotherPayments);
+                                managers.put(op.getManager(), managers.get(op.getManager()) + salary * managerCoeff / 100.0 + anotherPayments);
                             } else {
                                 //managers.put(op.getManager(), tmp * managerCoeff / 100 + anotherPayments);
-                                managers.put(op.getManager(), salary * managerCoeff / 100 + anotherPayments);
+                                managers.put(op.getManager(), salary * managerCoeff / 100.0 + anotherPayments);
                             }
                         }
                     } else {
@@ -280,40 +280,40 @@ public class FinancialResultsReport {
         sess.close();
         // Засовываем в XML
         Element e1 = doc.createElement("cashTotal");
-        e1.setTextContent("" + cashTotal);
+        e1.setTextContent(CommonUtils.formatDouble(cashTotal));
         root.appendChild(e1);
         e1 = doc.createElement("nonCashTotal");
-        e1.setTextContent("" + nonCashTotal);
+        e1.setTextContent(CommonUtils.formatDouble(nonCashTotal));
         root.appendChild(e1);
         e1 = doc.createElement("nonClosedTotal");
-        e1.setTextContent("" + nonClosedTotal);
+        e1.setTextContent(CommonUtils.formatDouble(nonClosedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("nonClosedLosses");
-        e1.setTextContent("" + nonClosedLosses);
+        e1.setTextContent(CommonUtils.formatDouble(nonClosedLosses));
         root.appendChild(e1);
         e1 = doc.createElement("prepaidTotal");
-        e1.setTextContent("" + prepaidTotal);
+        e1.setTextContent(CommonUtils.formatDouble(prepaidTotal));
         root.appendChild(e1);
         e1 = doc.createElement("plannedTotal");
-        e1.setTextContent("" + plannedTotal);
+        e1.setTextContent(CommonUtils.formatDouble(plannedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("plannedMakedTotal");
-        e1.setTextContent("" + plannedMakedTotal);
+        e1.setTextContent(CommonUtils.formatDouble(plannedMakedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("plannedReallyMakedTotal");
-        e1.setTextContent("" + plannedReallyMakedTotal);
+        e1.setTextContent(CommonUtils.formatDouble(plannedReallyMakedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("plannedTxt");
         e1.setTextContent("всего - " + CommonUtils.formatCurrency(plannedTotal) + "\n потрачено - " + CommonUtils.formatCurrency(plannedMakedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("nonPlannedTotal");
-        e1.setTextContent("" + nonPlannedTotal);
+        e1.setTextContent(CommonUtils.formatDouble(nonPlannedTotal));
         root.appendChild(e1);
         e1 = doc.createElement("payrollTotal");
-        e1.setTextContent("" + payrollTotal);
+        e1.setTextContent(CommonUtils.formatDouble(payrollTotal));
         root.appendChild(e1);
         e1 = doc.createElement("correction");
-        e1.setTextContent("" + correction);
+        e1.setTextContent(CommonUtils.formatDouble(correction));
         root.appendChild(e1);
         //
         // Сохраняем

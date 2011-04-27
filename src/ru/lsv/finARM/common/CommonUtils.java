@@ -21,6 +21,7 @@ public class CommonUtils {
 
     //private static final DecimalFormat df = new DecimalFormat("0.00 ¤");
     private static final NumberFormat df = DecimalFormat.getCurrencyInstance();
+    private static final NumberFormat nf = DecimalFormat.getNumberInstance();
 
     /**
      * Форматирование денежной суммы
@@ -31,6 +32,17 @@ public class CommonUtils {
     public static String formatCurrency(Double val) {
         if (val == null) return "";
         else return df.format(val);
+    }
+
+    /**
+     * Форматирование числа
+     *
+     * @param val Число
+     * @return Отформатированное значение
+     */
+    public static String formatDouble(Double val) {
+        if (val == null) return "";
+        else return nf.format(val);
     }
 
     private static String[] monthNames = new DateFormatSymbols(new Locale("RU", "ru")).getMonths();
