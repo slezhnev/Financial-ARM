@@ -118,6 +118,7 @@
               <model>
                 <item value="Пользователи"/>
                 <item value="Директора"/>
+                <item value="Только просмотр"/>
               </model>
             </properties>
           </component>

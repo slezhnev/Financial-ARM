@@ -114,8 +114,10 @@ public class UserParam {
             userNameEdit.setEnabled(false);
             if (user.userRole.equals("armDirectors")) {
                 userGroupCombo.setSelectedIndex(1);
-            } else {
+            } else if (user.userRole.equals("armUsers")) {
                 userGroupCombo.setSelectedIndex(0);
+            } else {
+                userGroupCombo.setSelectedIndex(2);                
             }
             userGroupCombo.setEnabled(false);
         }
@@ -136,9 +138,12 @@ public class UserParam {
                     if (userGroupCombo.getSelectedIndex() == 1) {
                         sess.createSQLQuery("CREATE ROLE " + userNameEdit.getText() + " LOGIN CREATEROLE PASSWORD '" + new String(passwordField1.getPassword()) + "'").executeUpdate();
                         sess.createSQLQuery("GRANT \"armDirectors\" TO "+ userNameEdit.getText()).executeUpdate();
-                    } else {
+                    } else if (userGroupCombo.getSelectedIndex() == 0) {
                         sess.createSQLQuery("CREATE ROLE " + userNameEdit.getText() + " LOGIN PASSWORD '" + new String(passwordField1.getPassword()) + "'").executeUpdate();
                         sess.createSQLQuery("GRANT \"armUsers\" TO "+ userNameEdit.getText()).executeUpdate();
+                    } else {
+                        sess.createSQLQuery("CREATE ROLE " + userNameEdit.getText() + " LOGIN PASSWORD '" + new String(passwordField1.getPassword()) + "'").executeUpdate();
+                        sess.createSQLQuery("GRANT \"armViewers\" TO "+ userNameEdit.getText()).executeUpdate();                        
                     }
                     //
                     sess.flush();
@@ -148,8 +153,10 @@ public class UserParam {
                     sess = null;
                     if (userGroupCombo.getSelectedIndex() == 1) {
                         return new UsersCatalog.UserStorage(userNameEdit.getText(), "armDirectors");
-                    } else {
+                    } else if (userGroupCombo.getSelectedIndex() == 0) {
                         return new UsersCatalog.UserStorage(userNameEdit.getText(), "armUsers");                        
+                    } else {
+                        return new UsersCatalog.UserStorage(userNameEdit.getText(), "armViewers");    
                     }
                 } else {
                     // Меняем у пользователя пароль

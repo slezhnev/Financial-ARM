@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.FinancialMonth;
 import ru.lsv.finARM.mappings.FinancialOperation;
@@ -49,7 +50,8 @@ public class MainForm implements ActionListener {
     private JMenuItem shortSalaryMI = null;
     private JMenuItem fullSalaryMI = null;
     //
-    boolean isDirector = false;
+    //boolean isDirector = false;
+    UserRoles userRole;
     // Константы пунктов меню
     private static final String managersMIText = "Менеджеры";
     private static final String spendingTemplatesMIText = "Шаблон месячных расходов";
@@ -164,7 +166,7 @@ public class MainForm implements ActionListener {
                 case 0: {
                     // Редактируем договор
                     FinancialOperationParam_Operation param = new FinancialOperationParam_Operation(frame);
-                    fo = param.doEdit(fo, mainPanel, isDirector);
+                    fo = param.doEdit(fo, mainPanel, userRole, addOperationBtn.isEnabled());
                     if (fo != null) {
                         saveToDB(fo, 1);
                     }
@@ -173,7 +175,7 @@ public class MainForm implements ActionListener {
                 case 1: {
                     // Редактируем аванс
                     FinancialOperationParam_Prepaid param = new FinancialOperationParam_Prepaid(frame);
-                    fo = param.doEdit(fo, mainPanel);
+                    fo = param.doEdit(fo, mainPanel, addOperationBtn.isEnabled());
                     if (fo != null) {
                         fo.setCloseDate(fo.getOperationDate());
                         // Поехали сохранять
@@ -184,7 +186,7 @@ public class MainForm implements ActionListener {
                 case 2: {
                     // Редактируем расход
                     FinancialOperationParam_Spending param = new FinancialOperationParam_Spending(frame);
-                    fo = param.doEdit(fo, mainPanel);
+                    fo = param.doEdit(fo, mainPanel, addOperationBtn.isEnabled());
                     if (fo != null) {
                         fo.setCloseDate(fo.getOperationDate());
                         // Поехали сохранять
@@ -256,72 +258,84 @@ public class MainForm implements ActionListener {
                 // Что-то странное. Какой-то текущий мутант - будем считать что это НЕ директор
                 throw new HibernateException("Strange user - has no or more than one roles");
             }
-            isDirector = res.get(0).equals("armDirectors");
+            if (res.get(0).equals("armDirectors"))
+                userRole = UserRoles.DIRECTOR;
+            else if (res.get(0).equals("armUsers"))
+                userRole = UserRoles.USER;
+            else if (res.get(0).equals("armViewers"))
+                userRole = UserRoles.VIEWER;
+            else {
+                // Что-то странное. Какой-то текущий мутант - будем считать что это НЕ директор
+                throw new HibernateException("Strange user - has strange role");
+            }
             sess.close();
             sess = null;
         } catch (HibernateException ex) {
-            isDirector = false;
+            userRole = UserRoles.VIEWER;
             if (sess != null) sess.close();
         }
         JMenuBar menuBar = new JMenuBar();
         JMenu menu;
         JMenuItem item;
         //if (isDirector) {
-        menu = new JMenu("Справочники");
-        item = new JMenuItem(managersMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        item = new JMenuItem(spendingTemplatesMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        //
-        if (isDirector) {
-            menu.addSeparator();
-            item = new JMenuItem(usersMIText);
+        // Это могут видеть только директора или пользователи. "Просмотрщики" не видят ничего
+        if ((userRole == UserRoles.DIRECTOR) || (userRole == UserRoles.USER)) {
+            menu = new JMenu("Справочники");
+            item = new JMenuItem(managersMIText);
             item.addActionListener(this);
             menu.add(item);
-        }
-        //
-        menuBar.add(menu);
-        //
-        menu = new JMenu("Помесячное");
-        item = new JMenuItem(monthSpendingMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        menu.addSeparator();
-        item = new JMenuItem(closeMonthMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        item = new JMenuItem(openMonthMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        menuBar.add(menu);
-        //}
-        //
-        //
-        menu = new JMenu("Отчеты");
-        shortSalaryMI = new JMenuItem(reports_salaryMIText);
-        shortSalaryMI.addActionListener(this);
-        menu.add(shortSalaryMI);
+            item = new JMenuItem(spendingTemplatesMIText);
+            item.addActionListener(this);
+            menu.add(item);
+            //
+            if (userRole == UserRoles.DIRECTOR) {
+                menu.addSeparator();
+                item = new JMenuItem(usersMIText);
+                item.addActionListener(this);
+                menu.add(item);
+            }
+            //
+            menuBar.add(menu);
+            //
+            menu = new JMenu("Помесячное");
+            item = new JMenuItem(monthSpendingMIText);
+            item.addActionListener(this);
+            menu.add(item);
+            menu.addSeparator();
+            item = new JMenuItem(closeMonthMIText);
+            item.addActionListener(this);
+            menu.add(item);
+            item = new JMenuItem(openMonthMIText);
+            item.addActionListener(this);
+            menu.add(item);
+            menuBar.add(menu);
+            //}
+            //
+            //
+            menu = new JMenu("Отчеты");
+            shortSalaryMI = new JMenuItem(reports_salaryMIText);
+            shortSalaryMI.addActionListener(this);
+            menu.add(shortSalaryMI);
 //        if (isDirector) {
-        fullSalaryMI = new JMenuItem(reports_fullSalaryMIText);
-        fullSalaryMI.addActionListener(this);
-        menu.add(fullSalaryMI);
-        menu.addSeparator();
-        item = new JMenuItem(reports_plannedMonthSpendingMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        menu.addSeparator();
-        item = new JMenuItem(reports_nonClosedOperationsMIText);
-        item.addActionListener(this);
-        menu.add(item);
-        if (isDirector) {
+            fullSalaryMI = new JMenuItem(reports_fullSalaryMIText);
+            fullSalaryMI.addActionListener(this);
+            menu.add(fullSalaryMI);
             menu.addSeparator();
-            item = new JMenuItem(reports_financialResultsMIText);
+            item = new JMenuItem(reports_plannedMonthSpendingMIText);
             item.addActionListener(this);
             menu.add(item);
+            menu.addSeparator();
+            item = new JMenuItem(reports_nonClosedOperationsMIText);
+            item.addActionListener(this);
+            menu.add(item);
+            if (userRole == UserRoles.DIRECTOR) {
+                menu.addSeparator();
+                item = new JMenuItem(reports_financialResultsMIText);
+                item.addActionListener(this);
+                menu.add(item);
+            }
+            menuBar.add(menu);
         }
-        menuBar.add(menu);
         //
         //
         menu = new JMenu("Дополнительное");
@@ -495,7 +509,7 @@ public class MainForm implements ActionListener {
         FinancialOperation fo = new FinancialOperation();
         fo.setKind(0);
         FinancialOperationParam_Operation params = new FinancialOperationParam_Operation(frame);
-        fo = params.doEdit(fo, mainPanel, isDirector);
+        fo = params.doEdit(fo, mainPanel, userRole, true);
         if (fo != null) {
             // Сохраняем
             saveToDB(fo, 0);
@@ -527,12 +541,12 @@ public class MainForm implements ActionListener {
         switch (what) {
             case 1: {
                 FinancialOperationParam_Prepaid prepaidParam = new FinancialOperationParam_Prepaid(frame);
-                fo = prepaidParam.doEdit(fo, mainPanel);
+                fo = prepaidParam.doEdit(fo, mainPanel, true);
                 break;
             }
             case 2: {
                 FinancialOperationParam_Spending param = new FinancialOperationParam_Spending(frame);
-                fo = param.doEdit(fo, mainPanel);
+                fo = param.doEdit(fo, mainPanel, true);
                 break;
             }
             default:
@@ -654,16 +668,19 @@ public class MainForm implements ActionListener {
     }
 
     /**
-     * Включает / выключает контролы в зависимости от выбранного периода
+     * Включает / выключает контролы в зависимости от выбранного периода и текущего пользователя!
      *
      * @param enable Включить / выключить
      */
     private void doPeriodEnable(boolean enable) {
+        // Просмотрщик не может смотреть ничего!
+        if (userRole == UserRoles.VIEWER) enable = false;
         addOperationBtn.setEnabled(enable);
         addPrepaymentBtn.setEnabled(enable);
         addSpendingBtn.setEnabled(enable);
-        editBtn.setEnabled(enable);
         delBtn.setEnabled(enable);
+
+        //editBtn.setEnabled(enable);
     }
 
     private class FinancialOperationTableModel extends AbstractTableModel {

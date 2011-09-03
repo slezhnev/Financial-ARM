@@ -5,6 +5,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.*;
 
@@ -60,7 +61,8 @@ public class FinancialOperationParam_Operation {
     private Date closeForSalaryDate = null;
     private Double currentProfit;
     private Double currentSalaryProfit;
-    private boolean isDirector = false;
+    //private boolean isDirector = false;
+    private UserRoles userRole;
 
     public FinancialOperationParam_Operation(Frame owner) {
         dialog = new JDialog(owner, "Параметры договора");
@@ -353,7 +355,7 @@ public class FinancialOperationParam_Operation {
             if (img != null) {
                 closeBtn.setIcon(new ImageIcon(img));
             }
-            if (!isDirector) closeBtn.setEnabled(false);
+            if (userRole != UserRoles.DIRECTOR) closeBtn.setEnabled(false);
         } else {
             if (isClosed) {
                 if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор?",
@@ -402,7 +404,7 @@ public class FinancialOperationParam_Operation {
     private void doCloseForSalaryEnabling(Boolean closed) {
         if (!isClosed) {
             // Что- тут мы будем делать только в случае, если у нас договор не закрыт
-            closeForSalaryBtn.setEnabled(isDirector);
+            closeForSalaryBtn.setEnabled(userRole == UserRoles.DIRECTOR);
             if (closed) {
                 if (!isClosedForSalary) {
                     if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите закрыть договор по зарплате?",
@@ -463,6 +465,8 @@ public class FinancialOperationParam_Operation {
      * Обработка нормального закрытия
      */
     private void doNormalClose() {
+        // Если кнопка сохранения выключена - то просто ничего не делаем
+        if (!saveBtn.isEnabled()) return;
         // Проверяем всякую фигню...
         if (dateEdit.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Не указана дата договора", "Параметры договора", JOptionPane.ERROR_MESSAGE);
@@ -502,10 +506,13 @@ public class FinancialOperationParam_Operation {
      *
      * @param fo                Договор
      * @param positionComponent Относительно чего позиционироваться
+     * @param userRole          Роль текущего пользователя в системе
+     * @param allowSave         Разрешать ли сохранять текущее редактирование
      * @return Скорректированный расход
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean isDirector) {
-        this.isDirector = isDirector;
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, UserRoles userRole, boolean allowSave) {
+        //this.isDirector = isDirector;
+        this.userRole = userRole;
         // Вначале - загрузим fo полностью...
         // До кучи - проинициализируем все остальное, связанное с сессией
         Session sess = null;
@@ -564,8 +571,14 @@ public class FinancialOperationParam_Operation {
         //
         dialog.pack();
         //
-        recalcOperationSum();
-        rebuildCurrentProfit();
+        if (allowSave) {
+            recalcOperationSum();
+            rebuildCurrentProfit();
+        } else {
+            // Выключаем ВСЕ НАФИГ!
+            CommonUtils.disableComponents(dialog);
+            cancelBtn.setEnabled(true);
+        }
         //
         dialog.setLocationRelativeTo(positionComponent);
         dialog.setVisible(true);

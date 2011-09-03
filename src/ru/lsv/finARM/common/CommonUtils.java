@@ -2,12 +2,14 @@ package ru.lsv.finARM.common;
 
 import org.w3c.dom.Document;
 
+import javax.swing.*;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.io.*;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
@@ -83,6 +85,23 @@ public class CommonUtils {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.transform(domSource, new StreamResult(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")));
         //transformer.transform(domSource, new StreamResult(new FileWriter(file)));
+    }
+
+    /**
+     * Дизейблит все контролы у указанного контейнера
+     * Дизейблит все до уровня JScrollPane!
+     *
+     * @param c Контейнер для выключения всех контролов
+     */
+    public static void disableComponents(java.awt.Container c) {
+        Component[] components = c.getComponents();
+        for (Component comp : components) {
+            if (comp instanceof JScrollPane)
+                continue;
+            if (comp instanceof java.awt.Container)
+                disableComponents((java.awt.Container) comp);
+            comp.setEnabled(false);
+        }
     }
 
 

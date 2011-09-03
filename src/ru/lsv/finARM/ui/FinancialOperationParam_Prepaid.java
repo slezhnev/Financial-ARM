@@ -3,6 +3,7 @@ package ru.lsv.finARM.ui;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.mappings.FinancialOperation;
 import ru.lsv.finARM.mappings.Manager;
@@ -81,6 +82,7 @@ public class FinancialOperationParam_Prepaid {
      * Обработка закрытия с сохранением
      */
     private void doNormalClose() {
+        if (!saveBtn.isEnabled()) return;
         // Делаем дополнительные проверки
         if (managerComboBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Не выбран менеджер", "Параметры аванса", JOptionPane.ERROR_MESSAGE);
@@ -110,12 +112,17 @@ public class FinancialOperationParam_Prepaid {
      * Редактирование аванса
      * @param fo Запись о авансе
      * @param positionComponent Компонента, относительно которой все будет позиционироваться
-     * @return Измененная запись о авансе 
+     * @param allowSave Разрешено ли сохранять текущую запись
+     * @return Измененная запись о авансе
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent) {
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean allowSave) {
         managerComboBox.setSelectedItem(fo.getManager());
         amountEdit.setValue(fo.getOperationSum());
         dateEdit.setDate(fo.getOperationDate());
+        if (!allowSave) {
+            CommonUtils.disableComponents(dialog);
+            cancelBtn.setEnabled(true);
+        }
         //
         dialog.pack();
         dialog.setLocationRelativeTo(positionComponent);

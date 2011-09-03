@@ -53,14 +53,14 @@ public class UsersCatalog extends CatalogTemplate {
                         "Зайдите в систему под другим именем пользователя для удаления этого пользователя."};
                 JOptionPane.showMessageDialog(mainPanel, msg, "Удаление пользователя", JOptionPane.WARNING_MESSAGE);
             } else {
-                if (JOptionPane.showConfirmDialog(mainPanel, "Вы уверены, что хотите удалить пользователя '"+user.userName+"'?",
+                if (JOptionPane.showConfirmDialog(mainPanel, "Вы уверены, что хотите удалить пользователя '" + user.userName + "'?",
                         "Удаление пользователя", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     Session sess = null;
                     Transaction trx = null;
                     try {
                         sess = HibernateUtils.openSession();
                         trx = sess.beginTransaction();
-                        sess.createSQLQuery("DROP ROLE "+user.userName).executeUpdate();
+                        sess.createSQLQuery("DROP ROLE " + user.userName).executeUpdate();
                         //
                         sess.flush();
                         trx.commit();
@@ -122,9 +122,9 @@ public class UsersCatalog extends CatalogTemplate {
         try {
             sess = HibernateUtils.openSession();
             currentUser = (String) sess.createSQLQuery("select current_user").uniqueResult();
-            List users = sess.createSQLQuery("select f.rolname, d.role_name from pg_roles f " +
-                    "left join information_schema.applicable_roles d " +
-                    "on (f.rolname=d.grantee) " +
+            List users = sess.createSQLQuery("select f.rolname, d.groname from pg_roles f " +
+                    "left join pg_group d " +
+                    "on f.oid = ANY(d.grolist) " +
                     "where f.rolcanlogin=true and f.rolsuper=false " +
                     "order by f.rolname").list();
             ArrayList<UserStorage> allUsers = new ArrayList<UserStorage>();
@@ -199,8 +199,12 @@ public class UsersCatalog extends CatalogTemplate {
                 else {
                     if (users.get(rowIndex).userRole.equals("armDirectors")) {
                         return "Директора";
-                    } else {
+                    } else if (users.get(rowIndex).userRole.equals("armUsers")) {
                         return "Пользователи";
+                    } else if (users.get(rowIndex).userRole.equals("armViewers")) {
+                        return "Только просмотр";
+                    } else {
+                        return "ОШИБКА";
                     }
                 }
             } else

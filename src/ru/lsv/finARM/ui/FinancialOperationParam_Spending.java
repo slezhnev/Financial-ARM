@@ -3,6 +3,7 @@ package ru.lsv.finARM.ui;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.FinancialOperation;
@@ -102,6 +103,8 @@ public class FinancialOperationParam_Spending {
      * Обработка закрытия с сохранением
      */
     private void doNormalClose() {
+        if (!saveBtn.isEnabled()) return;
+        //
         if (plannedSpendingRB.isSelected() && (plannedSpendingComboBox.getSelectedItem() == null)) {
             JOptionPane.showMessageDialog(null, "Не выбран расход", "Параметры расхода", JOptionPane.ERROR_MESSAGE);
             return;
@@ -135,9 +138,10 @@ public class FinancialOperationParam_Spending {
      *
      * @param fo                Расход
      * @param positionComponent Относительно чего позиционироваться
+     * @param allowSave Разрешать ли сохранять текущую запись
      * @return Скорректированный расход
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent) {
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean allowSave) {
         if (fo.getPlannedSpending() != null) {
             plannedSpendingRB.setSelected(true);
             plannedSpendingComboBox.setSelectedItem(fo.getPlannedSpending());
@@ -149,6 +153,10 @@ public class FinancialOperationParam_Spending {
         dateEdit.setDate(fo.getOperationDate());
         paymentTypeComboBox.setSelectedIndex(fo.getPaymentType());
         doSpendingsEnable();
+        if (!allowSave) {
+            CommonUtils.disableComponents(dialog);
+            cancelBtn.setEnabled(true);
+        }
         //
         dialog.pack();
         dialog.setLocationRelativeTo(positionComponent);
