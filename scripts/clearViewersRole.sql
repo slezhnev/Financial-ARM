@@ -1,0 +1,11 @@
+﻿REVOKE ALL ON TABLE financialmonth FROM "armViewers";
+REVOKE ALL ON TABLE financialoperation FROM "armViewers";
+REVOKE ALL ON TABLE fo_incomings FROM "armViewers";
+REVOKE ALL ON TABLE fo_spendings FROM "armViewers";
+REVOKE ALL ON TABLE incoming FROM "armViewers";
+REVOKE ALL ON TABLE manager FROM "armViewers";
+REVOKE ALL ON TABLE managerpermonth FROM "armViewers";
+REVOKE ALL ON TABLE monthspending FROM "armViewers";
+REVOKE ALL ON TABLE spending FROM "armViewers";
+REVOKE ALL ON TABLE spendingtemplate FROM "armViewers";
+DROP ROLE "armViewers";
