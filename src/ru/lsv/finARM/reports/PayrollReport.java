@@ -86,6 +86,39 @@ public class PayrollReport {
                     }
                 }
             }
+            // Посчитаем начало и конец периода
+            int beginYear;
+            int endYear;
+            int beginMonth;
+            int endMonth;
+            Date beginDate;
+            Date endDate;
+            if (timeParams.getBeginDate() != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(timeParams.getBeginDate().getTime());
+                beginYear = cal.get(Calendar.YEAR);
+                beginMonth = cal.get(Calendar.MONTH);
+                cal.setTimeInMillis(timeParams.getEndDate().getTime());
+                endYear = cal.get(Calendar.YEAR);
+                endMonth = cal.get(Calendar.MONTH);
+                //
+                beginDate = timeParams.getBeginDate();
+                endDate = timeParams.getEndDate();
+            } else {
+                // А вот тут у нас - тока ОДИН месяц!
+                beginYear = timeParams.getSelectedYear();
+                endYear = beginYear;
+                beginMonth = timeParams.getSelectedMonth();
+                endMonth = beginMonth;
+                //
+                // Побибикали шаманить!
+                Calendar cal = Calendar.getInstance();
+                cal.set(beginYear, beginMonth, 1);
+                beginDate = new Date(cal.getTimeInMillis());
+                cal.set(endYear, endMonth, 1);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+                endDate = new Date(cal.getTimeInMillis());
+            }
             //
             // Формируем XML с отчетом...
             File file = new File("Payroll.toReport");
@@ -112,7 +145,13 @@ public class PayrollReport {
             for (FinancialOperation op : operations) {
                 switch (op.getKind()) {
                     case 0: { // Договор
-                        if (op.getClosed() || op.getClosedForSalary()) {
+                        // Договор пойдет в зарплату ТОЛЬКО если он закрыт полностью
+                        // ИЛИ (!)
+                        // закрыт по зарплате В ТЕКУЩИЙ ПЕРИОД!
+                        boolean closedForSalary = (op.getClosedForSalary()) &&
+                                ((op.getCloseForSalaryDate().compareTo(beginDate) >= 0) &&
+                                        (op.getCloseForSalaryDate().compareTo(endDate) <= 0));
+                        if (op.getClosed() || closedForSalary) {
                             // Что-то считаем только в том случае, если оно у нас тут закрыто
                             // Считаем общую прибыль по договору
                             op = (FinancialOperation) sess.get(FinancialOperation.class, op.getFoId());
@@ -195,26 +234,6 @@ public class PayrollReport {
                             nonCashProfit = nonCashProfit + contract.managerPercent / 100.0 * (contract.paymentSum - contract.suppliersSum);
                         }
                         e.appendChild(e1);
-                    }
-                    // Посчитаем зарплату и прочую фигню за период...
-                    int beginYear;
-                    int endYear;
-                    int beginMonth;
-                    int endMonth;
-                    if (timeParams.getBeginDate() != null) {
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTimeInMillis(timeParams.getBeginDate().getTime());
-                        beginYear = cal.get(Calendar.YEAR);
-                        beginMonth = cal.get(Calendar.MONTH);
-                        cal.setTimeInMillis(timeParams.getEndDate().getTime());
-                        endYear = cal.get(Calendar.YEAR);
-                        endMonth = cal.get(Calendar.MONTH);
-                    } else {
-                        // А вот тут у нас - тока ОДИН месяц!
-                        beginYear = timeParams.getSelectedYear();
-                        endYear = beginYear;
-                        beginMonth = timeParams.getSelectedMonth();
-                        endMonth = beginMonth;
                     }
                     // Получаем из ManagerPerMonth
                     Query query;

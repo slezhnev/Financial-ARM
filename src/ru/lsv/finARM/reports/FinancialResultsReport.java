@@ -98,6 +98,39 @@ public class FinancialResultsReport {
         double payrollTotal = 0;
         // "Коррекция" по незакрытым договорам
         double correction = 0;
+        // Посчитаем начало и конец периода
+        int beginYear;
+        int endYear;
+        int beginMonth;
+        int endMonth;
+        Date beginDate;
+        Date endDate;
+        if (timeParams.getBeginDate() != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(timeParams.getBeginDate().getTime());
+            beginYear = cal.get(Calendar.YEAR);
+            beginMonth = cal.get(Calendar.MONTH);
+            cal.setTimeInMillis(timeParams.getEndDate().getTime());
+            endYear = cal.get(Calendar.YEAR);
+            endMonth = cal.get(Calendar.MONTH);
+            //
+            beginDate = timeParams.getBeginDate();
+            endDate = timeParams.getEndDate();
+        } else {
+            // А вот тут у нас - тока ОДИН месяц!
+            beginYear = timeParams.getSelectedYear();
+            endYear = beginYear;
+            beginMonth = timeParams.getSelectedMonth();
+            endMonth = beginMonth;
+            //
+            // Побибикали шаманить!
+            Calendar cal = Calendar.getInstance();
+            cal.set(beginYear, beginMonth, 1);
+            beginDate = new Date(cal.getTimeInMillis());
+            cal.set(endYear, endMonth, 1);
+            cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            endDate = new Date(cal.getTimeInMillis());
+        }
         // Поехали по операциям
         for (FinancialOperation op : operations) {
             switch (op.getKind()) {
@@ -111,14 +144,25 @@ public class FinancialResultsReport {
                         salary = salary - spend.getPaymentSalarySum();
                     }
                     if (op.getClosed() || op.getClosedForSalary()) {
-                        ManagerPerMonth mng;
+                        ManagerPerMonth mng = null;
                         // Отдельно обрабатываем закрытие и закрытие по зарплате
                         if (op.getClosed())
                             mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
                                     op.getCloseMonth(), op.getCloseYear());
-                        else
-                            mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
-                                    op.getCloseForSalaryMonth(), op.getCloseForSalaryYear());
+                        else {
+                            // А тут будем обрабатывать это отдельно.
+                            // Т.е. менеджера будем находить только в том случае, если договор
+                            // закрыт по зарплате в ТЕКУЩЕМ периоде!
+                            if ((op.getCloseForSalaryDate().compareTo(beginDate) >= 0) &&
+                                    (op.getCloseForSalaryDate().compareTo(endDate) <= 0)) {
+                                mng = ReportsCommonUtils.getManager(sess, op.getManager().getManagerId(),
+                                        op.getCloseForSalaryMonth(), op.getCloseForSalaryYear());
+                            }
+                        }
+                        // А менеджера тут мы найдем (и будем считать на него зарплату)
+                        // только если это
+                        // а) закрытый договор
+                        // б) закрытый по зарплате в ТЕКУЩЕМ периоде
                         if (mng != null) {
                             //double managerCoeff = 0;
                             double managerCoeff = op.getManagerPercent();
@@ -195,25 +239,6 @@ public class FinancialResultsReport {
         //
         // Поехали обрабатывать остатки менеджеров и плановые платежи
         // Учтем зарплаты тех, у кого нет закрытых договоров
-        int beginYear;
-        int endYear;
-        int beginMonth;
-        int endMonth;
-        if (timeParams.getBeginDate() != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(timeParams.getBeginDate().getTime());
-            beginYear = cal.get(Calendar.YEAR);
-            beginMonth = cal.get(Calendar.MONTH);
-            cal.setTimeInMillis(timeParams.getEndDate().getTime());
-            endYear = cal.get(Calendar.YEAR);
-            endMonth = cal.get(Calendar.MONTH);
-        } else {
-            // А вот тут у нас - тока ОДИН месяц!
-            beginYear = timeParams.getSelectedYear();
-            endYear = beginYear;
-            beginMonth = timeParams.getSelectedMonth();
-            endMonth = beginMonth;
-        }
         // Получаем из ManagerPerMonth
         Query query;
         if (beginYear == endYear) {
