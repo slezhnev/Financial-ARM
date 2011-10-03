@@ -20,7 +20,7 @@
         <property name="closeDate"/>
         <property name="closeYear"/>
         <property name="closeMonth"/>
-        <set name="spendings" table="fo_spendings" cascade="all-delete-orphan">
+        <set name="spendings" table="fo_spendings" cascade="all-delete-orphan" sort="ru.lsv.finARM.mappings.SpendingComparator">
             <key column="foId"/>
             <many-to-many column="finSpId" unique="true" class="ru.lsv.finARM.mappings.Spending"/>
         </set>
@@ -34,7 +34,7 @@
         <property name="closeForSalaryDate"/>
         <property name="closeForSalaryYear"/>
         <property name="closeForSalaryMonth"/>
-        <set name="incomings" table="fo_incomings" cascade="all-delete-orphan">
+        <set name="incomings" table="fo_incomings" cascade="all-delete-orphan"  sort="ru.lsv.finARM.mappings.IncomingComparator">
             <key column="foId"/>
             <many-to-many column="incomingId" unique="true" class="ru.lsv.finARM.mappings.Incoming"/>
         </set>

@@ -1,10 +1,12 @@
 package ru.lsv.finARM.ui;
 
+import com.jidesoft.swing.AutoCompletion;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.FinancialOperation;
 import ru.lsv.finARM.mappings.MonthSpending;
@@ -19,6 +21,9 @@ import java.util.*;
  * Финансования операция - расходы
  */
 public class FinancialOperationParam_Spending {
+
+    private UserRoles userRole;
+
     private JPanel mainPanel;
     private JButton saveBtn;
     private JButton cancelBtn;
@@ -97,6 +102,9 @@ public class FinancialOperationParam_Spending {
                 doSpendingsEnable();
             }
         });
+        //
+        new AutoCompletion(plannedSpendingComboBox);
+        //
     }
 
     /**
@@ -113,7 +121,7 @@ public class FinancialOperationParam_Spending {
             JOptionPane.showMessageDialog(null, "Не введено наименование расхода", "Параметры расхода", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if ((amountEdit.getValue() == null)||((Double)amountEdit.getValue()) == 0) {
+        if ((amountEdit.getValue() == null) || ((Double) amountEdit.getValue()) == 0) {
             JOptionPane.showMessageDialog(null, "Сумма расхода не может быть нулевой", "Параметры расхода", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -138,21 +146,27 @@ public class FinancialOperationParam_Spending {
      *
      * @param fo                Расход
      * @param positionComponent Относительно чего позиционироваться
-     * @param allowSave Разрешать ли сохранять текущую запись
-     * @return Скорректированный расход
+     * @param userRole          Роль текущего пользователя
+     * @param allowSave         Разрешать ли сохранять текущую запись  @return Скорректированный расход
+     * @return Скорректированные данные
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean allowSave) {
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, UserRoles userRole, boolean allowSave) {
+        this.userRole = userRole;
+
         if (fo.getPlannedSpending() != null) {
             plannedSpendingRB.setSelected(true);
             plannedSpendingComboBox.setSelectedItem(fo.getPlannedSpending());
         } else {
-            nonPlannedSpendingRB.setSelected(true);            
+            nonPlannedSpendingRB.setSelected(true);
             nonPlannedSpendinEdit.setText(fo.getNonPlannedSpending());
         }
         amountEdit.setValue(fo.getOperationSum());
         dateEdit.setDate(fo.getOperationDate());
         paymentTypeComboBox.setSelectedIndex(fo.getPaymentType());
         doSpendingsEnable();
+
+        // Дополнительно запретим что-либо изменять всем, кроме директора
+        //allowSave = (userRole == UserRoles.DIRECTOR);        
         if (!allowSave) {
             CommonUtils.disableComponents(dialog);
             cancelBtn.setEnabled(true);

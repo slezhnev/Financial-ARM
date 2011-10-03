@@ -3,12 +3,14 @@ package ru.lsv.finARM.mappings;
 import ru.lsv.finARM.common.CommonUtils;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Расходы по операциям
  */
-public class Spending {
+public class Spending implements Comparable, Cloneable {
+
     public Spending() {
         paymentSum = 0.0;
         paymentType = 0;
@@ -49,6 +51,55 @@ public class Spending {
                     (paymentSum.equals(sp.getPaymentSum())) &&
                     (paymentType.equals(sp.getPaymentType()));
         } else return false;
+    }
+
+    /**
+     * Creates and returns a copy of this object.
+     *
+     * @return a clone of this instance.
+     * @see Cloneable
+     */
+    @Override
+    public Object clone()  {
+        Spending sp = new Spending();    
+        sp.finSpId = this.finSpId;
+        sp.payerTo = this.payerTo;
+        sp.orderNum = this.orderNum;
+        sp.paymentSum = this.paymentSum;
+        sp.paymentSalarySum = this.paymentSalarySum;
+        sp.paymentType = this.paymentType;
+        sp.paymentDate = this.paymentDate;
+        sp.comment = this.comment;
+        return sp;
+    }
+
+    public String whatChanged(Spending old) {
+        StringBuffer res = new StringBuffer("изменено:");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        if (!old.payerTo.equals(this.payerTo)) {
+            res.append("\nпоставщик с ").append(old.payerTo).append(" на ").append(this.payerTo);
+        }
+        if (!old.orderNum.equals(this.orderNum)) {
+            res.append("\nномер счета с ").append(old.orderNum).append(" на ").append(this.orderNum);
+        }
+        if (!old.paymentSum.equals(this.paymentSum)) {
+            res.append("\nсумма с ").append(CommonUtils.formatCurrency(old.paymentSum)).append(" на ").append(this.paymentSum);
+        }
+        if ((old.paymentSalarySum != null)&&(!old.paymentSalarySum.equals(this.paymentSalarySum))) {
+            res.append("\nзарплатная сумма с ").append(CommonUtils.formatCurrency(old.paymentSalarySum)).append(" на ").append(CommonUtils.formatCurrency(this.paymentSalarySum));
+        }
+        if (!old.paymentType.equals(this.paymentType)) {
+            res.append("\nвид платежа с ");
+            if (old.paymentType == 0) res.append("безнал.");
+            else res.append("нал.");
+            res.append(" на ");
+            if (this.paymentType == 0) res.append("безнал.");
+            else res.append("нал.");
+        }
+        if ((old.paymentDate != null)&&(!old.paymentDate.equals(this.paymentDate))) {
+            res.append("\nдата с ").append(sdf.format(old.paymentDate)).append(" на ").append(sdf.format(this.paymentDate));
+        }
+        return res.toString();
     }
 
     /**
@@ -116,7 +167,7 @@ public class Spending {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
+
     public Double getPaymentSalarySum() {
         return paymentSalarySum;
     }
@@ -124,7 +175,7 @@ public class Spending {
     public void setPaymentSalarySum(Double paymentSalarySum) {
         this.paymentSalarySum = paymentSalarySum;
     }
-    
+
     /**
      * Возвращает число полей
      *
@@ -152,7 +203,7 @@ public class Spending {
                 return (paymentType == 0 ? "нал." : "безнал.");
             case 4:
                 return paymentDate;
-            case 5 :
+            case 5:
                 return comment;
             default:
                 return null;
@@ -218,7 +269,7 @@ public class Spending {
      */
     private Double paymentSum;
     /**
-     * Сумма для расчета зарплаты  
+     * Сумма для расчета зарплаты
      */
     private Double paymentSalarySum;
     /**
@@ -234,4 +285,24 @@ public class Spending {
      */
     private String comment;
 
+    /**
+     * см Comparable
+     * @param o см Comparable
+     * @return см Comparable
+     */
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Spending) {
+            Spending os = (Spending) o;
+            int val = paymentDate.compareTo(os.getPaymentDate());
+            if (val == 0) {
+                // Сравнивать будем по кодам. Если коды одинаковые - то и записи совпадают
+                if ((finSpId == 0) && (os.getFinSpId() == 0)) {
+                    // Тут они свежедобавленные чтоль? Значит будем сравнивать по хэшу
+                    return new Integer(hashCode()).compareTo(os.hashCode());
+                } else
+                    return finSpId.compareTo(os.getFinSpId());
+            } else return val;
+        } else return 0;
+    }
 }

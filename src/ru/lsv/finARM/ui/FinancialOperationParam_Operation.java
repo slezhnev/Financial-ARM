@@ -1,8 +1,10 @@
 package ru.lsv.finARM.ui;
 
+import com.jidesoft.swing.AutoCompletion;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
 import ru.lsv.finARM.common.UserRoles;
@@ -189,6 +191,10 @@ public class FinancialOperationParam_Operation {
                 doDelIncoming();
             }
         });
+        //
+        new AutoCompletion(customerComboBox);
+        new AutoCompletion(managerComboBox);
+        //
     }
 
     /**
@@ -212,12 +218,13 @@ public class FinancialOperationParam_Operation {
     private void doEditIncoming() {
         if (incomingsTable.getSelectedRow() > -1) {
             Incoming inc = (Incoming) ((IncomingTableModel) incomingsTable.getModel()).getIncomings().toArray()[incomingsTable.getSelectedRow()];
+            Incoming old = (Incoming) inc.clone();
             FinancialOperationParam_OperationIncoming fooi = new FinancialOperationParam_OperationIncoming(dialog);
-            inc = fooi.doEdit(inc, mainPanel);
+            inc = fooi.doEdit(inc, mainPanel, userRole);
             if (inc != null) {
                 ArrayList<Incoming> incs = new ArrayList<Incoming>(((IncomingTableModel) incomingsTable.getModel()).getIncomings());
                 incs.set(incomingsTable.getSelectedRow(), inc);
-                ((IncomingTableModel) incomingsTable.getModel()).setIncomings(new HashSet<Incoming>(incs));
+                ((IncomingTableModel) incomingsTable.getModel()).setIncomings(new TreeSet<Incoming>(incs));
                 ((IncomingTableModel) incomingsTable.getModel()).fireTableRowsUpdated(incomingsTable.getSelectedRow(), incomingsTable.getSelectedRow());
                 recalcOperationSum();
             }
@@ -230,7 +237,7 @@ public class FinancialOperationParam_Operation {
     private void doAddIncoming() {
         Incoming inc = new Incoming();
         FinancialOperationParam_OperationIncoming fooi = new FinancialOperationParam_OperationIncoming(dialog);
-        inc = fooi.doEdit(inc, mainPanel);
+        inc = fooi.doEdit(inc, mainPanel, userRole);
         if (inc != null) {
             ((IncomingTableModel) incomingsTable.getModel()).getIncomings().add(inc);
             ((IncomingTableModel) incomingsTable.getModel()).fireTableDataChanged();
@@ -294,16 +301,17 @@ public class FinancialOperationParam_Operation {
     private void doEditSpending() {
         if (spendingTable.getSelectedRow() > -1) {
             Spending spend = (Spending) ((SpendingTableModel) spendingTable.getModel()).getSpendings().toArray()[spendingTable.getSelectedRow()];
+            Spending old = (Spending) spend.clone();
             FinancialOperationParam_OperationSpending param = new FinancialOperationParam_OperationSpending(dialog);
             // Готовим список. Чтобы избежать проверки на совпадение "само с собой" - удаляем текущий элемент из списка
             // Да и проверять нам надо только на полное совпадение с остальными элементами
             HashSet<Spending> tmpSpendings = new HashSet<Spending>(((SpendingTableModel) spendingTable.getModel()).getSpendings());
             tmpSpendings.remove(spend);
-            spend = param.doEdit(spend, tmpSpendings, (Double) operationSumEdit.getValue(), isClosedForSalary, mainPanel);
+            spend = param.doEdit(spend, tmpSpendings, (Double) operationSumEdit.getValue(), isClosedForSalary, mainPanel, userRole);
             if (spend != null) {
                 ArrayList<Spending> spendings = new ArrayList<Spending>(((SpendingTableModel) spendingTable.getModel()).getSpendings());
                 spendings.set(spendingTable.getSelectedRow(), spend);
-                ((SpendingTableModel) spendingTable.getModel()).setSpendings(new HashSet<Spending>(spendings));
+                ((SpendingTableModel) spendingTable.getModel()).setSpendings(new TreeSet<Spending>(spendings));
                 ((SpendingTableModel) spendingTable.getModel()).fireTableRowsUpdated(spendingTable.getSelectedRow(), spendingTable.getSelectedRow());
                 rebuildCurrentProfit();
             }
@@ -317,7 +325,7 @@ public class FinancialOperationParam_Operation {
         Spending spend = new Spending();
         FinancialOperationParam_OperationSpending param = new FinancialOperationParam_OperationSpending(dialog);
         spend = param.doEdit(spend, ((SpendingTableModel) spendingTable.getModel()).getSpendings(), (Double) operationSumEdit.getValue(),
-                isClosedForSalary, mainPanel);
+                isClosedForSalary, mainPanel, userRole);
         if (spend != null) {
             ((SpendingTableModel) spendingTable.getModel()).getSpendings().add(spend);
             ((SpendingTableModel) spendingTable.getModel()).fireTableDataChanged();
@@ -374,7 +382,7 @@ public class FinancialOperationParam_Operation {
         }
         customerComboBox.setEnabled(!closed);
         orderNumEdit.setEnabled(!closed);
-        dateEdit.setEnabled(!closed);
+        dateEdit.setEnabled((!closed) && (userRole == UserRoles.DIRECTOR));
         paymentTypeComboBox.setEnabled(!closed);
         managerComboBox.setEnabled(!closed);
         spendingTable.setEnabled(!closed);
@@ -512,6 +520,7 @@ public class FinancialOperationParam_Operation {
      */
     public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, UserRoles userRole, boolean allowSave) {
         //this.isDirector = isDirector;
+        //
         this.userRole = userRole;
         // Вначале - загрузим fo полностью...
         // До кучи - проинициализируем все остальное, связанное с сессией
@@ -519,8 +528,8 @@ public class FinancialOperationParam_Operation {
         try {
             sess = HibernateUtils.openSession();
             // Грузим fo полностью - если есть id
-            if (fo.getFoId() != null)
-                fo = (FinancialOperation) sess.get(FinancialOperation.class, fo.getFoId());
+            //if (fo.getFoId() != null)
+            //    fo = (FinancialOperation) sess.get(FinancialOperation.class, fo.getFoId());
             // Грузим список заказчиков
             java.util.List<String> customers = sess.createQuery("select DISTINCT customer from FinancialOperation order by customer").list();
             customerComboBox.setModel(new DefaultComboBoxModel(customers.toArray()));
@@ -555,10 +564,10 @@ public class FinancialOperationParam_Operation {
             closeForSalaryDate = fo.getCloseForSalaryDate();
             doCloseForSalaryEnabling(fo.getClosedForSalary());
             //
-            HashSet<Spending> tempSp = new HashSet<Spending>(fo.getSpendings());
+            TreeSet<Spending> tempSp = new TreeSet<Spending>(fo.getSpendings());
             ((SpendingTableModel) spendingTable.getModel()).setSpendings(tempSp);
             //
-            HashSet<Incoming> incs = new HashSet<Incoming>(fo.getIncomings());
+            TreeSet<Incoming> incs = new TreeSet<Incoming>(fo.getIncomings());
             ((IncomingTableModel) incomingsTable.getModel()).setIncomings(incs);
             //
             sess.close();
@@ -641,6 +650,28 @@ public class FinancialOperationParam_Operation {
         currentSalaryProfitLabel.setText(CommonUtils.formatCurrency(currentSalaryProfit));
     }
 
+    /**
+     * Сохраняет в базу изменения
+     *
+     * @param changes Объект, куда загружены все изменения
+     */
+    private void saveChanges(FinancialOperationChanges changes) {
+        Session sess = null;
+        Transaction trx = null;
+        try {
+            sess = HibernateUtils.openSession();
+            trx = sess.beginTransaction();
+            sess.save(changes);
+            sess.flush();
+            trx.commit();
+            trx = null;
+            sess.close();
+            sess = null;
+        } catch (HibernateException ex) {
+            if (trx != null) trx.rollback();
+            if (sess != null) sess.close();
+        }
+    }
 
     /**
      * table model для трат по договору
@@ -650,7 +681,7 @@ public class FinancialOperationParam_Operation {
         /**
          * Расходы
          */
-        Set<Spending> spendings = new HashSet<Spending>();
+        SortedSet<Spending> spendings = new TreeSet<Spending>();
 
         /**
          * Число полей
@@ -662,7 +693,7 @@ public class FinancialOperationParam_Operation {
          *
          * @return Расходы
          */
-        public Set<Spending> getSpendings() {
+        public SortedSet<Spending> getSpendings() {
             return spendings;
         }
 
@@ -671,7 +702,7 @@ public class FinancialOperationParam_Operation {
          *
          * @param spendings Расходы
          */
-        public void setSpendings(Set<Spending> spendings) {
+        public void setSpendings(SortedSet<Spending> spendings) {
             this.spendings = spendings;
         }
 
@@ -740,16 +771,16 @@ public class FinancialOperationParam_Operation {
 
     private class IncomingTableModel extends AbstractTableModel {
 
-        public Set<Incoming> getIncomings() {
+        public SortedSet<Incoming> getIncomings() {
             return incomings;
         }
 
-        public void setIncomings(Set<Incoming> incomings) {
+        public void setIncomings(SortedSet<Incoming> incomings) {
             this.incomings = incomings;
             fireTableDataChanged();
         }
 
-        Set<Incoming> incomings = new HashSet<Incoming>();
+        SortedSet<Incoming> incomings = new TreeSet<Incoming>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
         /**

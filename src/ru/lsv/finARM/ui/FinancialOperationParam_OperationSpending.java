@@ -1,9 +1,11 @@
 package ru.lsv.finARM.ui;
 
+import com.jidesoft.swing.AutoCompletion;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.mappings.Spending;
 
 import javax.swing.*;
@@ -80,6 +82,9 @@ public class FinancialOperationParam_OperationSpending {
                     salarySumEdit.setValue(sumEdit.getValue());
             }
         });
+        //
+        new AutoCompletion(payerToComboBox);
+        //
     }
 
     /**
@@ -138,9 +143,10 @@ public class FinancialOperationParam_OperationSpending {
      * @param spendings         Список расходов в договоре. Надо для провеки введения дублей
      * @param sum               Общая сумма договора
      * @param positionComponent Компонента для позиционирования
+     * @param userRole
      * @return Скорректированный расход
      */
-    public Spending doEdit(Spending spend, Set<Spending> spendings, Double sum, boolean isClosedForSalary, Component positionComponent) {
+    public Spending doEdit(Spending spend, Set<Spending> spendings, Double sum, boolean isClosedForSalary, Component positionComponent, UserRoles userRole) {
         // Сохраняем и удаляем нафиг
         this.spendings = spendings;
         totalSum = sum;
@@ -167,6 +173,9 @@ public class FinancialOperationParam_OperationSpending {
         paymentTypeComboBox.setSelectedIndex(spend.getPaymentType());
         dateEdit.setDate(spend.getPaymentDate());
         commentEdit.setText(spend.getComment());
+        //
+        dateEdit.setEnabled(userRole == UserRoles.DIRECTOR);
+        //
         dialog.pack();
         dialog.setLocationRelativeTo(positionComponent);
         dialog.setVisible(true);

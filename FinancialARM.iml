@@ -39,6 +39,7 @@
     <orderEntry type="library" name="Jaxen 1.1.1" level="project" />
     <orderEntry type="library" name="HSQLDB 2.0.0" level="project" />
     <orderEntry type="library" name="Apache POI" level="project" />
+    <orderEntry type="library" name="JIDE Common Layer" level="project" />
   </component>
 </module>
 

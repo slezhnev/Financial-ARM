@@ -3,14 +3,13 @@ package ru.lsv.finARM.mappings;
 import ru.lsv.finARM.common.CommonUtils;
 
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Финансовая операция
  */
-public class FinancialOperation {
+public class FinancialOperation implements Cloneable {
 
     public FinancialOperation() {
         closed = false;
@@ -19,8 +18,125 @@ public class FinancialOperation {
         operationDate = new Date(Calendar.getInstance().getTimeInMillis());
         paymentType = 0;
         kind = 0;
-        spendings = new HashSet<Spending>();
-        incomings = new HashSet<Incoming>();
+        spendings = new TreeSet<Spending>();
+        incomings = new TreeSet<Incoming>();
+    }
+
+    /**
+     * Creates and returns a copy of this object.
+     *
+     * @return a clone of this instance.
+     * @see Cloneable
+     */
+    @Override
+    public Object clone() {
+        FinancialOperation fo = new FinancialOperation();
+        fo.foId = this.foId;
+        fo.kind = this.kind;
+        fo.operationDate = this.operationDate;
+        fo.operationSum = this.operationSum;
+        fo.manager = this.manager;
+        fo.customer = this.customer;
+        fo.orderNum = this.orderNum;
+        fo.paymentType = this.paymentType;
+        fo.closed = this.closed;
+        fo.closeDate = this.closeDate;
+        fo.closeYear = this.closeYear;
+        fo.closeMonth = this.closeMonth;
+        fo.spendings = new TreeSet<Spending>();
+        for (Spending sp : this.spendings) {
+            fo.spendings.add((Spending) sp.clone());
+        }
+        fo.currentProfit = this.currentProfit;
+        fo.salarySum = this.salarySum;
+        fo.currentSalaryProfit = this.currentSalaryProfit;
+        fo.managerPercent = this.managerPercent;
+        fo.incomings = new TreeSet<Incoming>();
+        for (Incoming inc : this.incomings) {
+            fo.incomings.add((Incoming) inc.clone());
+        }
+        fo.plannedSpending = this.plannedSpending;
+        fo.nonPlannedSpending = this.nonPlannedSpending;
+        fo.closedForSalary = this.closedForSalary;
+        fo.closeForSalaryDate = this.closeForSalaryDate;
+        fo.closeForSalaryYear = this.closeForSalaryYear;
+        fo.closeForSalaryMonth = this.closeForSalaryMonth;
+        return fo;
+    }
+
+    /**
+     * Выдает изменения между oldFinOp и this
+     *
+     * @param oldFinOp - финансовая операция для сравнения
+     * @return текстовое описание изменений
+     */
+    public String whatChanged(FinancialOperation oldFinOp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        StringBuffer res = new StringBuffer("изменено:");
+        if (!oldFinOp.operationDate.equals(this.operationDate)) {
+            res.append("\nдата договора с ").append(sdf.format(oldFinOp.operationDate)).append(" на ").append(sdf.format(this.operationDate));
+        }
+        if (!oldFinOp.operationSum.equals(this.operationSum)) {
+            res.append("\nсумма договора с ").append(CommonUtils.formatCurrency(oldFinOp.operationSum)).append(" на ").append(CommonUtils.formatCurrency(this.operationSum));
+        }
+        if ((oldFinOp.manager != null) && (!oldFinOp.manager.equals(this.manager))) {
+            res.append("\nменеджер с ").append(oldFinOp.manager.toString()).append(" на ").append(this.manager.toString());
+        }
+        if ((oldFinOp.customer != null) && (!oldFinOp.customer.equals(this.customer))) {
+            res.append("\nзаказчик с ").append(oldFinOp.customer).append(" на ").append(this.customer);
+        }
+        if ((oldFinOp.orderNum != null) && (!oldFinOp.orderNum.equals(this.orderNum))) {
+            res.append("\nномер счета с ").append(oldFinOp.orderNum).append(" на ").append(this.orderNum);
+        }
+        if (!oldFinOp.paymentType.equals(this.paymentType)) {
+            res.append("\nвид платежа с ");
+            if (oldFinOp.paymentType == 0) res.append("безнал.");
+            else res.append("нал.");
+            res.append(" на ");
+            if (this.paymentType == 0) res.append("безнал.");
+            else res.append("нал.");
+        }
+        if (oldFinOp.closed != this.closed) {
+            if (oldFinOp.closed) {
+                res.append("\nдоговор открыт");
+            } else {
+                res.append("\nдоговор закрыт ").append(sdf.format(this.closeDate));
+            }
+        }
+        if (oldFinOp.closedForSalary != this.closedForSalary) {
+            if (oldFinOp.closedForSalary) {
+                res.append("\nдоговор открыт по зарплате");
+            } else {
+                res.append("\nдоговор закрыт по зарплате ").append(sdf.format(this.closeForSalaryDate));
+            }
+        }
+        if (this.kind == 2) {
+            if ((oldFinOp.plannedSpending == null) && (this.plannedSpending != null)) {
+                res.append("\nрасход с ").append(oldFinOp.nonPlannedSpending).append(" на ").append(this.plannedSpending.toString());
+            } else if ((oldFinOp.plannedSpending != null) && (this.plannedSpending == null)) {
+                res.append("\nрасход с ").append(oldFinOp.plannedSpending.toString()).append(" на ").append(this.nonPlannedSpending);
+            } else if ((oldFinOp.plannedSpending != null) && (!oldFinOp.plannedSpending.equals(this.plannedSpending))) {
+                res.append("\nрасход с ").append(oldFinOp.plannedSpending.toString()).append(" на ").append(this.plannedSpending.toString());
+            } else if ((oldFinOp.plannedSpending == null) && (!oldFinOp.nonPlannedSpending.equals(this.nonPlannedSpending))) {
+                res.append("\nрасход с ").append(oldFinOp.nonPlannedSpending).append(" на ").append(this.nonPlannedSpending);
+            }
+        }
+        if (this.kind == 0) {
+            if (!oldFinOp.currentProfit.equals(this.currentProfit)) {
+                res.append("\nтекущая прибыль по договору с ").append(CommonUtils.formatCurrency(oldFinOp.currentProfit)).append(" на ").append(CommonUtils.formatCurrency(this.currentProfit));
+            }
+            if (!oldFinOp.salarySum.equals(this.salarySum)) {
+                res.append("\nзарплатная сумма с ").append(CommonUtils.formatCurrency(oldFinOp.salarySum)).append(" на ").append(CommonUtils.formatCurrency(this.salarySum));
+            }
+            if (!oldFinOp.currentSalaryProfit.equals(this.currentSalaryProfit)) {
+                res.append("\nтекущая зарплатная прибыль по договору с ").append(CommonUtils.formatCurrency(oldFinOp.currentSalaryProfit)).append(" на ").append(CommonUtils.formatCurrency(this.currentSalaryProfit));
+            }
+            if (!oldFinOp.managerPercent.equals(this.managerPercent)) {
+                res.append("\nпроцент менеджера с ").append(oldFinOp.managerPercent).append(" на ").append(this.managerPercent);
+            }
+            // А тут щас еще будем сравнивать приход / расход
+        }
+        return res.toString();
     }
 
     public Boolean getClosed() {
@@ -119,11 +235,11 @@ public class FinancialOperation {
         this.plannedSpending = plannedSpending;
     }
 
-    public Set<Spending> getSpendings() {
+    public SortedSet<Spending> getSpendings() {
         return spendings;
     }
 
-    public void setSpendings(Set<Spending> spendings) {
+    public void setSpendings(SortedSet<Spending> spendings) {
         this.spendings = spendings;
     }
 
@@ -150,7 +266,7 @@ public class FinancialOperation {
     public void setCurrentProfit(Double currentProfit) {
         this.currentProfit = currentProfit;
     }
-    
+
     /**
      * Код операции
      */
@@ -214,7 +330,7 @@ public class FinancialOperation {
     /**
      * Перечень расходов по операции
      */
-    private Set<Spending> spendings;
+    private SortedSet<Spending> spendings;
     /**
      * Текущая прибыль
      */
@@ -234,7 +350,7 @@ public class FinancialOperation {
     /**
      * Поступления
      */
-    private Set<Incoming> incomings;
+    private SortedSet<Incoming> incomings;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Блок для расхода
@@ -348,11 +464,11 @@ public class FinancialOperation {
         this.closeForSalaryMonth = closeForSalaryMonth;
     }
 
-    public Set<Incoming> getIncomings() {
+    public SortedSet<Incoming> getIncomings() {
         return incomings;
     }
 
-    public void setIncomings(Set<Incoming> incomings) {
+    public void setIncomings(SortedSet<Incoming> incomings) {
         this.incomings = incomings;
     }
 }

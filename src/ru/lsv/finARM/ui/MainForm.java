@@ -10,10 +10,8 @@ import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.logic.FinancialMonths;
 import ru.lsv.finARM.mappings.FinancialMonth;
 import ru.lsv.finARM.mappings.FinancialOperation;
-import ru.lsv.finARM.reports.FinancialResultsReport;
-import ru.lsv.finARM.reports.NonFinishedOperationsReport;
-import ru.lsv.finARM.reports.PayrollReport;
-import ru.lsv.finARM.reports.PlannedMonthSpendingReport;
+import ru.lsv.finARM.mappings.FinancialOperationChanges;
+import ru.lsv.finARM.reports.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -44,6 +42,16 @@ public class MainForm implements ActionListener {
     private JButton colorSetupBtn;
     private JScrollPane finOpTableSP;
     private JLabel periodLabel;
+    private JPanel findPanel;
+    private JRadioButton customerRadioButton;
+    private JRadioButton receiptNumRB;
+    private JRadioButton dateRB;
+    private JRadioButton sumRB;
+    private JFormattedTextField findEdit;
+    private JButton findFromBeginningButton;
+    private JButton findNextButton;
+    private JRadioButton managerRB;
+    private JProgressBar progressBar1;
 
     private MainForm_ColorSetup colors;
     //
@@ -52,6 +60,7 @@ public class MainForm implements ActionListener {
     //
     //boolean isDirector = false;
     UserRoles userRole;
+    String userName;
     // Константы пунктов меню
     private static final String managersMIText = "Менеджеры";
     private static final String spendingTemplatesMIText = "Шаблон месячных расходов";
@@ -67,6 +76,12 @@ public class MainForm implements ActionListener {
     private static final String reports_financialResultsMIText = "Финансовые результаты";
     private static final String usersMIText = "Пользователи";
     private static final String changePswMIText = "Изменить пароль";
+    private static final String findMIText = "Поиск";
+
+
+    private FindActionListener findActionListener = null;
+    private static final String reports_sumDismatchMIText = "Отчет по договорам с разницей в текущей и зарплатной прибыли";
+    private static final String reports_changesMIText = "Отчет по изменениям";
 
     /**
      * Параметры установленного временного фильтра
@@ -125,6 +140,102 @@ public class MainForm implements ActionListener {
                 }
             }
         });
+        //
+        // Настройки поиска
+        findActionListener = new FindActionListener(this);
+        customerRadioButton.addActionListener(findActionListener);
+        receiptNumRB.addActionListener(findActionListener);
+        dateRB.addActionListener(findActionListener);
+        sumRB.addActionListener(findActionListener);
+        managerRB.addActionListener(findActionListener);
+        findFromBeginningButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doFind(true);
+            }
+        });
+        findNextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doFind(false);
+            }
+        });
+        findEdit.setValue("");
+    }
+
+    /**
+     * Поиск записи в журнале
+     *
+     * @param fromBeggining Начинать сначала аль с текущего
+     */
+    private void doFind(boolean fromBeggining) {
+        if (findEdit.getValue() instanceof String) {
+            if (((String) findEdit.getValue()).trim().length() == 0) {
+                JOptionPane.showMessageDialog(frame, "Не введена строка поиска", "Поиск", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+        progressBar1.setValue(0);
+        progressBar1.setMaximum(finOpTable.getModel().getRowCount());
+        int firstEl = 0;
+        if ((!fromBeggining) && (finOpTable.getSelectedRow() != -1))
+            firstEl = finOpTable.getSelectedRow() + 1;
+        List<FinancialOperation> finOps = ((FinancialOperationTableModel) finOpTable.getModel()).getOperations();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        int i;
+        for (i = firstEl; i < finOps.size(); i++) {
+            FinancialOperation finOp = finOps.get(i);
+            if (customerRadioButton.isSelected()) {
+                // Сраниваем с покупателем/названием траты
+                if (finOp.getKind() == 0) {
+                    if (finOp.getCustomer().indexOf(findEdit.getText()) != -1) {
+                        // Ема. Нашли
+                        break;
+                    }
+                } else if (finOp.getKind() == 2) {
+                    if (finOp.getPlannedSpending() != null) {
+                        if (finOp.getPlannedSpending().getName().indexOf(findEdit.getText()) != -1) {
+                            break; // Нашли, чо
+                        }
+                    } else {
+                        if (finOp.getNonPlannedSpending().indexOf(findEdit.getText()) != -1) {
+                            break; // Нашли
+                        }
+                    }
+                }
+            } else if (receiptNumRB.isSelected()) {
+                if (finOp.getKind() == 0) {
+                    // Можем искать только в договорах!
+                    if (finOp.getOrderNum().indexOf(findEdit.getText()) != -1) {
+                        break; // И опять нашли. Чтож такое-то прям
+                    }
+                }
+            } else if (dateRB.isSelected()) {
+                if (sdf.format(finOp.getOperationDate()).indexOf(findEdit.getText()) != -1) {
+                    break; // Нашли часть даты!
+                }
+            }
+            if (sumRB.isSelected()) {
+                if (finOp.getOperationSum().equals((Double) findEdit.getValue())) {
+                    break; // Суммы совпадают
+                }
+            }
+            if (managerRB.isSelected()) {
+                if ((finOp.getKind() == 0) || (finOp.getKind() == 1)) {
+                    // Ищем только для договоров и авансов
+                    if (finOp.getManager().getFIO().indexOf(findEdit.getText()) != -1) {
+                        break; // Нашли
+                    }
+                }
+            }
+            progressBar1.setValue(progressBar1.getValue() + 1);
+        }
+        if (i == finOps.size()) {
+            JOptionPane.showMessageDialog(frame, "Не найден ни один элемент, удовлетворяющий условиям поиска", "Поиск", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            finOpTable.getSelectionModel().setSelectionInterval(i, i);
+        }
+        progressBar1.setValue(0);
     }
 
     /**
@@ -152,6 +263,7 @@ public class MainForm implements ActionListener {
                     if (trx != null) trx.rollback();
                     if (sess != null) sess.close();
                 }
+                saveChanges(new FinancialOperationChanges(fo, null, userName));
             }
         }
     }
@@ -162,6 +274,20 @@ public class MainForm implements ActionListener {
     private void doEdit() {
         if (finOpTable.getSelectedRow() != -1) {
             FinancialOperation fo = ((FinancialOperationTableModel) finOpTable.getModel()).getOperations().get(finOpTable.getSelectedRow());
+            FinancialOperation old = null;
+            Session sess = null;
+            try {
+                sess = HibernateUtils.openSession();
+                // Грузим fo полностью - если есть id
+                if (fo.getFoId() != null)
+                    fo = (FinancialOperation) sess.get(FinancialOperation.class, fo.getFoId());
+                old = (FinancialOperation) fo.clone();
+                sess.close();
+            } catch (HibernateException ex) {
+                if (sess != null) sess.close();
+                // Выходим - что-то сломалось
+                return;
+            }
             switch (fo.getKind()) {
                 case 0: {
                     // Редактируем договор
@@ -175,7 +301,7 @@ public class MainForm implements ActionListener {
                 case 1: {
                     // Редактируем аванс
                     FinancialOperationParam_Prepaid param = new FinancialOperationParam_Prepaid(frame);
-                    fo = param.doEdit(fo, mainPanel, addOperationBtn.isEnabled());
+                    fo = param.doEdit(fo, mainPanel, userRole, addOperationBtn.isEnabled() && (userRole == UserRoles.DIRECTOR));
                     if (fo != null) {
                         fo.setCloseDate(fo.getOperationDate());
                         // Поехали сохранять
@@ -186,7 +312,7 @@ public class MainForm implements ActionListener {
                 case 2: {
                     // Редактируем расход
                     FinancialOperationParam_Spending param = new FinancialOperationParam_Spending(frame);
-                    fo = param.doEdit(fo, mainPanel, addOperationBtn.isEnabled());
+                    fo = param.doEdit(fo, mainPanel, userRole, addOperationBtn.isEnabled() && (userRole == UserRoles.DIRECTOR));
                     if (fo != null) {
                         fo.setCloseDate(fo.getOperationDate());
                         // Поехали сохранять
@@ -194,6 +320,9 @@ public class MainForm implements ActionListener {
                     }
                     break;
                 }
+            }
+            if (fo != null) {
+                saveChanges(new FinancialOperationChanges(old, fo, userName));
             }
         }
     }
@@ -240,6 +369,8 @@ public class MainForm implements ActionListener {
         timeFilterParams = new TimeFilterParams(FinancialMonths.getInstance().getActiveMonth().getMonth(),
                 FinancialMonths.getInstance().getActiveMonth().getYear());
         //
+        findPanel.setVisible(false);
+        //
         loadData(null, false);
     }
 
@@ -268,6 +399,8 @@ public class MainForm implements ActionListener {
                 // Что-то странное. Какой-то текущий мутант - будем считать что это НЕ директор
                 throw new HibernateException("Strange user - has strange role");
             }
+            // Определяем имя пользователя
+            userName = (String) sess.createSQLQuery("SELECT current_user").uniqueResult();
             sess.close();
             sess = null;
         } catch (HibernateException ex) {
@@ -333,10 +466,22 @@ public class MainForm implements ActionListener {
                 item = new JMenuItem(reports_financialResultsMIText);
                 item.addActionListener(this);
                 menu.add(item);
+                item = new JMenuItem(reports_sumDismatchMIText);
+                item.addActionListener(this);
+                menu.add(item);
+                item = new JMenuItem(reports_changesMIText);
+                item.addActionListener(this);
+                menu.add(item);
             }
             menuBar.add(menu);
         }
         //
+        menu = new JMenu("Правка");
+        item = new JMenuItem(findMIText);
+        item.addActionListener(this);
+        item.setAccelerator(KeyStroke.getKeyStroke('F', Event.CTRL_MASK));
+        menu.add(item);
+        menuBar.add(menu);
         //
         menu = new JMenu("Дополнительное");
         item = new JMenuItem(closeMIText);
@@ -424,6 +569,22 @@ public class MainForm implements ActionListener {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
+        } else if (reports_sumDismatchMIText.equals(e.getActionCommand())) {
+            FinancialOperationSumDismatch report = new FinancialOperationSumDismatch();
+            try {
+                report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
+            }
+        } else if (reports_changesMIText.equals(e.getActionCommand())) {
+            FinancialOperationChangesReport report = new FinancialOperationChangesReport();
+            try {
+                report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
+            }
         } else if (closeMIText.equals(e.getActionCommand())) {
             if (JOptionPane.showConfirmDialog(null, "Завершить работу с системой?", "Завершение работы", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 System.exit(0);
@@ -433,6 +594,8 @@ public class MainForm implements ActionListener {
         } else if (usersMIText.equals(e.getActionCommand())) {
             UsersCatalog catalog = new UsersCatalog("", frame);
             catalog.showCatalog(mainPanel);
+        } else if (findMIText.equals(e.getActionCommand())) {
+            findPanel.setVisible(!findPanel.isVisible());
         }
     }
 
@@ -513,6 +676,7 @@ public class MainForm implements ActionListener {
         if (fo != null) {
             // Сохраняем
             saveToDB(fo, 0);
+            saveChanges(new FinancialOperationChanges(null, fo, userName));
             // А теперь его и выделим
             List<FinancialOperation> fos = ((FinancialOperationTableModel) finOpTable.getModel()).getOperations();
             for (int i = 0; i < fos.size(); i++) {
@@ -541,12 +705,12 @@ public class MainForm implements ActionListener {
         switch (what) {
             case 1: {
                 FinancialOperationParam_Prepaid prepaidParam = new FinancialOperationParam_Prepaid(frame);
-                fo = prepaidParam.doEdit(fo, mainPanel, true);
+                fo = prepaidParam.doEdit(fo, mainPanel, userRole, true);
                 break;
             }
             case 2: {
                 FinancialOperationParam_Spending param = new FinancialOperationParam_Spending(frame);
-                fo = param.doEdit(fo, mainPanel, true);
+                fo = param.doEdit(fo, mainPanel, userRole, true);
                 break;
             }
             default:
@@ -556,6 +720,7 @@ public class MainForm implements ActionListener {
             fo.setCloseDate(fo.getOperationDate());
             // Поехали сохранять
             saveToDB(fo, 0);
+            saveChanges(new FinancialOperationChanges(null, fo, userName));
             // А теперь его и выделим
             List<FinancialOperation> fos = ((FinancialOperationTableModel) finOpTable.getModel()).getOperations();
             for (int i = 0; i < fos.size(); i++) {
@@ -565,6 +730,30 @@ public class MainForm implements ActionListener {
                     break;
                 }
             }
+        }
+    }
+
+
+    /**
+     * Сохраняет в базу изменения
+     *
+     * @param changes Объект, куда загружены все изменения
+     */
+    private void saveChanges(FinancialOperationChanges changes) {
+        Session sess = null;
+        Transaction trx = null;
+        try {
+            sess = HibernateUtils.openSession();
+            trx = sess.beginTransaction();
+            sess.save(changes);
+            sess.flush();
+            trx.commit();
+            trx = null;
+            sess.close();
+            sess = null;
+        } catch (HibernateException ex) {
+            if (trx != null) trx.rollback();
+            if (sess != null) sess.close();
         }
     }
 
@@ -593,10 +782,16 @@ public class MainForm implements ActionListener {
             trx.commit();
             trx = null;
             switch (operation) {
-                case 0:
+                case 0: {
                     loadData(sess, false);
-                case 1:
+                    sess = null;
+                    break;
+                }
+                case 1: {
                     loadData(null, true);
+                    sess.close();
+                    sess = null;
+                }
             }
         } catch (HibernateException ex) {
             if (trx != null) trx.rollback();
@@ -1025,6 +1220,29 @@ public class MainForm implements ActionListener {
         }
 
 
+    }
+
+    /**
+     * Класс, настраивающий edit поиска
+     */
+    public class FindActionListener implements ActionListener {
+
+        private MainForm mainForm;
+
+        public FindActionListener(MainForm _mainForm) {
+            mainForm = _mainForm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (sumRB.getText().endsWith(e.getActionCommand())) {
+                if (mainForm.findEdit.getValue() instanceof String)
+                    mainForm.findEdit.setValue((double) 0);
+            } else {
+                if (mainForm.findEdit.getValue() instanceof Double)
+                    mainForm.findEdit.setValue("");
+            }
+        }
     }
 
 }

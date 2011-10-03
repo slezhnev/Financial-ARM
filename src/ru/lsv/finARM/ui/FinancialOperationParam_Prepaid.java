@@ -1,10 +1,12 @@
 package ru.lsv.finARM.ui;
 
+import com.jidesoft.swing.AutoCompletion;
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ru.lsv.finARM.common.CommonUtils;
 import ru.lsv.finARM.common.HibernateUtils;
+import ru.lsv.finARM.common.UserRoles;
 import ru.lsv.finARM.mappings.FinancialOperation;
 import ru.lsv.finARM.mappings.Manager;
 
@@ -18,6 +20,8 @@ import java.util.List;
  * Парамеры финансовой операции - аванс
  */
 public class FinancialOperationParam_Prepaid {
+
+    private UserRoles userRole;
 
     private JDialog dialog;
 
@@ -76,6 +80,9 @@ public class FinancialOperationParam_Prepaid {
         } catch (HibernateException ex) {
             if (sess != null) sess.close();
         }
+        //
+        new AutoCompletion(managerComboBox);
+        //
     }
 
     /**
@@ -88,7 +95,7 @@ public class FinancialOperationParam_Prepaid {
             JOptionPane.showMessageDialog(null, "Не выбран менеджер", "Параметры аванса", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if ((amountEdit.getValue() == null)||((Double)amountEdit.getValue()) == 0) {
+        if ((amountEdit.getValue() == null) || ((Double) amountEdit.getValue()) == 0) {
             JOptionPane.showMessageDialog(null, "Сумма аванса не может быть нулевой", "Параметры аванса", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -110,12 +117,17 @@ public class FinancialOperationParam_Prepaid {
 
     /**
      * Редактирование аванса
-     * @param fo Запись о авансе
+     *
+     * @param fo                Запись о авансе
      * @param positionComponent Компонента, относительно которой все будет позиционироваться
-     * @param allowSave Разрешено ли сохранять текущую запись
-     * @return Измененная запись о авансе
+     * @param userRole          Роль текущего залогиненного юзверя
+     * @param allowSave         Разрешено ли сохранять текущую запись  @return Измененная запись о авансе
+     * @return Скорректированные данные
      */
-    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, boolean allowSave) {
+    public FinancialOperation doEdit(FinancialOperation fo, Component positionComponent, UserRoles userRole, boolean allowSave) {
+        this.userRole = userRole;
+        // Дополнительно запретим что-либо изменять всем, кроме директора
+        //allowSave = (userRole == UserRoles.DIRECTOR);
         managerComboBox.setSelectedItem(fo.getManager());
         amountEdit.setValue(fo.getOperationSum());
         dateEdit.setDate(fo.getOperationDate());
@@ -128,8 +140,8 @@ public class FinancialOperationParam_Prepaid {
         dialog.setLocationRelativeTo(positionComponent);
         dialog.setVisible(true);
         if (modalResult) {
-            fo.setManager((Manager)managerComboBox.getSelectedItem());
-            fo.setOperationSum((Double)amountEdit.getValue());
+            fo.setManager((Manager) managerComboBox.getSelectedItem());
+            fo.setOperationSum((Double) amountEdit.getValue());
             fo.setOperationDate(new Date(dateEdit.getDate().getTime()));
             return fo;
         } else {
