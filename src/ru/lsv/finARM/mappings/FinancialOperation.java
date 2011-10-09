@@ -71,6 +71,8 @@ public class FinancialOperation implements Cloneable {
      * @return текстовое описание изменений
      */
     public String whatChanged(FinancialOperation oldFinOp) {
+        // Если сравнивать не с чем - возвращаем пустое место
+        if (oldFinOp == null) return "";
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         StringBuffer res = new StringBuffer("изменено:");
         if (!oldFinOp.operationDate.equals(this.operationDate)) {
@@ -135,6 +137,49 @@ public class FinancialOperation implements Cloneable {
                 res.append("\nпроцент менеджера с ").append(oldFinOp.managerPercent).append(" на ").append(this.managerPercent);
             }
             // А тут щас еще будем сравнивать приход / расход
+            // Тут все просто. По очереди пытаемся делать сравнение
+            // Поступления
+            if (this.incomings.size() < oldFinOp.incomings.size()) {
+                res.append("\nудалены поступления");
+            } else if (this.incomings.size() > oldFinOp.incomings.size()) {
+                res.append("\nдобавлены поступления");                
+            } else {
+                // Вот тут поедем сравнивать по очереди по а)коду, б)хэшу
+                Iterator<Incoming> oldIncs = oldFinOp.incomings.iterator();
+                Incoming oldInc = oldIncs.next();
+                for (Incoming inc : this.incomings) {
+                    if (!inc.getIncomingId().equals(oldInc.getIncomingId())) {
+                        // Тут - что-то новое
+                        res.append("\nизменены поступления");
+                        break;
+                    } else if (inc.hashCode() != oldInc.hashCode()) {
+                        res.append("\nизменены поступления");
+                        break;
+                    }
+                    oldInc = oldIncs.next();
+                }
+            }
+            // Расходы
+            if (this.spendings.size() < oldFinOp.spendings.size()) {
+                res.append("\nудалены расходы");
+            } else if (this.spendings.size() > oldFinOp.spendings.size()) {
+                res.append("\nдобавлены расходы");
+            } else {
+                // Вот тут поедем сравнивать по очереди по а)коду, б)хэшу
+                Iterator<Spending> oldIncs = oldFinOp.spendings.iterator();
+                Spending oldInc = oldIncs.next();
+                for (Spending inc : this.spendings) {
+                    if (!inc.getFinSpId().equals(oldInc.getFinSpId())) {
+                        // Тут - что-то новое
+                        res.append("\nизменены расходы");
+                        break;
+                    } else if (inc.hashCode() != oldInc.hashCode()) {
+                        res.append("\nизменены расходы");
+                        break;
+                    }
+                    oldInc = oldIncs.next();
+                }
+            }
         }
         return res.toString();
     }

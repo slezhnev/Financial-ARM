@@ -83,7 +83,7 @@ public class FinancialOperationParam_OperationSpending {
             }
         });
         //
-        new AutoCompletion(payerToComboBox);
+        new AutoCompletion(payerToComboBox).setStrict(false);
         //
     }
 

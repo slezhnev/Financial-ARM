@@ -192,7 +192,7 @@ public class FinancialOperationParam_Operation {
             }
         });
         //
-        new AutoCompletion(customerComboBox);
+        new AutoCompletion(customerComboBox).setStrict(false);
         new AutoCompletion(managerComboBox);
         //
     }

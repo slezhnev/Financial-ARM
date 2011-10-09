@@ -82,32 +82,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinancialOperationSumDismatch.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="0" selection-start="4593" selection-end="4635" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FinancialOperationChangesReport.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="FinancialOperationChangesReport.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="49" selection-start="2709" selection-end="2709" vertical-scroll-proportion="2.0425138">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="80" column="68" selection-start="3503" selection-end="3503" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NonFinishedOperationsReport.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/NonFinishedOperationsReport.java">
+      <file leaf-file-name="FinancialOperation.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="13" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0">
+            <state line="176" column="54" selection-start="8767" selection-end="8767" vertical-scroll-proportion="1.1053604">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Spending.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="13" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Incoming.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="30" selection-start="1357" selection-end="1357" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -129,20 +134,20 @@
       <list>
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationIncoming.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/Main.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationSpending.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Prepaid.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Spending.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/resources/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/hbm/FinancialOperationChanges.hbm.xml" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChanges.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationSpending.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/hbm/FinancialOperationChanges.hbm.xml" />
       </list>
     </option>
   </component>
@@ -195,6 +200,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -383,9 +389,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -405,12 +410,12 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="Persistence.ERD.MergeInherited" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="Persistence.ERD.MergeInherited" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -602,10 +607,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="0" width="1678" height="1020" extended-state="1" />
+    <frame x="1" y="0" width="1678" height="1020" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20147875" sideWeight="0.46355352" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959503" sideWeight="0.4959724" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29197532" sideWeight="0.5148064" order="2" side_tool="true" content_ui="tabs" />
@@ -615,12 +619,13 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32801822" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2962963" sideWeight="0.5284738" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3993827" sideWeight="0.43621868" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2962963" sideWeight="0.6640091" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31111112" sideWeight="0.27790433" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3993827" sideWeight="0.48177677" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31111112" sideWeight="0.3781321" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.51025057" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20147875" sideWeight="0.46355352" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43963555" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -675,119 +680,93 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationSpending.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="13" selection-start="552" selection-end="552" vertical-scroll-proportion="-2.4290953">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/ReportsCommonUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="10" selection-start="1996" selection-end="1996" vertical-scroll-proportion="0.20334928">
-          <folding />
-        </state>
+        <state line="9" column="13" selection-start="219" selection-end="219" vertical-scroll-proportion="0.13983549" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="13" selection-start="882" selection-end="882" vertical-scroll-proportion="-1.2607656" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/common/CommonUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="25" selection-start="986" selection-end="986" vertical-scroll-proportion="0.33254993" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/ReportViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="0" selection-start="4593" selection-end="4635" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="40" selection-start="644" selection-end="644" vertical-scroll-proportion="0.020408163" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationSpending.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="59" selection-start="2964" selection-end="2964" vertical-scroll-proportion="0.020782396" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="0" selection-start="2153" selection-end="2153" vertical-scroll-proportion="0.08133971">
+        <state line="194" column="60" selection-start="6972" selection-end="6972" vertical-scroll-proportion="0.020334927" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="381" column="21" selection-start="14906" selection-end="14906" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/NonFinishedOperationsReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="13" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="68" selection-start="3503" selection-end="3503" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="10" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="44" column="30" selection-start="1357" selection-end="1357" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/hbm/FinancialOperationChanges.hbm.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="34" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/ReportsCommonUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="219" selection-end="219" vertical-scroll-proportion="0.13983549">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="65" selection-start="1098" selection-end="1098" vertical-scroll-proportion="0.5405405">
+        <state line="17" column="0" selection-start="578" selection-end="578" vertical-scroll-proportion="0.72979796">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="51" selection-start="5605" selection-end="5605" vertical-scroll-proportion="2.1961722">
+        <state line="176" column="54" selection-start="8767" selection-end="8767" vertical-scroll-proportion="1.1053604">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="13" selection-start="882" selection-end="882" vertical-scroll-proportion="-1.2607656">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/common/CommonUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="25" selection-start="986" selection-end="986" vertical-scroll-proportion="0.33254993">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/NonFinishedOperationsReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="13" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/ReportViewer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="381" column="21" selection-start="14906" selection-end="14906" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="0" selection-start="4593" selection-end="4635" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="49" selection-start="2709" selection-end="2709" vertical-scroll-proportion="2.0425138">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
