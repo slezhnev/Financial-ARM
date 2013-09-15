@@ -146,8 +146,8 @@ public class FinancialOperation implements Cloneable {
             } else {
                 // Вот тут поедем сравнивать по очереди по а)коду, б)хэшу
                 Iterator<Incoming> oldIncs = oldFinOp.incomings.iterator();
-                Incoming oldInc = oldIncs.next();
                 for (Incoming inc : this.incomings) {
+                    Incoming oldInc = oldIncs.next();
                     if (!inc.getIncomingId().equals(oldInc.getIncomingId())) {
                         // Тут - что-то новое
                         res.append("\nизменены поступления");
@@ -156,7 +156,6 @@ public class FinancialOperation implements Cloneable {
                         res.append("\nизменены поступления");
                         break;
                     }
-                    oldInc = oldIncs.next();
                 }
             }
             // Расходы
@@ -167,8 +166,8 @@ public class FinancialOperation implements Cloneable {
             } else {
                 // Вот тут поедем сравнивать по очереди по а)коду, б)хэшу
                 Iterator<Spending> oldIncs = oldFinOp.spendings.iterator();
-                Spending oldInc = oldIncs.next();
                 for (Spending inc : this.spendings) {
+                    Spending oldInc = oldIncs.next();
                     if (!inc.getFinSpId().equals(oldInc.getFinSpId())) {
                         // Тут - что-то новое
                         res.append("\nизменены расходы");
@@ -177,7 +176,6 @@ public class FinancialOperation implements Cloneable {
                         res.append("\nизменены расходы");
                         break;
                     }
-                    oldInc = oldIncs.next();
                 }
             }
         }
