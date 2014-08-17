@@ -81,7 +81,7 @@ public class ChangePassword {
                 sess = HibernateUtils.openSession();
                 String currentUser = (String) sess.createSQLQuery("select current_user").uniqueResult();
                 trx = sess.beginTransaction();
-                sess.createSQLQuery("ALTER ROLE "+currentUser+" PASSWORD '"+new String(passwordField1.getPassword())+"'").executeUpdate();
+                sess.createSQLQuery("ALTER ROLE " + currentUser + " PASSWORD '" + new String(passwordField1.getPassword()) + "'").executeUpdate();
                 sess.flush();
                 trx.commit();
                 trx = null;

@@ -11,10 +11,10 @@
       <root url="jar://$PROJECT_DIR$/lib/antlr.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/Hibernate/3.6.0/javadocs" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/Hibernate/3.6.0/javadocs" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/Hibernate/3.6.0/src" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/Hibernate/3.6.0/src" />
     </SOURCES>
   </library>
 </component>

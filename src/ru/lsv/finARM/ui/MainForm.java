@@ -345,7 +345,7 @@ public class MainForm implements ActionListener {
      * Построение фрейма
      */
     public void buildFrame() {
-        frame = new JFrame("Финансовый АРМ");
+        frame = new JFrame("Финансовый АРМ - " + HibernateUtils.getDBName());
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.addWindowListener(new WindowAdapter() {
@@ -385,19 +385,24 @@ public class MainForm implements ActionListener {
         try {
             sess = HibernateUtils.openSession();
             List<String> res = sess.createSQLQuery("SELECT role_name FROM information_schema.applicable_roles where grantee=current_user").list();
-            if (res.size() != 1) {
+            /*if (res.size() != 1) {
                 // Что-то странное. Какой-то текущий мутант - будем считать что это НЕ директор
                 throw new HibernateException("Strange user - has no or more than one roles");
+            }*/
+            userRole = UserRoles.UNKNOWN;
+            for (int i = 0; i < res.size(); i++) {
+                if (res.get(i).equals("armDirectors")) {
+                    userRole = UserRoles.DIRECTOR;
+                    break;
+                } else if (res.get(i).equals("armUsers")) {
+                    userRole = UserRoles.USER;
+                } else if (res.get(i).equals("armViewers")) {
+                    userRole = UserRoles.VIEWER;
+                }
             }
-            if (res.get(0).equals("armDirectors"))
-                userRole = UserRoles.DIRECTOR;
-            else if (res.get(0).equals("armUsers"))
-                userRole = UserRoles.USER;
-            else if (res.get(0).equals("armViewers"))
-                userRole = UserRoles.VIEWER;
-            else {
+            if (userRole == UserRoles.UNKNOWN) {
                 // Что-то странное. Какой-то текущий мутант - будем считать что это НЕ директор
-                throw new HibernateException("Strange user - has strange role");
+                throw new HibernateException("Strange user - has no valid roles");
             }
             // Определяем имя пользователя
             userName = (String) sess.createSQLQuery("SELECT current_user").uniqueResult();
@@ -844,7 +849,7 @@ public class MainForm implements ActionListener {
                         .setDate(2, timeFilterParams.getBeginDate())
                         .setDate(3, timeFilterParams.getEndDate());
             }
-            java.util.List<FinancialOperation> operations = query.list();
+            List<FinancialOperation> operations = query.list();
             ((FinancialOperationTableModel) finOpTable.getModel()).setOperations(operations);
             ((FinancialOperationTableModel) finOpTable.getModel()).fireTableDataChanged();
             if ((savePosition) && (storedId != -1)) {

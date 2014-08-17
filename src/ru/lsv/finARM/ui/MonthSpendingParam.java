@@ -70,7 +70,7 @@ public class MonthSpendingParam {
 
     /**
      * Обработка закрытия по "Сохранить" или Enter'у
-     */    
+     */
     private void doNormalClose() {
         // Проверяем - а сохранять-то мы вообще можем? Может там фигня какая навведена?
         if (spendNameEdit.getText().trim().length() == 0) {
@@ -116,7 +116,7 @@ public class MonthSpendingParam {
         spYear = spTemplate.getYear();
         spendNameEdit.setText(spTemplate.getName());
         spendAmountEdit.setValue(spTemplate.getAmount());
-        yearMonthLabel.setText(""+ CommonUtils.getMonthNameByIndex(spTemplate.getMonth())+" "+spTemplate.getYear());
+        yearMonthLabel.setText("" + CommonUtils.getMonthNameByIndex(spTemplate.getMonth()) + " " + spTemplate.getYear());
         //
         dialog.pack();
         dialog.setLocationRelativeTo(positionComponent);

@@ -4,10 +4,10 @@
       <root url="jar://$PROJECT_DIR$/lib/jgoodies-looks-2.4.0.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JGoodies.libs/looks/2.4.0/docs" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JGoodies.libs/looks/2.4.0/docs" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JGoodies.libs/looks/2.4.0/src/core" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JGoodies.libs/looks/2.4.0/src/core" />
     </SOURCES>
   </library>
 </component>

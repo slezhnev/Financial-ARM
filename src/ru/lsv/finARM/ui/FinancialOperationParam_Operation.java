@@ -17,9 +17,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Параметры договора
@@ -342,7 +344,7 @@ public class FinancialOperationParam_Operation {
         if (closed) {
             if (!isClosed) {
                 if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите закрыть договор?",
-                        "После закрытия редактирование договора будет невозможно без его повторного открытия!"},
+                                "После закрытия редактирование договора будет невозможно без его повторного открытия!"},
                         "Закрытие договора", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     return;
                 }
@@ -359,7 +361,7 @@ public class FinancialOperationParam_Operation {
             }
             closeBtn.setText("Открыть договор. Дата закрытия - " + new SimpleDateFormat("dd.MM.yyyy").format(closeDate));
             closeBtn.setToolTipText("Открыть закрытый договор");
-            java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/refresh_square16_h.png");
+            URL img = getClass().getResource("ru/lsv/finARM/resources/refresh_square16_h.png");
             if (img != null) {
                 closeBtn.setIcon(new ImageIcon(img));
             }
@@ -367,7 +369,7 @@ public class FinancialOperationParam_Operation {
         } else {
             if (isClosed) {
                 if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор?",
-                        "Это может повлиять на уже сформированные и напечатанные отчеты!"},
+                                "Это может повлиять на уже сформированные и напечатанные отчеты!"},
                         "Открытие договора", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     return;
                 }
@@ -375,7 +377,7 @@ public class FinancialOperationParam_Operation {
             }
             closeBtn.setText("Закрыть договор");
             closeBtn.setToolTipText("Закрыть договор");
-            java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/post_square16_h.png");
+            URL img = getClass().getResource("ru/lsv/finARM/resources/post_square16_h.png");
             if (img != null) {
                 closeBtn.setIcon(new ImageIcon(img));
             }
@@ -416,8 +418,8 @@ public class FinancialOperationParam_Operation {
             if (closed) {
                 if (!isClosedForSalary) {
                     if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите закрыть договор по зарплате?",
-                            "После закрытия будут недоступны к редактированию зарплатная сумма, менеджер, зарплатный процент, вид оплаты,",
-                            "не будет пересчитываться текущая зарплатная прибыль !"},
+                                    "После закрытия будут недоступны к редактированию зарплатная сумма, менеджер, зарплатный процент, вид оплаты,",
+                                    "не будет пересчитываться текущая зарплатная прибыль !"},
                             "Закрытие договора по зарплате", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                         return;
                     }
@@ -434,15 +436,15 @@ public class FinancialOperationParam_Operation {
                 }
                 closeForSalaryBtn.setText("Открыть договор по зарплате. Дата закрытия - " + new SimpleDateFormat("dd.MM.yyyy").format(closeForSalaryDate));
                 closeForSalaryBtn.setToolTipText("Открыть закрытый по зарплате договор");
-                java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/refresh_square16_h.png");
+                URL img = getClass().getResource("ru/lsv/finARM/resources/refresh_square16_h.png");
                 if (img != null) {
                     closeForSalaryBtn.setIcon(new ImageIcon(img));
                 }
             } else {
                 if (isClosedForSalary) {
                     if (JOptionPane.showConfirmDialog(mainPanel, new String[]{"Вы уверены, что хотите открыть договор по зарплате?",
-                            "Это может повлиять на уже сформированные и напечатанные отчеты!", " ",
-                            "ВНИМАНИЕ - если в закрытый по зарплате договор вносились расходы - не забудьте скорректировать в них зарплатные суммы!", " "},
+                                    "Это может повлиять на уже сформированные и напечатанные отчеты!", " ",
+                                    "ВНИМАНИЕ - если в закрытый по зарплате договор вносились расходы - не забудьте скорректировать в них зарплатные суммы!", " "},
                             "Открытие договора по зарплате", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                         return;
                     }
@@ -450,7 +452,7 @@ public class FinancialOperationParam_Operation {
                 }
                 closeForSalaryBtn.setText("Закрыть договор по зарплате");
                 closeForSalaryBtn.setToolTipText("Закрыть договор по зарплате");
-                java.net.URL img = getClass().getResource("ru/lsv/finARM/resources/post_square16_h.png");
+                URL img = getClass().getResource("ru/lsv/finARM/resources/post_square16_h.png");
                 if (img != null) {
                     closeForSalaryBtn.setIcon(new ImageIcon(img));
                 }
@@ -531,7 +533,7 @@ public class FinancialOperationParam_Operation {
             //if (fo.getFoId() != null)
             //    fo = (FinancialOperation) sess.get(FinancialOperation.class, fo.getFoId());
             // Грузим список заказчиков
-            java.util.List<String> customers = sess.createQuery("select DISTINCT customer from FinancialOperation order by customer").list();
+            List<String> customers = sess.createQuery("select DISTINCT customer from FinancialOperation order by customer").list();
             customerComboBox.setModel(new DefaultComboBoxModel(customers.toArray()));
             customerComboBox.setSelectedItem(fo.getCustomer());
             //
@@ -547,7 +549,7 @@ public class FinancialOperationParam_Operation {
             dateEdit.setDate(fo.getOperationDate());
             paymentTypeComboBox.setSelectedIndex(fo.getPaymentType());
             //
-            java.util.List<Manager> managers = sess.createQuery("from Manager order by FIO").list();
+            List<Manager> managers = sess.createQuery("from Manager order by FIO").list();
             managerComboBox.setModel(new DefaultComboBoxModel(managers.toArray()));
             managerComboBox.setSelectedItem(fo.getManager());
             doSetManagerPercent();

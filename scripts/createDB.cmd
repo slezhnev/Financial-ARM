@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\pgAdmin III\1.18\psql.exe" -f createNewDB.sql -h 192.168.100.100 -U postgres

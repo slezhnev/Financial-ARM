@@ -165,11 +165,11 @@ public class ManagerParam {
                     Query query = sess.createQuery("update FinancialOperation set managerPercent=? where closed=false and paymentType=? and manager=?").
                             setEntity(2, tempMng);
                     // Наличка
-                    query.setDouble(0, (Double)cashPercentEdit.getValue());
+                    query.setDouble(0, (Double) cashPercentEdit.getValue());
                     query.setInteger(1, 0);
                     query.executeUpdate();
                     // Безналичка
-                    query.setDouble(0, (Double)nonCashPercentEdit.getValue());
+                    query.setDouble(0, (Double) nonCashPercentEdit.getValue());
                     query.setInteger(1, 1);
                     query.executeUpdate();
                     trx.commit();

@@ -3,6 +3,7 @@ package ru.lsv.finARM.ui;
 import ru.lsv.finARM.common.HibernateUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,35 +23,45 @@ public class LoginForm {
 
     public LoginForm() {
         enterBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Загружаем адрес сервера...
-                try {
-                    Properties props = new Properties();
-                    props.load(new FileReader("connection.properties"));
-                    if (!props.containsKey("server.address")) {
-                        throw new IOException("Invalid configuration file!");
-                    }
-                    HibernateUtils.doSessionFactoryConfiguration(userNameEdit.getText(), new String(pswEdit.getPassword()), props.getProperty("server.address"));
-                    props.put("last.connected", userNameEdit.getText());
-                    props.store(new FileWriter("connection.properties"), "Connection properties");
-                } catch (ExceptionInInitializerError ex) {
-                    JOptionPane.showMessageDialog(null, "Неверное имя пользователя/пароль или проблемы с доступностью SQL-сервера");
-                    return;
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(null, "Не удается получить адрес сервера");
-                    return;
-                }
+                                       @Override
+                                       public void actionPerformed(ActionEvent e) {
+                                           // Загружаем адрес сервера...
+                                           try {
+                                               String connection_properties = System.getProperty("connection");
+                                               if (connection_properties == null) {
+                                                   connection_properties = "connection.properties";
+                                               }
+                                               Properties props = new Properties();
+                                               props.load(new FileReader(connection_properties));
+                                               String db = "finARM";
+                                               if (!props.containsKey("server.address")) {
+                                                   throw new IOException("Invalid configuration file!");
+                                               }
+                                               if (props.containsKey("db")) {
+                                                   db = props.getProperty("db");
+                                                   System.out.println("Working with base " + db);
+                                               }
+                                               HibernateUtils.doSessionFactoryConfiguration(userNameEdit.getText(),
+                                                       new String(pswEdit.getPassword()), props.getProperty("server.address"), db);
+                                               props.put("last.connected", userNameEdit.getText());
+                                               props.store(new FileWriter("connection.properties"), "Connection properties");
+                                           } catch (ExceptionInInitializerError ex) {
+                                               JOptionPane.showMessageDialog(null, "Неверное имя пользователя/пароль или проблемы с доступностью SQL-сервера");
+                                               return;
+                                           } catch (IOException e1) {
+                                               JOptionPane.showMessageDialog(null, "Не удается получить адрес сервера");
+                                               return;
+                                           }
 
-                // Прячем и будем показывать какую-нито другую форму
-                MainForm mainForm = new MainForm();
-                mainForm.buildFrame();
-                frame.setVisible(false);
-                mainForm.getFrame().
+                                           // Прячем и будем показывать какую-нито другую форму
+                                           MainForm mainForm = new MainForm();
+                                           mainForm.buildFrame();
+                                           frame.setVisible(false);
+                                           mainForm.getFrame().
 
-                        setVisible(true);
-            }
-        }
+                                                   setVisible(true);
+                                       }
+                                   }
 
         );
     }

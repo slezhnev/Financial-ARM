@@ -92,7 +92,7 @@ public class MainForm_TimeFilterParams {
             }
         }
         if (periodRadioButton.isSelected()) {
-            if ((dateEdit1.getDate() == null)||(dateEdit2.getDate() == null)) {
+            if ((dateEdit1.getDate() == null) || (dateEdit2.getDate() == null)) {
                 JOptionPane.showMessageDialog(mainPanel, "Не указана одна из дат периода", "Параметры временного выделения",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -145,7 +145,7 @@ public class MainForm_TimeFilterParams {
         dialog.setVisible(true);
         if (modalResult) {
             if (monthRadioButton.isSelected()) {
-                FinancialMonth fm = (FinancialMonth)monthComboBox.getSelectedItem();
+                FinancialMonth fm = (FinancialMonth) monthComboBox.getSelectedItem();
                 params.setMonth(fm.getMonth(), fm.getYear());
             } else {
                 //params.setPeriod((Date)dateEdit1.getValue(), (Date)dateEdit2.getValue());

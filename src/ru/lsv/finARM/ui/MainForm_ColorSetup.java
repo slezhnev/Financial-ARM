@@ -220,4 +220,5 @@ public class MainForm_ColorSetup {
     public Color getClosedForSalaryColor() {
         return colors[4];
     }
+
 }

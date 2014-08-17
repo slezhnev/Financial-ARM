@@ -55,6 +55,7 @@ public class ReportViewer extends JFrame {
         //
         this.reportName = reportName;
         this.xmlName = xmlName;
+        //$$$setupUI$$$();
         getContentPane().add(panel1);
         setBounds(0, 0, 1100, 900);
         setLocationRelativeTo(locationComp);
@@ -90,4 +91,5 @@ public class ReportViewer extends JFrame {
     public void fitPage() {
         JRViewer1.setFitPageZoomRatio();
     }
+
 }

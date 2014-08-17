@@ -121,4 +121,5 @@ public class SpendingTemplateParam {
             return null;
         }
     }
+
 }

@@ -15,6 +15,10 @@ public class HibernateUtils {
      * Session factory
      */
     private static SessionFactory sessFactory = null;
+    /**
+     * Имя базы, с которой работаем
+     */
+    private static String dbName = null;
 
     /**
      * Создает и настраивает фактори коннектов
@@ -22,26 +26,28 @@ public class HibernateUtils {
      * @param userName      Имя пользователя
      * @param userPsw       Пароль
      * @param serverAddress Адрес сервера
+     * @param db            Имя базы
      * @throws ExceptionInInitializerError Если экземпляр уже создан и сделана попытка повторной инициализации
      */
-    public static void doSessionFactoryConfiguration(String userName, String userPsw, String serverAddress) throws ExceptionInInitializerError {
+    public static void doSessionFactoryConfiguration(String userName, String userPsw, String serverAddress, String db
+    ) throws ExceptionInInitializerError {
         if (sessFactory != null) {
             throw new ExceptionInInitializerError("Session factory already created");
         } else {
             try {
+                dbName = db;
                 Configuration conf = new Configuration().
                         configure("ru/lsv/finARM/resources/hibernate.cfg.xml");
                 conf.setProperty("hibernate.connection.username", userName);
                 conf.setProperty("hibernate.connection.password", userPsw);
-                conf.setProperty("hibernate.connection.url", "jdbc:postgresql://" + serverAddress + "/finARM");
+                conf.setProperty("hibernate.connection.url", "jdbc:postgresql://" + serverAddress + "/" + db);
                 sessFactory = conf.buildSessionFactory();
                 // Что-то как-то при проблемах с именем пользователя никто exception создавать не хочет
                 // Обойдем тестовым запросом - тогда оно точно бабахнется
                 Session sess = sessFactory.openSession();
                 List<Manager> tmpMng = sess.createQuery("from Manager").list();
                 sess.close();
-            }
-            catch (Throwable ex) {
+            } catch (Throwable ex) {
                 if (sessFactory != null) sessFactory.close();
                 sessFactory = null;
                 throw new ExceptionInInitializerError(ex);
@@ -63,4 +69,11 @@ public class HibernateUtils {
         return sess;
     }
 
+    /**
+     * Получить имя базы, с которой работаем
+     * @return Имя базы
+     */
+    public static String getDBName() {
+        return dbName;
+    }
 }

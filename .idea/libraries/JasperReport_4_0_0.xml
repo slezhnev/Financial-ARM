@@ -8,10 +8,10 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-logging.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JasperReport/4.0.0/docs" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JasperReport/4.0.0/docs" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JasperReport/4.0.0/src" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JasperReport/4.0.0/src" />
     </SOURCES>
   </library>
 </component>

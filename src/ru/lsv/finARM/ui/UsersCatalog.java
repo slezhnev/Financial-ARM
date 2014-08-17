@@ -8,7 +8,7 @@ import ru.lsv.finARM.common.HibernateUtils;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +17,7 @@ import java.util.List;
 public class UsersCatalog extends CatalogTemplate {
 
     private String currentUser = null;
+    private List<String> databases = null;
 
     /**
      * Создает форму
@@ -92,7 +93,7 @@ public class UsersCatalog extends CatalogTemplate {
                         "Зайдите в систему под другим именем пользователя для редактирования этого пользователя."};
                 JOptionPane.showMessageDialog(mainPanel, msg, "Параметры пользователя", JOptionPane.WARNING_MESSAGE);
             } else {
-                new UserParam(dialog).doEdit(user, mainPanel);
+                new UserParam(dialog).doEdit(user, mainPanel, databases);
             }
         }
     }
@@ -103,7 +104,7 @@ public class UsersCatalog extends CatalogTemplate {
     @Override
     protected void doAdd() {
         UserParam up = new UserParam(dialog);
-        UserStorage user = up.doEdit(null, mainPanel);
+        UserStorage user = up.doEdit(null, mainPanel, databases);
         if (user != null) {
             ((UsersTableModel) table.getModel()).getUsers().add(user);
             ((UsersTableModel) table.getModel()).fireTableDataChanged();
@@ -122,15 +123,48 @@ public class UsersCatalog extends CatalogTemplate {
         try {
             sess = HibernateUtils.openSession();
             currentUser = (String) sess.createSQLQuery("select current_user").uniqueResult();
+            // Получаем список БД
+            databases = new ArrayList<String>();
+            List dbs = sess.createSQLQuery("SELECT datname FROM pg_database WHERE datistemplate = false").list();
+            for (Object db : dbs) {
+                if (!"postgres".equals(db))
+                    databases.add((String) db);
+            }
+            //
             List users = sess.createSQLQuery("select f.rolname, d.groname from pg_roles f " +
                     "left join pg_group d " +
                     "on f.oid = ANY(d.grolist) " +
                     "where f.rolcanlogin=true and f.rolsuper=false " +
                     "order by f.rolname").list();
             ArrayList<UserStorage> allUsers = new ArrayList<UserStorage>();
+            List<String> accessRoles = null;
+            String processingUser = null;
+            String processingUserRole = null;
             for (Object user : users) {
                 Object[] currUser = (Object[]) user;
-                allUsers.add(new UserStorage((String) currUser[0], (String) currUser[1]));
+                if (!((String) currUser[0]).equals(processingUser)) {
+                    // Новый пользователь
+                    if (processingUser != null) {
+                        allUsers.add(new UserStorage(processingUser, processingUserRole, accessRoles));
+                    }
+                    processingUser = (String) currUser[0];
+                    processingUserRole = null;
+                    accessRoles = new ArrayList<String>();
+                }
+                if ("armDirectors".equals(currUser[1]) || "armUsers".equals(currUser[1]) || "armViewers".equals
+                        (currUser[1])) {
+                    processingUserRole = (String) currUser[1];
+                } else {
+                    // Проверяем - может это роль доступа к БД?
+                    for (String db : databases) {
+                        if (((String) currUser[1]).toLowerCase().startsWith(db.toLowerCase())) {
+                            accessRoles.add(db);
+                        }
+                    }
+                }
+            }
+            if (processingUser != null) {
+                allUsers.add(new UserStorage(processingUser, processingUserRole, accessRoles));
             }
             ((UsersTableModel) table.getModel()).setUsers(allUsers);
             ((UsersTableModel) table.getModel()).fireTableDataChanged();
@@ -146,16 +180,23 @@ public class UsersCatalog extends CatalogTemplate {
      * Storage для пользователя
      */
     public static class UserStorage {
-        public UserStorage(String userName, String userRole) {
+        public UserStorage(String userName, String userRole, List<String> accessRoles) {
             if (userName == null) this.userName = "";
             else this.userName = userName;
             if (userRole == null) this.userRole = "";
             else this.userRole = userRole;
+            if (accessRoles == null) {
+                this.accessRoles = new ArrayList<String>();
+            } else {
+                this.accessRoles = accessRoles;
+            }
         }
 
         String userName;
 
         String userRole;
+
+        List<String> accessRoles;
     }
 
     private class UsersTableModel extends AbstractTableModel {
@@ -181,7 +222,7 @@ public class UsersCatalog extends CatalogTemplate {
          */
         @Override
         public int getColumnCount() {
-            return 2;
+            return 3;
         }
 
         /**
@@ -196,7 +237,7 @@ public class UsersCatalog extends CatalogTemplate {
         public Object getValueAt(int rowIndex, int columnIndex) {
             if ((rowIndex < users.size()) && (columnIndex < 2)) {
                 if (columnIndex == 0) return users.get(rowIndex).userName;
-                else {
+                else if (columnIndex == 1) {
                     if (users.get(rowIndex).userRole.equals("armDirectors")) {
                         return "Директора";
                     } else if (users.get(rowIndex).userRole.equals("armUsers")) {
@@ -206,6 +247,15 @@ public class UsersCatalog extends CatalogTemplate {
                     } else {
                         return "ОШИБКА";
                     }
+                } else {
+                    StringBuffer tmp = new StringBuffer();
+                    for (String role : users.get(rowIndex).accessRoles) {
+                        if (tmp.length() != 0) {
+                            tmp.append(" / ");
+                        }
+                        tmp.append(role);
+                    }
+                    return tmp.toString();
                 }
             } else
                 return null;
@@ -222,7 +272,8 @@ public class UsersCatalog extends CatalogTemplate {
         @Override
         public String getColumnName(int column) {
             if (column == 0) return "Имя пользователя";
-            else return "Группа";
+            else if (column == 1) return "Группа";
+            else return "Доступ";
         }
 
         /**

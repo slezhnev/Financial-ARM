@@ -15,7 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
+import java.util.List;
 
 /**
  * Финансования операция - расходы
@@ -80,7 +82,7 @@ public class FinancialOperationParam_Spending {
         Session sess = null;
         try {
             sess = HibernateUtils.openSession();
-            java.util.List<MonthSpending> spendings = sess.createQuery("from MonthSpending where (month=? AND year=?) order by name")
+            List<MonthSpending> spendings = sess.createQuery("from MonthSpending where (month=? AND year=?) order by name")
                     .setInteger(0, FinancialMonths.getInstance().getActiveMonth().getMonth())
                     .setInteger(1, FinancialMonths.getInstance().getActiveMonth().getYear())
                     .list();
@@ -166,7 +168,7 @@ public class FinancialOperationParam_Spending {
         doSpendingsEnable();
 
         // Дополнительно запретим что-либо изменять всем, кроме директора
-        //allowSave = (userRole == UserRoles.DIRECTOR);        
+        //allowSave = (userRole == UserRoles.DIRECTOR);
         if (!allowSave) {
             CommonUtils.disableComponents(dialog);
             cancelBtn.setEnabled(true);
@@ -184,7 +186,7 @@ public class FinancialOperationParam_Spending {
                 fo.setNonPlannedSpending(nonPlannedSpendinEdit.getText());
             }
             fo.setOperationSum((Double) amountEdit.getValue());
-            fo.setOperationDate(new java.sql.Date(dateEdit.getDate().getTime()));
+            fo.setOperationDate(new Date(dateEdit.getDate().getTime()));
             fo.setPaymentType(paymentTypeComboBox.getSelectedIndex());
             return fo;
         } else {
@@ -200,4 +202,5 @@ public class FinancialOperationParam_Spending {
         plannedSpendingComboBox.setEnabled(plannedSpendingRB.isSelected());
         nonPlannedSpendinEdit.setEnabled(nonPlannedSpendingRB.isSelected());
     }
+
 }

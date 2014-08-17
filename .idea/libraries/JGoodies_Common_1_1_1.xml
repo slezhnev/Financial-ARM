@@ -4,10 +4,10 @@
       <root url="jar://$PROJECT_DIR$/lib/jgoodies-common-1.1.1.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JGoodies.libs/common/1.1.1/docs" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JGoodies.libs/common/1.1.1/docs" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$USER_HOME_GRIFFON$/JavaProjects/JGoodies.libs/common/1.1.1/src/core" />
+      <root url="file://$USER_HOME$/.griffon/JavaProjects/JGoodies.libs/common/1.1.1/src/core" />
     </SOURCES>
   </library>
 </component>
