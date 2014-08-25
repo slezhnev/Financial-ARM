@@ -297,7 +297,7 @@ public class Spending implements Comparable, Cloneable {
             int val = paymentDate.compareTo(os.getPaymentDate());
             if (val == 0) {
                 // Сравнивать будем по кодам. Если коды одинаковые - то и записи совпадают
-                if ((finSpId == 0) && (os.getFinSpId() == 0)) {
+                if ((finSpId == null) && (os.getFinSpId() == null)) {
                     // Тут они свежедобавленные чтоль? Значит будем сравнивать по хэшу
                     return new Integer(hashCode()).compareTo(os.hashCode());
                 } else

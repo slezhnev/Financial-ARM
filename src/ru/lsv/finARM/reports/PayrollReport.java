@@ -277,7 +277,12 @@ public class PayrollReport {
                         e.setAttribute("cashProfit", CommonUtils.formatDouble(cashProfit));
                         e.setAttribute("nonCashProfit", CommonUtils.formatDouble(nonCashProfit));
                     }
-                    root.appendChild(e);
+                    // Возможный вариант - менеджер у нас уволен нахрен - и у него нету никаких выплат. Тогда
+                    // добавлять не будем
+                    if (!(mng.isDismissed() && (cashProfit == 0) && (nonCashProfit == 0) && (subsidy == 0) &&
+                            (retention == 0) && (salary == 0))) {
+                        root.appendChild(e);
+                    }
                     id++;
                 }
             }

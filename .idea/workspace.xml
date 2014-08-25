@@ -9,55 +9,22 @@
     <bookmark url="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.form" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b95a4354-fedd-4331-85db-7125b2a3e51d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Apache_POI.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/FinancialARM_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/JIDE_Common_Layer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/clearViewersRole.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/connection.arm2.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/createDB.cmd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/createNewDB.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/createRoles.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/createTables.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/createUser.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/createViewers.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/update_3Oct2011.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/old/update_9Oct2011.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/update_finARM.sql" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\clearViewersRole.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\createRoles.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\createTables.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\createUser.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\createViewers.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\update_3Oct2011.sql" afterPath="" />
-      <change type="DELETED" beforePath="I:\JavaProjects\FinancialARM\scripts\update_9Oct2011.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ChangePassword.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ChangePassword.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FinancialARM.iml" afterPath="$PROJECT_DIR$/FinancialARM.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Spending.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Spending.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/common/HibernateUtils.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/common/HibernateUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/JCalendar_1_3_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/JCalendar_1_3_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/JGoodies_Common_1_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/JGoodies_Common_1_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/JGoodies_Looks_2_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/JGoodies_Looks_2_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/JasperReport_4_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/JasperReport_4_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm_ColorSetup.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm_ColorSetup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm_TimeFilterParams.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm_TimeFilterParams.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ManagerParam.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ManagerParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MonthSpendingParam.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MonthSpendingParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ReportViewer.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ReportViewer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/SpendingTemplateParam.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/SpendingTemplateParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.form" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UsersCatalog.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UsersCatalog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+    <list default="true" id="b95a4354-fedd-4331-85db-7125b2a3e51d" name="Default" comment="Изменен номер версии на 2.0&#10;Поправлены ошибки добавления платежей и расходов при работе на Java 7&#10;При формировании зарплатной ведомости в нее не включаются уволенные менеджеры, выплаты которым отсутствуют">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationIncoming.form" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationIncoming.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FormattedEditDialog.form" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FormattedEditDialog.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/IncomingComparator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/SpendingComparator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/common/UserRoles.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connection.properties" afterPath="$PROJECT_DIR$/connection.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/hibernate3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/hibernate3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FinancialARM.iws" />
@@ -113,8 +80,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules converted="true" />
     <ui_properties converted="true" />
+    <breakpoint_rules converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -125,18 +92,51 @@
       <file leaf-file-name="MainForm.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5899" max-vertical-offset="21403">
-              <caret line="347" column="75" selection-start-line="347" selection-start-column="75" selection-end-line="347" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="7803" max-vertical-offset="20111">
+              <caret line="545" column="45" selection-start-line="545" selection-start-column="45" selection-end-line="545" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginForm.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PayrollReport.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2147806" vertical-offset="3673" max-vertical-offset="7735">
+              <caret line="250" column="57" selection-start-line="250" selection-start-column="57" selection-end-line="250" selection-end-column="57" />
+              <folding>
+                <element signature="e#6183#6208#0" expanded="true" />
+                <element signature="e#19435#19461#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginForm.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1632">
               <caret line="41" column="80" selection-start-line="41" selection-start-column="80" selection-end-line="41" selection-end-column="80" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Incoming.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="953" max-vertical-offset="1819">
+              <caret line="113" column="71" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Spending.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3792" max-vertical-offset="4658">
+              <caret line="299" column="65" selection-start-line="299" selection-start-column="65" selection-end-line="299" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -172,19 +172,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserParam.form" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.form">
-          <provider selected="true" editor-type-id="ui-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -194,17 +190,14 @@
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Prepaid.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Spending.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/resources/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationSumDismatch.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChanges.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_OperationSpending.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperationChanges.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/hbm/FinancialOperationChanges.hbm.xml" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java" />
-        <option value="$PROJECT_DIR$/connection.properties" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/common/UserRoles.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/ReportViewer.java" />
@@ -213,6 +206,11 @@
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/common/HibernateUtils.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" />
+        <option value="$PROJECT_DIR$/connection.properties" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java" />
       </list>
     </option>
   </component>
@@ -221,10 +219,10 @@
     <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="10" />
-    <option name="y" value="5" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1696" />
-    <option name="height" value="1040" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -335,7 +333,187 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FormattedEditDialog" />
+              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialOperationParam_OperationIncoming" />
+              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reports" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mappings" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialARM" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -425,19 +603,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -463,6 +628,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -525,7 +703,7 @@
     <configuration default="false" name="Main" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="ru.lsv.finARM.Main" />
-      <option name="VM_PARAMETERS" value="-Dconnection=connection.arm2.properties" />
+      <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -573,6 +751,11 @@
       <created>1296413198000</created>
       <updated>1296413198000</updated>
     </task>
+    <task id="LOCAL-00001" summary="Добавлена возможность работы с несколькими БД">
+      <created>1408293417510</created>
+      <updated>1408293417510</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -596,7 +779,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="10" y="5" width="1696" height="1040" extended-state="0" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20110025" sideWeight="0.46355352" order="2" side_tool="false" content_ui="tabs" />
@@ -606,17 +789,18 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32823962" sideWeight="0.48177677" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6726862" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39647576" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39597315" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32550335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1900978" sideWeight="0.47986576" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3993827" sideWeight="0.48177677" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39914426" sideWeight="0.48177677" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1900978" sideWeight="0.5201342" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4493392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44854587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29197532" sideWeight="0.5148064" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -624,7 +808,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4395973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32599118" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -644,11 +827,13 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Добавлена возможность работы с несколькими БД" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена возможность работы с несколькими БД" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -664,6 +849,51 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="21403">
+          <caret line="347" column="75" selection-start-line="347" selection-start-column="75" selection-end-line="347" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1734">
+          <caret line="41" column="80" selection-start-line="41" selection-start-column="80" selection-end-line="41" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/common/HibernateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1241" max-vertical-offset="1445">
+          <caret line="73" column="23" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/UsersCatalog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2703" max-vertical-offset="5185">
+          <caret line="159" column="92" selection-start-line="159" selection-start-column="92" selection-end-line="159" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2907" max-vertical-offset="4930">
+          <caret line="171" column="84" selection-start-line="171" selection-start-column="84" selection-end-line="171" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/UserParam.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5899" max-vertical-offset="21403">
@@ -721,6 +951,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2533" max-vertical-offset="7191">
           <caret line="153" column="30" selection-start-line="153" selection-start-column="30" selection-end-line="153" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -733,13 +964,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13983549" vertical-offset="0" max-vertical-offset="0">
           <caret line="9" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2607656" vertical-offset="0" max-vertical-offset="0">
-          <caret line="30" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -799,36 +1023,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="11" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="44" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="2533" max-vertical-offset="7191">
           <caret line="153" column="30" selection-start-line="153" selection-start-column="30" selection-end-line="153" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/connection.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -880,19 +1079,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5525" max-vertical-offset="20995">
-          <caret line="347" column="75" selection-start-line="347" selection-start-column="75" selection-end-line="347" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/LoginForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1632">
           <caret line="41" column="80" selection-start-line="41" selection-start-column="80" selection-end-line="41" selection-end-column="80" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Spending.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3792" max-vertical-offset="4658">
+          <caret line="299" column="65" selection-start-line="299" selection-start-column="65" selection-end-line="299" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.03926097" vertical-offset="102" max-vertical-offset="1122">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="953" max-vertical-offset="1819">
+          <caret line="113" column="71" selection-start-line="113" selection-start-column="71" selection-end-line="113" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/connection.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07311828" vertical-offset="0" max-vertical-offset="465">
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="7803" max-vertical-offset="20111">
+          <caret line="545" column="45" selection-start-line="545" selection-start-column="45" selection-end-line="545" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2147806" vertical-offset="3673" max-vertical-offset="7735">
+          <caret line="250" column="57" selection-start-line="250" selection-start-column="57" selection-end-line="250" selection-end-column="57" />
+          <folding>
+            <element signature="e#6183#6208#0" expanded="true" />
+            <element signature="e#19435#19461#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
