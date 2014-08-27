@@ -878,7 +878,11 @@ public class MainForm implements ActionListener {
         addOperationBtn.setEnabled(enable);
         addPrepaymentBtn.setEnabled(enable);
         addSpendingBtn.setEnabled(enable);
-        delBtn.setEnabled(enable);
+        if (userRole == UserRoles.DIRECTOR) {
+            delBtn.setEnabled(enable);
+        } else {
+            delBtn.setEnabled(false);
+        }
 
         //editBtn.setEnabled(enable);
     }
