@@ -418,34 +418,36 @@ public class MainForm implements ActionListener {
         //if (isDirector) {
         // Это могут видеть только директора или пользователи. "Просмотрщики" не видят ничего
         if ((userRole == UserRoles.DIRECTOR) || (userRole == UserRoles.USER)) {
-            menu = new JMenu("Справочники");
-            item = new JMenuItem(managersMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            item = new JMenuItem(spendingTemplatesMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            //
             if (userRole == UserRoles.DIRECTOR) {
+                menu = new JMenu("Справочники");
+                item = new JMenuItem(managersMIText);
+                item.addActionListener(this);
+                menu.add(item);
+                item = new JMenuItem(spendingTemplatesMIText);
+                item.addActionListener(this);
+                menu.add(item);
+                //
                 menu.addSeparator();
                 item = new JMenuItem(usersMIText);
                 item.addActionListener(this);
                 menu.add(item);
+                //
+                menuBar.add(menu);
             }
-            //
-            menuBar.add(menu);
             //
             menu = new JMenu("Помесячное");
             item = new JMenuItem(monthSpendingMIText);
             item.addActionListener(this);
             menu.add(item);
-            menu.addSeparator();
-            item = new JMenuItem(closeMonthMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            item = new JMenuItem(openMonthMIText);
-            item.addActionListener(this);
-            menu.add(item);
+            if (userRole == UserRoles.DIRECTOR) {
+                menu.addSeparator();
+                item = new JMenuItem(closeMonthMIText);
+                item.addActionListener(this);
+                menu.add(item);
+                item = new JMenuItem(openMonthMIText);
+                item.addActionListener(this);
+                menu.add(item);
+            }
             menuBar.add(menu);
             //}
             //
@@ -458,15 +460,15 @@ public class MainForm implements ActionListener {
             fullSalaryMI = new JMenuItem(reports_fullSalaryMIText);
             fullSalaryMI.addActionListener(this);
             menu.add(fullSalaryMI);
-            menu.addSeparator();
-            item = new JMenuItem(reports_plannedMonthSpendingMIText);
-            item.addActionListener(this);
-            menu.add(item);
-            menu.addSeparator();
-            item = new JMenuItem(reports_nonClosedOperationsMIText);
-            item.addActionListener(this);
-            menu.add(item);
             if (userRole == UserRoles.DIRECTOR) {
+                menu.addSeparator();
+                item = new JMenuItem(reports_plannedMonthSpendingMIText);
+                item.addActionListener(this);
+                menu.add(item);
+                menu.addSeparator();
+                item = new JMenuItem(reports_nonClosedOperationsMIText);
+                item.addActionListener(this);
+                menu.add(item);
                 menu.addSeparator();
                 item = new JMenuItem(reports_financialResultsMIText);
                 item.addActionListener(this);

@@ -158,7 +158,7 @@
             </constraints>
             <properties>
               <font size="9"/>
-              <text value="Версия 2.1"/>
+              <text value="Версия 2.2"/>
             </properties>
           </component>
           <component id="f2742" class="javax.swing.JProgressBar" binding="progressBar1" default-binding="true">
