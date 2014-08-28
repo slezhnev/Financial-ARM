@@ -9,10 +9,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/FinancialOperationParam_Operation.form" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b95a4354-fedd-4331-85db-7125b2a3e51d" name="Default" comment="Версия 2.2&#10;* Для пользователей отключены следующие возможности:&#10;   доступ к разделу &quot;Справочники&quot; (полностью)">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" />
+    <list default="true" id="b95a4354-fedd-4331-85db-7125b2a3e51d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" afterPath="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connection.properties" afterPath="$PROJECT_DIR$/connection.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FinancialARM.iws" />
@@ -80,8 +78,8 @@
       <file leaf-file-name="MainForm.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6049822" vertical-offset="5916" max-vertical-offset="20213">
-              <caret line="424" column="0" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.24733096" vertical-offset="8123" max-vertical-offset="20213">
+              <caret line="542" column="30" selection-start-line="542" selection-start-column="30" selection-end-line="542" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -131,8 +129,8 @@
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/mappings/Incoming.java" />
         <option value="$PROJECT_DIR$/connection.properties" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/reports/PayrollReport.java" />
-        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
         <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.form" />
+        <option value="$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java" />
       </list>
     </option>
   </component>
@@ -308,28 +306,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="reports" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinancialARM" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinancialARM" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finARM" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mappings" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -637,7 +613,11 @@
       <created>1409160273186</created>
       <updated>1409160273186</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Версия 2.2&#10;* Для пользователей отключены следующие возможности:&#10;   доступ к разделу &quot;Справочники&quot; (полностью)&#10;   возможность формирования отчета по незакрытым договорам&#10;   возможность формирования отчета по месячным расходам">
+      <created>1409247356109</created>
+      <updated>1409247356109</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -675,7 +655,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32550335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32550335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1900978" sideWeight="0.47986576" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -714,7 +694,8 @@
     <MESSAGE value="Добавлена возможность работы с несколькими БД" />
     <MESSAGE value="Изменен номер версии на 2.0&#10;Поправлены ошибки добавления платежей и расходов при работе на Java 7&#10;При формировании зарплатной ведомости в нее не включаются уволенные менеджеры, выплаты которым отсутствуют&#10;Добавлена пачка файлов, которые я засклерозил добавить раньше" />
     <MESSAGE value="Версия 2.1&#10;* Для пользователей заблокирована возможность удаления чего либо (удалять могут только директора)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Версия 2.1&#10;* Для пользователей заблокирована возможность удаления чего либо (удалять могут только директора)" />
+    <MESSAGE value="Версия 2.2&#10;* Для пользователей отключены следующие возможности:&#10;   доступ к разделу &quot;Справочники&quot; (полностью)&#10;   возможность формирования отчета по незакрытым договорам&#10;   возможность формирования отчета по месячным расходам" />
+    <option name="LAST_COMMIT_MESSAGE" value="Версия 2.2&#10;* Для пользователей отключены следующие возможности:&#10;   доступ к разделу &quot;Справочники&quot; (полностью)&#10;   возможность формирования отчета по незакрытым договорам&#10;   возможность формирования отчета по месячным расходам" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -973,13 +954,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="80" column="68" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/mappings/FinancialOperation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="2533" max-vertical-offset="7191">
@@ -1083,10 +1057,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/reports/FinancialOperationChangesReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19630484" vertical-offset="0" max-vertical-offset="1360">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/lsv/finARM/ui/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6049822" vertical-offset="5916" max-vertical-offset="20213">
-          <caret line="424" column="0" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.24733096" vertical-offset="8123" max-vertical-offset="20213">
+          <caret line="542" column="30" selection-start-line="542" selection-start-column="30" selection-end-line="542" selection-end-column="30" />
           <folding />
         </state>
       </provider>

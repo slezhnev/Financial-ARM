@@ -540,7 +540,7 @@ public class MainForm implements ActionListener {
             PlannedMonthSpendingReport report = new PlannedMonthSpendingReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams);
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -548,7 +548,7 @@ public class MainForm implements ActionListener {
             PayrollReport report = new PayrollReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams, false);
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -556,7 +556,7 @@ public class MainForm implements ActionListener {
             PayrollReport report = new PayrollReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams, true);
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -564,7 +564,7 @@ public class MainForm implements ActionListener {
             NonFinishedOperationsReport report = new NonFinishedOperationsReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations());
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -572,7 +572,7 @@ public class MainForm implements ActionListener {
             FinancialResultsReport report = new FinancialResultsReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations(), timeFilterParams);
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -580,7 +580,7 @@ public class MainForm implements ActionListener {
             FinancialOperationSumDismatch report = new FinancialOperationSumDismatch();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations());
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
@@ -588,7 +588,7 @@ public class MainForm implements ActionListener {
             FinancialOperationChangesReport report = new FinancialOperationChangesReport();
             try {
                 report.makeReport(mainPanel, mainPanel, periodLabel.getText(), ((FinancialOperationTableModel) finOpTable.getModel()).getOperations());
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "При формировании отчета произошла ошибка");
             }
